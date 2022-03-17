@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Authentification from "./pages/Authentifcation";
+import {Routes, Route, Navigate, BrowserRouter} from "react-router-dom";
+import Dashbored from "./pages/Dashbored";
+import {useSelector} from "react-redux";
 
 function App() {
+  const logedIn = useSelector(state => state.userReducer.logedIn);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/auth" element={<Authentification />} />
+        {logedIn && <Route path="/dashbored/*" element={<Dashbored />} />}
+        <Route
+          path="*"
+          element={<Navigate to={logedIn ? "/dashbored" : "/auth"} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
