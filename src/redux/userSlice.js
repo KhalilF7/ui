@@ -8,10 +8,16 @@ export const auth = createAsyncThunk("users/login", async user => {
   });
   return res.data;
 });
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {data: {}, logedIn: false},
-  reducers: {},
+  reducers: {
+    logout(state, action) {
+      state.data = {};
+      state.logedIn = false;
+    },
+  },
   extraReducers: {
     [auth.fulfilled]: (state, action) => {
       if (action.payload.data) {
@@ -27,5 +33,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const {connect} = userSlice.actions;
+export const {connect, logout} = userSlice.actions;
 export default userSlice.reducer;
