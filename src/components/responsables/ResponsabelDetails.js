@@ -172,57 +172,7 @@ export default function ResponsabelDetails() {
               <Grid item xs={4}>
                 <div> matricule : {responsable.matricule}</div>
               </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <TextField
-                    onChange={handelChange}
-                    id="dateNaissance"
-                    name="dateNaissance"
-                    label="Date de naissance"
-                    type="date"
-                    fullWidth
-                    value={responsable.dateNaissance}
-                    variant="outlined"
-                    required
-                  />
-                ) : (
-                  <div> date de naissance : {responsable.dateNaissance}</div>
-                )}
-              </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <TextField
-                    onChange={handelChange}
-                    id="email"
-                    name="email"
-                    label="Email"
-                    type="email"
-                    fullWidth
-                    value={responsable.email}
-                    variant="outlined"
-                    required
-                  />
-                ) : (
-                  <div> Email: {responsable.email}</div>
-                )}
-              </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <TextField
-                    onChange={handelChange}
-                    id="dateNaissance"
-                    name="dateNaissance"
-                    label="Date du naissance"
-                    type="date"
-                    fullWidth
-                    value={responsable.dateNaissance}
-                    variant="outlined"
-                    required
-                  />
-                ) : (
-                  <div> date de naissance : {responsable.dateNaissance}</div>
-                )}
-              </Grid>
+
               <Grid item xs={4}>
                 {edit ? (
                   <TextField
@@ -240,40 +190,17 @@ export default function ResponsabelDetails() {
                   <div> Numero telephonique : {responsable.telephone}</div>
                 )}
               </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <>
-                    <label htmlFor="etatCivile">Etat civile</label>
-                    <Select
-                      onChange={handelList}
-                      defaultValue={responsable.etatCivile}
-                      labelId="etatCivile"
-                      id="etatCivile"
-                      variant="outlined"
-                      fullWidth
-                      label="etat civile">
-                      <MenuItem value={"celebataire"}>Celebataire</MenuItem>
-                      <MenuItem value={"mariee"}>Mariée</MenuItem>
-                      <MenuItem value={"divorser"}>Divorsé</MenuItem>
-                    </Select>
-                  </>
-                ) : (
-                  <div> Etat civile : {responsable.etatCivile}</div>
-                )}
-              </Grid>
-              <Grid item xs={4}>
-                <div> NCI : {responsable.cin}</div>
-              </Grid>
+
               <Grid item xs={4}>
                 {edit ? (
                   <TextField
                     onChange={handelChange}
-                    id="username"
-                    name="username"
+                    id="login"
+                    name="login"
                     label="Login"
                     type="text"
                     fullWidth
-                    value={responsable.username}
+                    value={responsable.login}
                     variant="outlined"
                     required
                   />
@@ -283,7 +210,7 @@ export default function ResponsabelDetails() {
                     {responsable.username === "" ? (
                       <div> aucun login affecter </div>
                     ) : (
-                      <div> username : {responsable.username} </div>
+                      <div> username : {responsable.login} </div>
                     )}{" "}
                   </div>
                 )}
@@ -292,12 +219,12 @@ export default function ResponsabelDetails() {
                 {edit ? (
                   <TextField
                     onChange={handelChange}
-                    id="password"
-                    name="password"
+                    id="motDePasse"
+                    name="motDePasse"
                     label="mot de passe"
                     type="text"
                     fullWidth
-                    value={responsable.password}
+                    value={responsable.motDePasse}
                     variant="outlined"
                     required
                   />
@@ -306,7 +233,7 @@ export default function ResponsabelDetails() {
                     {responsable.password === "" ? (
                       <div> aucune mot du passe affecter </div>
                     ) : (
-                      <div> mot du passe : {responsable.password} </div>
+                      <div> mot du passe : {responsable.motDePasse} </div>
                     )}
                   </div>
                 )}

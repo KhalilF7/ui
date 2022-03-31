@@ -3,6 +3,9 @@ import {useSelector} from "react-redux";
 import {Routes, Route, useNavigate} from "react-router-dom";
 
 import Acceuil from "../components/Acceuil";
+import AllAtelier from "../components/atelier/AllAtelier";
+import AtelierDetails from "../components/atelier/AtelierDetails";
+import Ateliers from "../components/atelier/Ateliers";
 import AllBranches from "../components/Branches/AllBranches";
 import Branche from "../components/Branches/Branche";
 import Branches from "../components/Branches/Branches";
@@ -46,6 +49,10 @@ export default function Dashbored() {
               <Route path="techniciens" element={<Techniciens />}>
                 <Route index element={<AllTehniciens />}></Route>
                 <Route path=":code" element={<TechniciensDeatils />}></Route>
+              </Route>
+              <Route path="atelier" element={<Ateliers />}>
+                <Route index element={<AllAtelier />}></Route>
+                <Route path=":code" element={<AtelierDetails />}></Route>
               </Route>
             </>
           )}

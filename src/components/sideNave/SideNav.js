@@ -25,6 +25,7 @@ export default function SideNav() {
           "interventions",
           "techniciens",
           "machines",
+          "atelier",
           "compte",
           "admin",
         ]);

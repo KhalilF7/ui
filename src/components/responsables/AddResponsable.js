@@ -8,21 +8,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import axios from "axios";
-import FormControl from "@mui/material/FormControl";
 import DialogTitle from "@mui/material/DialogTitle";
 import {Divider} from "@mui/material";
 
 export default function AddResponsable(props) {
   const [form, setForm] = useState({
-    cin: "",
     matricule: "",
     nom: "",
     prenom: "",
-    dateNaissance: new Date(),
-    email: "",
     telephone: 0,
-    etatCivile: "",
-    isDeleted: false,
     username: "",
     password: "",
     branche: "",
@@ -35,8 +29,8 @@ export default function AddResponsable(props) {
       console.log(data);
     });
   }, []);
-  const handelChanges = (e, column) => {
-    setForm({...form, [column]: e.target.value});
+  const handelChanges = e => {
+    setForm({...form, [e.target.name]: e.target.value});
   };
   const handelForm = () => {
     axios
@@ -55,16 +49,11 @@ export default function AddResponsable(props) {
     <div>
       <Dialog fullWidth open={props.open} onClose={props.handleClose}>
         <form onSubmit={handelForm}>
-          <DialogTitle>Subscribe</DialogTitle>
+          <DialogTitle>Ajouter un responsable</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Ajouter un responsable du branche
-            </DialogContentText>
             <div style={{margin: "20px"}}>
               <TextField
-                onChange={e => {
-                  handelChanges(e, "matricule");
-                }}
+                onChange={handelChanges}
                 autoFocus
                 id="matricule"
                 name="matricule"
@@ -76,26 +65,10 @@ export default function AddResponsable(props) {
               />
             </div>
             <Divider />
+
             <div style={{margin: "20px"}}>
               <TextField
-                onChange={e => {
-                  handelChanges(e, "cin");
-                }}
-                id="cin"
-                name="cin"
-                label="CIN"
-                type="number"
-                fullWidth
-                variant="outlined"
-                required
-              />
-            </div>
-            <Divider />
-            <div style={{margin: "20px"}}>
-              <TextField
-                onChange={e => {
-                  handelChanges(e, "nom");
-                }}
+                onChange={handelChanges}
                 id="nom"
                 name="nom"
                 label="Nom"
@@ -109,9 +82,7 @@ export default function AddResponsable(props) {
             <Divider />
             <div style={{margin: "20px"}}>
               <TextField
-                onChange={e => {
-                  handelChanges(e, "prenom");
-                }}
+                onChange={handelChanges}
                 id="prenom"
                 name="prenom"
                 label="Prenom"
@@ -121,41 +92,11 @@ export default function AddResponsable(props) {
                 variant="outlined"
               />
             </div>
-            <Divider />
-            <div style={{margin: "20px"}}>
-              <label htmlFor="dateNaissane"> Date de naissance : </label>
-              <TextField
-                required
-                id="dateNaissance"
-                name="dateNaissance"
-                type="date"
-                fullWidth
-                onChange={e => {
-                  handelChanges(e, "dateNaissance");
-                }}
-              />
-            </div>
+
             <Divider />
             <div style={{margin: "20px"}}>
               <TextField
-                onChange={e => {
-                  handelChanges(e, "email");
-                }}
-                id="email"
-                name="email"
-                label="Email"
-                type="email"
-                fullWidth
-                variant="outlined"
-                required
-              />
-            </div>
-            <Divider />
-            <div style={{margin: "20px"}}>
-              <TextField
-                onChange={e => {
-                  handelChanges(e, "telephone");
-                }}
+                onChange={handelChanges}
                 id="telephone"
                 name="telephone"
                 label="Telephone"
@@ -166,32 +107,15 @@ export default function AddResponsable(props) {
               />
             </div>
             <Divider />
-            <div style={{margin: "20px"}}>
-              <label htmlFor="etatCivile">Etat civile</label>
-              <Select
-                onChange={e => {
-                  handelChanges(e, "etatCivile");
-                }}
-                defaultValue=""
-                labelId="etatCivile"
-                id="etatCivile"
-                variant="outlined"
-                fullWidth
-                label="etat civile">
-                <MenuItem value={"celebataire"}>Celebataire</MenuItem>
-                <MenuItem value={"mariee"}>Mariée</MenuItem>
-                <MenuItem value={"divorser"}>Divorsé</MenuItem>
-              </Select>
-            </div>
+
             <Divider />
             <div style={{margin: "20px"}}>
               <label htmlFor="etatCivile">Branches</label>
               {branches && (
                 <Select
-                  onChange={e => {
-                    handelChanges(e, "branche");
-                  }}
+                  onChange={handelChanges}
                   defaultValue=""
+                  name="branche"
                   id="branches"
                   variant="outlined"
                   fullWidth
@@ -207,11 +131,9 @@ export default function AddResponsable(props) {
             <Divider />
             <div style={{margin: "20px"}}>
               <TextField
-                onChange={e => {
-                  handelChanges(e, "username");
-                }}
-                id="username"
-                name="username"
+                onChange={handelChanges}
+                id="login"
+                name="login"
                 label="Login"
                 type="text"
                 fullWidth
@@ -221,11 +143,9 @@ export default function AddResponsable(props) {
             <Divider />
             <div style={{margin: "20px"}}>
               <TextField
-                onChange={e => {
-                  handelChanges(e, "password");
-                }}
-                id="password"
-                name="password"
+                onChange={handelChanges}
+                id="motDePasse"
+                name="motDePasse"
                 label="Mot de passe"
                 type="text"
                 fullWidth

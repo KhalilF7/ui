@@ -1,3 +1,4 @@
+import AddIcon from "@mui/icons-material/Add";
 import {
   TableContainer,
   Paper,
@@ -11,22 +12,21 @@ import {
   Tooltip,
 } from "@mui/material";
 import axios from "axios";
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Spinning from "../Spinning";
-import AddIcon from "@mui/icons-material/Add";
+import AddAtelier from "./AddAtelier";
 
-import AddTechniciens from "./AddTechniciens";
-
-export default function AllTehniciens() {
-  const [techniciens, setTechniciens] = useState();
+export default function AllAtelier() {
+  const [atelier, setAtelier] = useState();
   const [loading, setLoading] = useState(true);
   const [dialog, setDialog] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/techniciens`).then(response => {
-      let data = response.data.technicines;
-      setTechniciens(data);
+    axios.get(`${process.env.REACT_APP_API_URL}/ateliers`).then(response => {
+      let data = response.data;
+      console.log(data);
+      setAtelier(data);
       setLoading(false);
     });
   }, []);
@@ -39,11 +39,10 @@ export default function AllTehniciens() {
   const handleClose = () => {
     setDialog(false);
   };
-
   return (
     <>
       {loading && <Spinning />}
-      {!loading && techniciens && Object.keys(techniciens) !== 0 && (
+      {!loading && atelier && Object.keys(atelier) !== 0 && (
         <div>
           <TableContainer component={Container}>
             <Table
@@ -52,17 +51,15 @@ export default function AllTehniciens() {
               aria-label="tous les responsables">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Matricule</TableCell>
-                  <TableCell align="center">Nom</TableCell>
-                  <TableCell align="center">Prenom</TableCell>
+                  <TableCell align="center">nom de l'atelier </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {techniciens.map(row => (
+                {atelier.map(row => (
                   <Tooltip title="detail" placement="top">
                     <TableRow
                       onClick={() => {
-                        hadelRedirect(row.matricule);
+                        hadelRedirect(row.idAtelier);
                       }}
                       key={row.matricule}
                       sx={{
@@ -71,9 +68,7 @@ export default function AllTehniciens() {
                         },
                         cursor: "pointer",
                       }}>
-                      <TableCell align="center">{row.matricule}</TableCell>
-                      <TableCell align="center">{row.nom}</TableCell>
-                      <TableCell align="center">{row.prenom}</TableCell>
+                      <TableCell align="center">{row.nomAtelier}</TableCell>
                     </TableRow>
                   </Tooltip>
                 ))}
@@ -94,7 +89,7 @@ export default function AllTehniciens() {
         }}>
         <AddIcon />
       </Fab>
-      <AddTechniciens open={dialog} handleClose={handleClose} />
+      <AddAtelier open={dialog} handleClose={handleClose} />
     </>
   );
 }

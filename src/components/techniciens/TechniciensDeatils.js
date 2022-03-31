@@ -9,8 +9,6 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  MenuItem,
-  Select,
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
@@ -26,7 +24,7 @@ export default function TechniciensDeatils() {
   const user = useSelector(state => state.userReducer.data);
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
-  const [branches, setBranches] = useState(user["branche"]);
+  const [branche, setBranche] = useState(user["branche"]);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function TechniciensDeatils() {
         setTechnicien(data);
         setLoading(false);
       });
-  }, [edit]);
+  }, [param.code]);
 
   const handelResMaint = e => {
     setTechnicien({...technicine, isResponsableMaintenance: e.target.checked});
@@ -47,9 +45,6 @@ export default function TechniciensDeatils() {
   };
   const handelChange = e => {
     setTechnicien({...technicine, [e.target.name]: e.target.value});
-  };
-  const handelList = e => {
-    setTechnicien({...technicine, etatCivile: e.target.value});
   };
   const handelDelete = () => {
     MySwal.fire({
@@ -61,6 +56,9 @@ export default function TechniciensDeatils() {
       confirmButtonText: "Supprimer",
       cancelButtonColor: "#F21800",
     }).then(result => {
+      if (branche) {
+        setTechnicien({...technicine, branche: branche});
+      }
       if (result.isConfirmed) {
         axios
           .delete(`${process.env.REACT_APP_API_URL}/technicien/${param.code}`)
@@ -177,55 +175,7 @@ export default function TechniciensDeatils() {
                 <div> matricule : {technicine.matricule}</div>
               </Grid>
               <Grid item xs={4}>
-                {edit ? (
-                  <TextField
-                    onChange={handelChange}
-                    id="dateNaissance"
-                    name="dateNaissance"
-                    label="Date de naissance"
-                    type="date"
-                    fullWidth
-                    value={technicine.dateNaissance}
-                    variant="outlined"
-                    required
-                  />
-                ) : (
-                  <div> date de naissance : {technicine.dateNaissance}</div>
-                )}
-              </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <TextField
-                    onChange={handelChange}
-                    id="email"
-                    name="email"
-                    label="Email"
-                    type="email"
-                    fullWidth
-                    value={technicine.email}
-                    variant="outlined"
-                    required
-                  />
-                ) : (
-                  <div> Email: {technicine.email}</div>
-                )}
-              </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <TextField
-                    onChange={handelChange}
-                    id="dateNaissance"
-                    name="dateNaissance"
-                    label="Date du naissance"
-                    type="date"
-                    fullWidth
-                    value={technicine.dateNaissance}
-                    variant="outlined"
-                    required
-                  />
-                ) : (
-                  <div> date de naissance : {technicine.dateNaissance}</div>
-                )}
+                <div> brache : {technicine.branche}</div>
               </Grid>
               <Grid item xs={4}>
                 {edit ? (
@@ -244,63 +194,26 @@ export default function TechniciensDeatils() {
                   <div> Numero telephonique : {technicine.telephone}</div>
                 )}
               </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <>
-                    <label htmlFor="etatCivile">Etat civile</label>
-                    <Select
-                      onChange={handelList}
-                      defaultValue={technicine.etatCivile}
-                      labelId="etatCivile"
-                      id="etatCivile"
-                      variant="outlined"
-                      fullWidth
-                      label="etat civile">
-                      <MenuItem value="celebataire">Celebataire</MenuItem>
-                      <MenuItem value="mariee">Mariée</MenuItem>
-                      <MenuItem value="divorser">Divorsé</MenuItem>
-                    </Select>
-                  </>
-                ) : (
-                  <div> Etat civile : {technicine.etatCivile}</div>
-                )}
-              </Grid>
+
               <Grid item xs={4}>
                 {edit ? (
                   <TextField
                     onChange={handelChange}
-                    id="cin"
-                    name="cin"
-                    label="NCI"
-                    type="text"
-                    fullWidth
-                    value={technicine.cin}
-                    variant="outlined"
-                    required
-                  />
-                ) : (
-                  <div> NCI : {technicine.cin}</div>
-                )}
-              </Grid>
-              <Grid item xs={4}>
-                {edit ? (
-                  <TextField
-                    onChange={handelChange}
-                    id="username"
-                    name="username"
+                    id="login"
+                    name="login"
                     label="Login"
                     type="text"
                     fullWidth
-                    value={technicine.username}
+                    value={technicine.login}
                     variant="outlined"
                     required
                   />
                 ) : (
                   <div>
-                    {technicine.username === "" ? (
+                    {technicine.login === "" ? (
                       <div> aucun login affecter </div>
                     ) : (
-                      <div> username : {technicine.username} </div>
+                      <div> username : {technicine.login} </div>
                     )}
                   </div>
                 )}
@@ -309,21 +222,21 @@ export default function TechniciensDeatils() {
                 {edit ? (
                   <TextField
                     onChange={handelChange}
-                    id="password"
-                    name="password"
+                    id="motDePasse"
+                    name="motDePasse"
                     label="mot de passe"
                     type="text"
                     fullWidth
-                    value={technicine.password}
+                    value={technicine.motDePasse}
                     variant="outlined"
                     required
                   />
                 ) : (
                   <div>
-                    {technicine.password === "" ? (
+                    {technicine.motDePasse === "" ? (
                       <div> aucune mot du passe affecter </div>
                     ) : (
-                      <div> mot du passe : {technicine.password} </div>
+                      <div> mot du passe : {technicine.motDePasse} </div>
                     )}
                   </div>
                 )}
