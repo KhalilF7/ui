@@ -26,8 +26,9 @@ export default function AllResponsabels() {
     axios
       .get(`${process.env.REACT_APP_API_URL}/responsables`)
       .then(response => {
-        let data = response.data.responsables;
+        let data = response.data;
         setResponsables(data);
+
         setLoading(false);
       });
   }, []);

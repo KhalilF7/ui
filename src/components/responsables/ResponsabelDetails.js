@@ -29,7 +29,7 @@ export default function ResponsabelDetails() {
     axios
       .get(`${process.env.REACT_APP_API_URL}/responsable/${param.code}`)
       .then(response => {
-        let data = response.data.responsable;
+        let data = response.data;
         setResponsable(data);
         setLoading(false);
       });
@@ -40,9 +40,6 @@ export default function ResponsabelDetails() {
       setBranches(data);
     });
     return true;
-  };
-  const handelList = e => {
-    setResponsable({...responsable, etatCivile: e.target.value});
   };
   const handelChange = e => {
     setResponsable({...responsable, [e.target.name]: e.target.value});

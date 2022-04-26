@@ -9,6 +9,11 @@ import Ateliers from "../components/atelier/Ateliers";
 import AllBranches from "../components/Branches/AllBranches";
 import Branche from "../components/Branches/Branche";
 import Branches from "../components/Branches/Branches";
+import AllInterventions from "../components/interventionCurative/AllInterventions";
+import Interventions from "../components/interventionCurative/Interventions";
+import AllMachines from "../components/machines/AllMachines";
+import Machines from "../components/machines/Machines";
+import MachinesDetails from "../components/machines/MachinesDetails";
 import AllResponsabels from "../components/responsables/AllResponsabels";
 import ResponsabelDetails from "../components/responsables/ResponsabelDetails";
 import Responsabels from "../components/responsables/Responsabels";
@@ -54,9 +59,23 @@ export default function Dashbored() {
                 <Route index element={<AllAtelier />}></Route>
                 <Route path=":code" element={<AtelierDetails />}></Route>
               </Route>
+              <Route path="machines" element={<Machines />}>
+                <Route index element={<AllMachines />}></Route>
+                <Route path=":code" element={<MachinesDetails />}></Route>
+              </Route>
             </>
           )}
-
+          {user["profile"] === "tech" && (
+            <>
+              <Route path="Interventions" element={<Interventions />}>
+                <Route index element={<AllInterventions />}></Route>
+              </Route>
+              <Route path="machines" element={<Machines />}>
+                <Route index element={<AllMachines />}></Route>
+                <Route path=":code" element={<MachinesDetails />}></Route>
+              </Route>
+            </>
+          )}
           <Route path="*" element={<Acceuil />}></Route>
         </Routes>
       </div>

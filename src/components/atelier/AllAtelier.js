@@ -25,7 +25,6 @@ export default function AllAtelier() {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/ateliers`).then(response => {
       let data = response.data;
-      console.log(data);
       setAtelier(data);
       setLoading(false);
     });
@@ -48,7 +47,7 @@ export default function AllAtelier() {
             <Table
               component={Paper}
               sx={{minWidth: 650}}
-              aria-label="tous les responsables">
+              aria-label="tous les atelier">
               <TableHead>
                 <TableRow>
                   <TableCell align="center">nom de l'atelier </TableCell>

@@ -31,7 +31,7 @@ export default function TechniciensDeatils() {
     axios
       .get(`${process.env.REACT_APP_API_URL}/technicien/${param.code}`)
       .then(response => {
-        let data = response.data.responsable;
+        let data = response.data;
         setTechnicien(data);
         setLoading(false);
       });
@@ -79,7 +79,6 @@ export default function TechniciensDeatils() {
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         MySwal.fire("Cancelled", "les changement sont annuler", "error");
-        setEdit(false);
       }
     });
   };
