@@ -6,6 +6,7 @@ import {logout} from "../../redux/userSlice";
 import Links from "./Links";
 import Spinning from "../Spinning";
 import {useNavigate} from "react-router-dom";
+import logo from "../../Assets/logo.png";
 
 export default function SideNav() {
   const [linkes, setLinkes] = useState([]);
@@ -22,6 +23,7 @@ export default function SideNav() {
         break;
       case "res":
         setLinkes([
+          "Acceuil",
           "interventions",
           "techniciens",
           "machines",
@@ -69,7 +71,7 @@ export default function SideNav() {
                 height: "50%",
                 justifyContent: "start",
               }}>
-              <Paper sx={{flexGrow: 1}}>{user.nom}</Paper>
+              <img width="200px" src={logo} alt="logo" />{" "}
               <Stack spacing={2}>
                 <List>
                   {linkes.map(row => (

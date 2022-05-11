@@ -15,9 +15,11 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormControl,
 } from "@mui/material";
 import AddMachines from "./AddMachines";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+
 export default function AllMachines() {
   const [machines, setMachines] = useState();
   const [loading, setLoading] = useState(true);
@@ -25,8 +27,14 @@ export default function AllMachines() {
   const [catMachine, setCatMachine] = useState();
   const [selectedCat, setSelectedCat] = useState("");
   const navigate = useNavigate();
+  const {state} = useLocation();
+  const {categorie} = state !== null && state;
+
   useEffect(() => {
     fetchData();
+    if (categorie) {
+      setSelectedCat(categorie);
+    }
   }, [dialog]);
   const handelListChange = e => {
     setSelectedCat(e.target.value);
@@ -80,34 +88,35 @@ export default function AllMachines() {
               padding: "20px",
             }}>
             <InputLabel id="demo-simple-select-label">Categorie</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              defaultValue="all"
-              value={selectedCat}
-              onChange={handelListChange}
-              label="categorie machine ">
-              <MenuItem value="all"> Tout </MenuItem>
-              {catMachine.map(cat => (
-                <MenuItem value={cat.codeCategorie} key={cat.codeCategorie}>
-                  {cat.nomCategrie}
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl>
+              <Select
+                autoWidth
+                displayEmpty
+                value={selectedCat}
+                onChange={handelListChange}
+                label="categorie machine ">
+                <MenuItem value={""}> Tout </MenuItem>
+                {catMachine.map(cat => (
+                  <MenuItem value={cat.codeCategorie} key={cat.codeCategorie}>
+                    {cat.nomCategrie}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Container>
 
           <TableContainer component={Container}>
             <Table sx={{minWidth: 650}} aria-label="tous les machines">
               <TableHead>
-                <TableCell align="center">Code machine</TableCell>
-                <TableCell align="center">Marque machine</TableCell>
-                <TableCell align="center">Model machine</TableCell>
+                <TableCell align="center">Code </TableCell>
+                <TableCell align="center">Marque </TableCell>
+                <TableCell align="center">Model </TableCell>
                 <TableCell align="center">etat </TableCell>
               </TableHead>
               <TableBody>
                 {machines
                   .filter(row => {
-                    if (selectedCat === "all") {
+                    if (selectedCat === "") {
                       return row;
                     } else if (row.type === selectedCat) {
                       return row;

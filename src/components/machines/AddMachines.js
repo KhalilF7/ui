@@ -12,7 +12,7 @@ export default function AddMachines(props) {
     type: "",
     brand: "",
     model: "",
-    currentState: "fonction",
+    currentState: "enArret",
     schudledTime: 0,
     timeLosses: 0,
     availibilty: 100,
