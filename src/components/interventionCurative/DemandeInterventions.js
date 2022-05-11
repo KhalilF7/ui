@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 export default function DemandeInterventions(props) {
   const [intervention, setintervention] = useState({
@@ -24,12 +24,14 @@ export default function DemandeInterventions(props) {
     diagnostique: "",
     TypeDePanne: [],
     etatInterventions: "ouvert",
-    technicine: "",
-    dateDebutAction: null,
     dateFinAction: null,
     dateCloture: null,
+    technicine: null,
+    machine: "",
     sousTraitence: null,
   });
+  const [sousTraitence, setsousTraitence] = useState();
+  const [technicien, setTechnicien] = useState();
   const sympthomesChoices = [
     "Bruit",
     "Fuite d'eau",
@@ -39,7 +41,11 @@ export default function DemandeInterventions(props) {
     "Demarage anormale",
     "Arret",
   ];
+  const panne = ["Mécanique", "Électrique", "Pneumatique", "Hydraulique"];
   const machines = props.machines;
+  const [textEnabel, setTextEnabel] = useState(true);
+  const [equipeIntene, setequipeIntene] = useState(false);
+  const [sous, setSous] = useState(false);
   const [sympthomes, setSympthomes] = useState({
     bruit: {value: "Bruit", cheked: false},
     fuitEau: {value: "Fuite d'eau", cheked: false},
@@ -50,10 +56,22 @@ export default function DemandeInterventions(props) {
     arret: {value: "Arret", cheked: false},
     autre: {value: "autre", checked: false},
   });
-  const [textEnabel, setTextEnabel] = useState(true);
+  const [typePanne, setTypePanne] = useState({
+    mec: {value: "Mécanique", cheked: false},
+    elc: {value: "Électrique", cheked: false},
+    pne: {value: "Pneumatique", cheked: false},
+    hyd: {value: "Hydraulique", cheked: false},
+  });
   const [detailSympthomes, setdetailsSympthomes] = useState();
+
   const enableText = () => {
     setTextEnabel(!textEnabel);
+  };
+  const enableSousTraitence = () => {
+    setSous(!sous);
+  };
+  const eanbelEquipe = () => {
+    setequipeIntene(!equipeIntene);
   };
   const HandelSympthome = e => {
     switch (e.target.name) {
@@ -107,14 +125,57 @@ export default function DemandeInterventions(props) {
         break;
     }
   };
+  const HandelPanne = e => {
+    switch (e.target.name) {
+      case "Mécanique":
+        setTypePanne({
+          ...typePanne,
+          mec: {value: e.target.name, cheked: e.target.checked},
+        });
+        break;
+      case "Électrique":
+        setTypePanne({
+          ...typePanne,
+          elc: {value: e.target.name, cheked: e.target.checked},
+        });
+        break;
+      case "Pneumatique":
+        setTypePanne({
+          ...typePanne,
+          pne: {value: e.target.name, cheked: e.target.checked},
+        });
+        break;
+      default:
+        setTypePanne({
+          ...typePanne,
+          hyd: {value: e.target.name, cheked: e.target.checked},
+        });
+    }
+  };
   const handelChanges = e => {
     setintervention({...intervention, [e.target.name]: e.target.value});
   };
   const handelDetails = e => {
     setdetailsSympthomes(e.target.value);
   };
+  const fetchData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/sousTraitences`)
+      .then(response => {
+        setsousTraitence(response.data);
+      });
+    axios.get(`${process.env.REACT_APP_API_URL}/techniciens`).then(response => {
+      setTechnicien(response.data);
+    });
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const getSelected = e => {
     HandelSympthome(e);
+  };
+  const getPanne = e => {
+    HandelPanne(e);
   };
   const handelSubmit = e => {
     e.preventDefault(e);
@@ -135,21 +196,31 @@ export default function DemandeInterventions(props) {
     sym = sym.filter(s => {
       return s !== false && s !== undefined;
     });
+    var tp = [];
+    tp.push(typePanne.mec.cheked && typePanne.mec.value);
+    tp.push(typePanne.elc.cheked && typePanne.elc.value);
+    tp.push(typePanne.pne.cheked && typePanne.pne.value);
+    tp.push(typePanne.hyd.cheked && typePanne.hyd.value);
+    tp = tp.filter(t => {
+      return t !== false && t !== undefined;
+    });
+    console.log(tp);
+    console.log(sym);
     setintervention({
       ...intervention,
       Sympthomes: sym,
-      dateRapport: new Date(),
-      etatInterventions: "cloture",
+      TypeDePanne: tp,
+      etatInterventions: "ouvert",
     });
+    console.log(tp);
+    console.log(intervention);
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/IntevetionCuratives`,
         intervention,
       )
       .then(response => {
-        if (response.data) {
-          props.handleClose();
-        }
+        console.log(response.data);
       });
   };
   return (
@@ -157,7 +228,9 @@ export default function DemandeInterventions(props) {
       <Dialog open={props.open} onClose={props.handelClose}>
         <form onSubmit={handelSubmit}>
           <DialogTitle>
-            <Typography variant="h4">Demande d'interventions</Typography>
+            <Typography variant="h4">
+              Ajouter un intervention de l'historique
+            </Typography>
           </DialogTitle>
           <DialogContent>
             <div style={{margin: "20px"}}>
@@ -174,7 +247,19 @@ export default function DemandeInterventions(props) {
               />
             </div>
             <Divider />
-
+            <div style={{margin: "20px"}}>
+              <label htmlFor="dateRapport"> Date de Rapport </label>
+              <TextField
+                onChange={handelChanges}
+                id="dateRapport"
+                name="dateRapport"
+                label=""
+                type="date"
+                fullWidth
+                variant="outlined"
+                required
+              />
+            </div>
             <Divider />
             <div style={{margin: "20px"}}>
               <FormLabel component="legend"> Symphtome </FormLabel>
@@ -233,6 +318,8 @@ export default function DemandeInterventions(props) {
                 </Select>
               </>
             )}
+
+            <Divider />
           </DialogContent>
           <DialogActions>
             <Button onClick={props.handleClose}>Annuler</Button>
