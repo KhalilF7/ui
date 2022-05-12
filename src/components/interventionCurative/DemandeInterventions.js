@@ -204,8 +204,7 @@ export default function DemandeInterventions(props) {
     tp = tp.filter(t => {
       return t !== false && t !== undefined;
     });
-    console.log(tp);
-    console.log(sym);
+
     setintervention({
       ...intervention,
       Sympthomes: sym,
@@ -220,7 +219,9 @@ export default function DemandeInterventions(props) {
         intervention,
       )
       .then(response => {
-        console.log(response.data);
+        if (response.data) {
+          props.handelClose();
+        }
       });
   };
   return (
@@ -254,7 +255,7 @@ export default function DemandeInterventions(props) {
                 id="dateRapport"
                 name="dateRapport"
                 label=""
-                type="date"
+                type="datetime-local"
                 fullWidth
                 variant="outlined"
                 required

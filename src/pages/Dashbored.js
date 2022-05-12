@@ -22,6 +22,7 @@ import AllTehniciens from "../components/techniciens/AllTehniciens";
 import Techniciens from "../components/techniciens/Techniciens";
 import TechniciensDeatils from "../components/techniciens/TechniciensDeatils";
 import MainAcceuil from "../components/AcceuilRes/MainAcceuil";
+import InterventionsDetails from "../components/interventionCurative/InterventionsDetails";
 export default function Dashbored() {
   const navigate = useNavigate();
   const logedIn = useSelector(state => state.userReducer.logedIn);
@@ -67,6 +68,7 @@ export default function Dashbored() {
               </Route>
               <Route path="Interventions" element={<Interventions />}>
                 <Route index element={<AllInterventions />}></Route>
+                <Route path=":code" element={<InterventionsDetails />}></Route>
               </Route>
               <Route path="*" element={<MainAcceuil />}></Route>
             </>
@@ -75,6 +77,7 @@ export default function Dashbored() {
             <>
               <Route path="Interventions" element={<Interventions />}>
                 <Route index element={<AllInterventions />}></Route>
+                <Route path=":code" element={<InterventionsDetails />}></Route>
               </Route>
               <Route path="machines" element={<Machines />}>
                 <Route index element={<AllMachines />}></Route>

@@ -16,6 +16,7 @@ import {useSelector} from "react-redux";
 import Spinning from "../Spinning";
 import OldIntervention from "./OldIntervention";
 import DemandeInterventions from "./DemandeInterventions";
+import {useNavigate} from "react-router-dom";
 export default function AllInterventions() {
   const user = useSelector(state => state.userReducer.data);
   const [tech, setTech] = useState();
@@ -24,7 +25,7 @@ export default function AllInterventions() {
   const [demand, setDemande] = useState(false);
   const [loading, setLoading] = useState(true);
   const [machines, setMachines] = useState();
-
+  const navigate = useNavigate();
   const fetchData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/technicien/${user.userID}`)
@@ -44,7 +45,10 @@ export default function AllInterventions() {
   };
   useEffect(() => {
     fetchData();
-  }, [oldInter]);
+  }, [oldInter, demand]);
+  const hadelRedirect = code => {
+    navigate(`${code}`);
+  };
   const handelCloseOld = () => {
     setOldInter(false);
   };
@@ -104,6 +108,9 @@ export default function AllInterventions() {
                   {interventions.map(row => (
                     <TableRow
                       key={row.codeCuratif}
+                      onClick={() => {
+                        hadelRedirect(row.codeCuratif);
+                      }}
                       sx={{
                         ":hover": {
                           backgroundColor: "#8aa8ff",

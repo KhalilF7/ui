@@ -218,7 +218,9 @@ export default function OldIntervention(props) {
         intervention,
       )
       .then(response => {
-        console.log(response.data);
+        if (response.data) {
+          props.handelClose();
+        }
       });
   };
   return (
@@ -252,7 +254,7 @@ export default function OldIntervention(props) {
                 id="dateRapport"
                 name="dateRapport"
                 label=""
-                type="date"
+                type="datetime-local"
                 fullWidth
                 variant="outlined"
                 required
@@ -323,7 +325,7 @@ export default function OldIntervention(props) {
                 onChange={handelChanges}
                 id="dateDebutAction"
                 name="dateDebutAction"
-                type="date"
+                type="datetime-local"
                 fullWidth
                 variant="outlined"
                 required
@@ -361,7 +363,7 @@ export default function OldIntervention(props) {
               <TextField
                 onChange={handelChanges}
                 id="dateFinAction"
-                name="dateFinAction"
+                name="datetime-local"
                 type="date"
                 fullWidth
                 variant="outlined"
@@ -375,7 +377,7 @@ export default function OldIntervention(props) {
                 onChange={handelChanges}
                 id="dateCloture"
                 name="dateCloture"
-                type="date"
+                type="datetime-local"
                 fullWidth
                 variant="outlined"
                 required
