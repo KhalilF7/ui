@@ -32,6 +32,7 @@ export default function DemandeInterventions(props) {
   });
   const [sousTraitence, setsousTraitence] = useState();
   const [technicien, setTechnicien] = useState();
+  const [interventions, setIntervention] = useState(props.interventions);
   const sympthomesChoices = [
     "Bruit",
     "Fuite d'eau",
@@ -196,58 +197,44 @@ export default function DemandeInterventions(props) {
     sym = sym.filter(s => {
       return s !== false && s !== undefined;
     });
-    var tp = [];
-    tp.push(typePanne.mec.cheked && typePanne.mec.value);
-    tp.push(typePanne.elc.cheked && typePanne.elc.value);
-    tp.push(typePanne.pne.cheked && typePanne.pne.value);
-    tp.push(typePanne.hyd.cheked && typePanne.hyd.value);
-    tp = tp.filter(t => {
-      return t !== false && t !== undefined;
+    let nb = 0;
+    let today = new Date();
+    interventions.filter(row => {
+      let date = new Date(intervention.dateRapport);
+      if (date.getFullYear() === today.getFullYear()) {
+        nb++;
+      }
     });
 
+    let code = `${nb}_${today.getFullYear()}`;
     setintervention({
       ...intervention,
+      codeCuratif: code,
       Sympthomes: sym,
-      TypeDePanne: tp,
       etatInterventions: "ouvert",
     });
-    console.log(tp);
-    console.log(intervention);
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/IntevetionCuratives`,
-        intervention,
-      )
-      .then(response => {
-        if (response.data) {
-          props.handelClose();
-        }
-      });
+    if (intervention.Sympthomes.length === sym.length) {
+      console.log(intervention.Sympthomes.length);
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/InteventionCuratives`,
+          intervention,
+        )
+        .then(response => {
+          if (response.data) {
+            props.handelClose();
+          }
+        });
+    }
   };
   return (
     <>
       <Dialog open={props.open} onClose={props.handelClose}>
         <form onSubmit={handelSubmit}>
           <DialogTitle>
-            <Typography variant="h4">
-              Ajouter un intervention de l'historique
-            </Typography>
+            <Typography variant="h4">Demande d'intervention</Typography>
           </DialogTitle>
           <DialogContent>
-            <div style={{margin: "20px"}}>
-              <TextField
-                onChange={handelChanges}
-                autoFocus
-                id="codeCuratif"
-                name="codeCuratif"
-                label="code intervention"
-                type="text"
-                fullWidth
-                variant="outlined"
-                required
-              />
-            </div>
-            <Divider />
             <div style={{margin: "20px"}}>
               <label htmlFor="dateRapport"> Date de Rapport </label>
               <TextField
@@ -261,6 +248,25 @@ export default function DemandeInterventions(props) {
                 required
               />
             </div>
+            <Divider />
+            {machines && (
+              <>
+                <label htmlFor="machine">Machine</label>
+                <Select
+                  onChange={handelChanges}
+                  defaultValue=""
+                  name="machine"
+                  id="machine"
+                  variant="outlined"
+                  fullWidth>
+                  {machines.map(machine => (
+                    <MenuItem value={machine.code} key={machine.code}>
+                      {machine.model}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </>
+            )}
             <Divider />
             <div style={{margin: "20px"}}>
               <FormLabel component="legend"> Symphtome </FormLabel>
@@ -300,25 +306,6 @@ export default function DemandeInterventions(props) {
                 required
               />
             </div>
-            <Divider />
-            {machines && (
-              <>
-                <label htmlFor="machine">Machine</label>
-                <Select
-                  onChange={handelChanges}
-                  defaultValue=""
-                  name="machine"
-                  id="machine"
-                  variant="outlined"
-                  fullWidth>
-                  {machines.map(machine => (
-                    <MenuItem value={machine.code} key={machine.code}>
-                      {machine.model}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </>
-            )}
 
             <Divider />
           </DialogContent>

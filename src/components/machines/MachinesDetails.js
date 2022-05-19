@@ -54,13 +54,13 @@ export default function MachinesDetails() {
   const getStatus = etat => {
     switch (etat) {
       case "fonction":
-        return "Fonctionnement normal";
+        return "Bon fonctionnement ";
 
       case "degradee":
-        return "En etat degrade";
+        return "Fonctionnement degrade";
 
       default:
-        return "En arret";
+        return "Arrêt";
     }
   };
   const handelUpdate = () => {

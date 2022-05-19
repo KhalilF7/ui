@@ -210,18 +210,21 @@ export default function OldIntervention(props) {
       TypeDePanne: tp,
       etatInterventions: "cloture",
     });
-    console.log(tp);
-    console.log(intervention);
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/IntevetionCuratives`,
-        intervention,
-      )
-      .then(response => {
-        if (response.data) {
-          props.handelClose();
-        }
-      });
+    if (
+      intervention.Sympthomes.length === sym.length &&
+      intervention.TypeDePanne.length === tp.length
+    ) {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/InteventionCuratives`,
+          intervention,
+        )
+        .then(response => {
+          if (response.data) {
+            props.handelClose();
+          }
+        });
+    }
   };
   return (
     <>
@@ -410,12 +413,12 @@ export default function OldIntervention(props) {
             </div>
             {sousTraitence && sous && (
               <>
-                <label htmlFor="sousTraitence_id">SousTraitence</label>
+                <label htmlFor="sousTraitence">SousTraitence</label>
                 <Select
                   onChange={handelChanges}
                   defaultValue=""
-                  name="sousTraitence_id"
-                  id="sousTraitence_id"
+                  name="sousTraitence"
+                  id="sousTraitence"
                   variant="outlined"
                   fullWidth>
                   {sousTraitence.map(sous => (
@@ -428,12 +431,12 @@ export default function OldIntervention(props) {
             )}
             {technicien && equipeIntene && (
               <>
-                <label htmlFor="technicine_id">Technicine</label>
+                <label htmlFor="technicine">Technicine</label>
                 <Select
                   onChange={handelChanges}
                   defaultValue=""
-                  name="technicine_id"
-                  id="technicine_id"
+                  name="technicine"
+                  id="technicine"
                   variant="outlined"
                   fullWidth>
                   {technicien.map(row => (

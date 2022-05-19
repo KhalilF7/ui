@@ -33,10 +33,9 @@ export default function AllInterventions() {
         setTech(response.data);
       });
     axios
-      .get(`${process.env.REACT_APP_API_URL}/IntevetionCuratives`)
+      .get(`${process.env.REACT_APP_API_URL}/InteventionCuratives`)
       .then(response => {
         setInterventions(response.data);
-        console.log(response.data);
       });
     axios.get(`${process.env.REACT_APP_API_URL}/machines`).then(response => {
       setMachines(response.data);
@@ -69,7 +68,31 @@ export default function AllInterventions() {
         }
       });
     }
-    return machine[0].brand;
+    return machine[0].model;
+  };
+  const getColor = etat => {
+    switch (etat) {
+      case "ouvert":
+        return "#FC4445";
+      case "encours":
+        return "#E7A302";
+      case "achieve":
+        return "#5431F0";
+      default:
+        return "#5CDB95";
+    }
+  };
+  const getStatus = etat => {
+    switch (etat) {
+      case "ouvert":
+        return "Ouvert  ";
+      case "encours":
+        return "En cours";
+      case "achieve":
+        return "Achever";
+      default:
+        return "Clotûre";
+    }
   };
   return (
     <>
@@ -119,19 +142,22 @@ export default function AllInterventions() {
                       }}>
                       <TableCell align="center"> {row.codeCuratif} </TableCell>
                       <TableCell align="center">
-                        {" "}
                         {machines && getMachineName(row.machine)}
                       </TableCell>
                       <TableCell align="center">
-                        {row.etatInterventions}
+                        {getStatus(row.etatInterventions)}
                       </TableCell>
+                      <TableCell
+                        sx={{
+                          backgroundColor: getColor(row.etatInterventions),
+                        }}></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
           )}
-          {tech.isResponsableProduction && (
+          {tech.isResponsableProduction && user.profile === "tech" && (
             <>
               <Fab
                 color="primary"
@@ -139,8 +165,8 @@ export default function AllInterventions() {
                 aria-label="add"
                 sx={{
                   position: "fixed",
-                  bottom: "100px",
-                  right: "100px",
+                  bottom: "60px",
+                  right: "60px",
                   transform: "scale(1.3)",
                 }}>
                 <AddIcon />
@@ -153,6 +179,7 @@ export default function AllInterventions() {
             handelClose={handelCloseOld}
           />
           <DemandeInterventions
+            interventions={interventions}
             machines={machines}
             open={demand}
             handelClose={handelCloseDemande}

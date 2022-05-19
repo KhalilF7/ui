@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import AddMachines from "./AddMachines";
 import {useLocation, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 export default function AllMachines() {
   const [machines, setMachines] = useState();
@@ -29,7 +30,7 @@ export default function AllMachines() {
   const navigate = useNavigate();
   const {state} = useLocation();
   const {categorie} = state !== null && state;
-
+  const user = useSelector(state => state.userReducer.data);
   useEffect(() => {
     fetchData();
     if (categorie) {
@@ -60,18 +61,30 @@ export default function AllMachines() {
   const getColor = etat => {
     switch (etat) {
       case "fonction":
-        return "green";
+        return "#5CDB95";
 
       case "degradee":
-        return "orange";
+        return "#E7A302";
 
       default:
-        return "red";
+        return "#FC4445";
     }
   };
 
   const hadelRedirect = code => {
     navigate(`${code}`);
+  };
+  const getStatus = etat => {
+    switch (etat) {
+      case "fonction":
+        return "Bon fonctionnement ";
+
+      case "degradee":
+        return "Fonctionnement degrade";
+
+      default:
+        return "Arrêt";
+    }
   };
   return (
     <>
@@ -134,14 +147,17 @@ export default function AllMachines() {
                             backgroundColor: "#8aa8ff",
                           },
                           cursor: "pointer",
-                          backgroundColor: getColor(row.currentState),
                         }}>
                         <TableCell align="center">{row.code}</TableCell>
                         <TableCell align="center"> {row.brand} </TableCell>
                         <TableCell align="center"> {row.model} </TableCell>
                         <TableCell align="center">
+                          {getStatus(row.currentState)}
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          sx={{backgroundColor: getColor(row.currentState)}}>
                           {" "}
-                          {row.currentState}{" "}
                         </TableCell>
                       </TableRow>
                     </Tooltip>
@@ -151,18 +167,20 @@ export default function AllMachines() {
           </TableContainer>
         </div>
       )}
-      <Fab
-        onClick={handleClickOpen}
-        color="primary"
-        aria-label="add"
-        sx={{
-          position: "fixed",
-          bottom: "100px",
-          right: "100px",
-          transform: "scale(1.3)",
-        }}>
-        <AddIcon />
-      </Fab>
+      {user.profile === "res" && (
+        <Fab
+          onClick={handleClickOpen}
+          color="primary"
+          aria-label="add"
+          sx={{
+            position: "fixed",
+            bottom: "100px",
+            right: "100px",
+            transform: "scale(1.3)",
+          }}>
+          <AddIcon />
+        </Fab>
+      )}
       <AddMachines open={dialog} handleClose={handleClose} />
     </>
   );
