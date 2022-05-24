@@ -23,6 +23,14 @@ import Techniciens from "../components/techniciens/Techniciens";
 import TechniciensDeatils from "../components/techniciens/TechniciensDeatils";
 import MainAcceuil from "../components/AcceuilRes/MainAcceuil";
 import InterventionsDetails from "../components/interventionCurative/InterventionsDetails";
+import AcceuilTech from "../components/AcceuilTech/AcceuilTech";
+import InterventionPrevetif from "../components/interventionPreventif/InterventionPrevetif";
+import AllPreventif from "../components/interventionPreventif/AllPreventif";
+
+import SousTraitent from "../components/Sous-Traitent/SousTraitent";
+import AllSousTraitents from "../components/Sous-Traitent/AllSousTraitents";
+import Statistic from "../components/Statistic/Statistic";
+
 export default function Dashbored() {
   const navigate = useNavigate();
   const logedIn = useSelector(state => state.userReducer.logedIn);
@@ -37,7 +45,7 @@ export default function Dashbored() {
       <div style={{flex: "1"}}>
         <SideNav />
       </div>
-      <div style={{flex: "4"}}>
+      <div style={{flex: "5"}}>
         <Routes>
           {user["profile"] === "pdg" && (
             <>
@@ -58,6 +66,7 @@ export default function Dashbored() {
                 <Route index element={<AllTehniciens />}></Route>
                 <Route path=":code" element={<TechniciensDeatils />}></Route>
               </Route>
+              <Route path="Statistique" element={<Statistic />}></Route>
               <Route path="atelier" element={<Ateliers />}>
                 <Route index element={<AllAtelier />}></Route>
                 <Route path=":code" element={<AtelierDetails />}></Route>
@@ -69,6 +78,9 @@ export default function Dashbored() {
               <Route path="Interventions" element={<Interventions />}>
                 <Route index element={<AllInterventions />}></Route>
                 <Route path=":code" element={<InterventionsDetails />}></Route>
+              </Route>
+              <Route path="sousTraitences" element={<SousTraitent />}>
+                <Route index element={<AllSousTraitents />}></Route>
               </Route>
               <Route path="*" element={<MainAcceuil />}></Route>
             </>
@@ -83,6 +95,10 @@ export default function Dashbored() {
                 <Route index element={<AllMachines />}></Route>
                 <Route path=":code" element={<MachinesDetails />}></Route>
               </Route>
+              <Route path="Preventif" element={<InterventionPrevetif />}>
+                <Route index element={<AllPreventif />}></Route>
+              </Route>
+              <Route path="*" element={<AcceuilTech />}></Route>
             </>
           )}
           <Route path="*" element={<Acceuil />}></Route>

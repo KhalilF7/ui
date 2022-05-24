@@ -31,7 +31,9 @@ export default function AddTechniciens(props) {
     axios
       .post(`${process.env.REACT_APP_API_URL}/techniciens`, form)
       .then(response => {
-        console.log(response.data);
+        if (response.data) {
+          props.handleClose();
+        }
       });
   };
   return (

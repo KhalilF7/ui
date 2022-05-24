@@ -76,7 +76,7 @@ export default function Categorie(props) {
     <Card sx={{maxWidth: 200, paddingTop: "30px"}}>
       <CardMedia
         component="img"
-        height="50"
+        height="100"
         image={getImage(categorie.nomCategrie)}
         alt="Categorie image"
       />
@@ -90,7 +90,7 @@ export default function Categorie(props) {
         </Typography>
         <Typography variant="body2" color="text.secondary">
           <div>en Arret : {getMachineArret()}</div>
-          <div>fonctioneer : {getMachinefonction()}</div>
+          <div>fonctionner : {getMachinefonction()}</div>
           <div> degrade : {getMachinedegrade()}</div>
         </Typography>
       </CardContent>

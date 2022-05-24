@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import Spinning from "../Spinning";
 import Categorie from "./Categorie";
 import logo from "../../Assets/logo.png";
+import CountCuratif from "./CountCuratif";
 
 export default function MainAcceuil() {
   const [machines, setMachines] = useState();
@@ -54,6 +55,7 @@ export default function MainAcceuil() {
             }}>
             <img src={logo} alt="logo" />
           </div>
+          <CountCuratif />
         </>
       )}
     </>

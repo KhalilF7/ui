@@ -29,7 +29,7 @@ export default function OldIntervention(props) {
     sousTraitence: null,
   });
   const [sousTraitence, setsousTraitence] = useState();
-  const [technicien, setTechnicien] = useState();
+  const [techniciens, setTechniciens] = useState();
   const sympthomesChoices = [
     "Bruit",
     "Fuite d'eau",
@@ -44,6 +44,7 @@ export default function OldIntervention(props) {
   const [textEnabel, setTextEnabel] = useState(true);
   const [equipeIntene, setequipeIntene] = useState(false);
   const [sous, setSous] = useState(false);
+  var techs = [];
   const [sympthomes, setSympthomes] = useState({
     bruit: {value: "Bruit", cheked: false},
     fuitEau: {value: "Fuite d'eau", cheked: false},
@@ -163,7 +164,7 @@ export default function OldIntervention(props) {
         setsousTraitence(response.data);
       });
     axios.get(`${process.env.REACT_APP_API_URL}/techniciens`).then(response => {
-      setTechnicien(response.data);
+      setTechniciens(response.data);
     });
   };
   useEffect(() => {
@@ -174,6 +175,13 @@ export default function OldIntervention(props) {
   };
   const getPanne = e => {
     HandelPanne(e);
+  };
+  const handelTechs = e => {
+    if (e.target.checked === true) {
+      techs.push(e.target.value);
+    } else {
+      techs.pop(e.target.value);
+    }
   };
   const handelSubmit = e => {
     e.preventDefault(e);
@@ -202,10 +210,10 @@ export default function OldIntervention(props) {
     tp = tp.filter(t => {
       return t !== false && t !== undefined;
     });
-    console.log(tp);
-    console.log(sym);
+
     setintervention({
       ...intervention,
+      technicines: techs,
       Sympthomes: sym,
       TypeDePanne: tp,
       etatInterventions: "cloture",
@@ -366,8 +374,8 @@ export default function OldIntervention(props) {
               <TextField
                 onChange={handelChanges}
                 id="dateFinAction"
-                name="datetime-local"
-                type="date"
+                name="dateFinAction"
+                type="datetime-local"
                 fullWidth
                 variant="outlined"
                 required
@@ -375,7 +383,7 @@ export default function OldIntervention(props) {
             </div>
             <Divider />{" "}
             <div style={{margin: "20px"}}>
-              <label htmlFor="dateDebutAction"> Clôture </label>
+              <label htmlFor="dateCloture"> Clôture </label>
               <TextField
                 onChange={handelChanges}
                 id="dateCloture"
@@ -429,22 +437,18 @@ export default function OldIntervention(props) {
                 </Select>
               </>
             )}
-            {technicien && equipeIntene && (
+            {techniciens && equipeIntene && (
               <>
-                <label htmlFor="technicine">Technicine</label>
-                <Select
-                  onChange={handelChanges}
-                  defaultValue=""
-                  name="technicine"
-                  id="technicine"
-                  variant="outlined"
-                  fullWidth>
-                  {technicien.map(row => (
-                    <MenuItem value={row.matricule} key={row.matricule}>
-                      {row.nom} {row.prenom}
-                    </MenuItem>
+                <FormLabel component="legend"> Techniciens </FormLabel>
+                <FormGroup required onChange={handelTechs}>
+                  {techniciens.map(T => (
+                    <FormControlLabel
+                      key={T.matricule}
+                      control={<Checkbox cheked value={T.matricule} />}
+                      label={T.nom}
+                    />
                   ))}
-                </Select>
+                </FormGroup>
               </>
             )}
           </DialogContent>

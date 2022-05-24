@@ -24,6 +24,8 @@ export default function SideNav() {
       case "res":
         setLinkes([
           "Acceuil",
+          "Statistique",
+          "sousTraitences",
           "interventions",
           "techniciens",
           "machines",
@@ -33,7 +35,13 @@ export default function SideNav() {
         ]);
         break;
       default:
-        setLinkes(["interventions", "machines", "compte"]);
+        setLinkes([
+          "Acceuil",
+          "Preventif",
+          "interventions",
+          "machines",
+          "compte",
+        ]);
     }
     setLoading(false);
   }, []);
@@ -47,7 +55,7 @@ export default function SideNav() {
         <Drawer
           sx={{
             background: "#8aa8ff",
-            width: 300,
+            width: 250,
             flexShrink: 0,
             "& .MuiDrawer-paper": {
               width: 250,

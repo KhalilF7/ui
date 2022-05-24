@@ -206,15 +206,15 @@ export default function DemandeInterventions(props) {
       }
     });
 
-    let code = `${nb}_${today.getFullYear()}`;
+    let code = `${nb + 1}_${today.getFullYear()}`;
     setintervention({
       ...intervention,
       codeCuratif: code,
       Sympthomes: sym,
+      technicines: [],
       etatInterventions: "ouvert",
     });
     if (intervention.Sympthomes.length === sym.length) {
-      console.log(intervention.Sympthomes.length);
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/InteventionCuratives`,
@@ -306,7 +306,6 @@ export default function DemandeInterventions(props) {
                 required
               />
             </div>
-
             <Divider />
           </DialogContent>
           <DialogActions>

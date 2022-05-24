@@ -2,12 +2,17 @@ import {
   Button,
   Container,
   Fab,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
@@ -25,13 +30,25 @@ export default function AllInterventions() {
   const [demand, setDemande] = useState(false);
   const [loading, setLoading] = useState(true);
   const [machines, setMachines] = useState();
+  const [selectedEtat, setselectedEtat] = useState("");
+  const [selectedMachine, setSelectedMachine] = useState("");
+
   const navigate = useNavigate();
+  const etat = ["ouvert", "encours", "achieve", "cloture"];
   const fetchData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/technicien/${user.userID}`)
-      .then(response => {
-        setTech(response.data);
-      });
+    if (user.profile === "tech") {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/technicien/${user.userID}`)
+        .then(response => {
+          setTech(response.data);
+        });
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/responsable/${user.userID}`)
+        .then(response => {
+          setTech(response.data);
+        });
+    }
     axios
       .get(`${process.env.REACT_APP_API_URL}/InteventionCuratives`)
       .then(response => {
@@ -94,10 +111,17 @@ export default function AllInterventions() {
         return "Clotûre";
     }
   };
+  const handelEtatChange = e => {
+    setselectedEtat(e.target.value);
+  };
+  const handleMachineChange = e => {
+    setSelectedMachine(e.target.value);
+    console.log(e.target.value);
+  };
   return (
     <>
       {loading && <Spinning />}
-      {!loading && interventions && tech && (
+      {!loading && interventions && tech && machines && (
         <>
           <Container
             sx={{
@@ -117,6 +141,44 @@ export default function AllInterventions() {
               </>
             )}
           </Container>
+          <div style={{display: "flex", justifyContent: "space-around"}}>
+            <div>
+              <InputLabel> Etat de l'intervention </InputLabel>
+              <FormControl>
+                <Select
+                  autoWidth
+                  onChange={handelEtatChange}
+                  displayEmpty
+                  name="etat"
+                  defaultValue=""
+                  value={selectedEtat}
+                  label="etat intervention">
+                  <MenuItem value={""}> Tout </MenuItem>
+                  {etat.map(e => (
+                    <MenuItem value={e}>{getStatus(e)}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <InputLabel> Machine </InputLabel>
+              <FormControl>
+                <Select
+                  autoWidth
+                  onChange={handleMachineChange}
+                  displayEmpty
+                  defaultValue=""
+                  name="machine"
+                  value={selectedMachine}
+                  label="etat intervention">
+                  <MenuItem value={""}> Tout </MenuItem>
+                  {machines.map(e => (
+                    <MenuItem value={e.code}>{getMachineName(e.code)}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          </div>
           {/** fillter d intevention selon : etat (ouvert , en cours , achiver , cloture) */}
           {/** chercher par nom du machine  */}
           {interventions && (
@@ -128,31 +190,55 @@ export default function AllInterventions() {
                   <TableCell align="center"> Etat </TableCell>
                 </TableHead>
                 <TableBody>
-                  {interventions.map(row => (
-                    <TableRow
-                      key={row.codeCuratif}
-                      onClick={() => {
-                        hadelRedirect(row.codeCuratif);
-                      }}
-                      sx={{
-                        ":hover": {
-                          backgroundColor: "#8aa8ff",
-                        },
-                        cursor: "pointer",
-                      }}>
-                      <TableCell align="center"> {row.codeCuratif} </TableCell>
-                      <TableCell align="center">
-                        {machines && getMachineName(row.machine)}
-                      </TableCell>
-                      <TableCell align="center">
-                        {getStatus(row.etatInterventions)}
-                      </TableCell>
-                      <TableCell
+                  {interventions
+                    .filter(row => {
+                      if (selectedEtat === "" && selectedMachine === "") {
+                        return row;
+                      } else if (
+                        row.etatInterventions === selectedEtat &&
+                        selectedMachine === ""
+                      ) {
+                        return row;
+                      } else if (
+                        row.machine === selectedMachine &&
+                        selectedEtat === ""
+                      ) {
+                        return row;
+                      } else if (
+                        row.etatInterventions === selectedEtat &&
+                        row.machine === selectedMachine
+                      ) {
+                        return row;
+                      }
+                    })
+                    .map(row => (
+                      <TableRow
+                        key={row.codeCuratif}
+                        onClick={() => {
+                          hadelRedirect(row.codeCuratif);
+                        }}
                         sx={{
-                          backgroundColor: getColor(row.etatInterventions),
-                        }}></TableCell>
-                    </TableRow>
-                  ))}
+                          ":hover": {
+                            backgroundColor: "#8aa8ff",
+                          },
+                          cursor: "pointer",
+                        }}>
+                        <TableCell align="center">
+                          {" "}
+                          {row.codeCuratif}{" "}
+                        </TableCell>
+                        <TableCell align="center">
+                          {machines && getMachineName(row.machine)}
+                        </TableCell>
+                        <TableCell align="center">
+                          {getStatus(row.etatInterventions)}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            backgroundColor: getColor(row.etatInterventions),
+                          }}></TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>

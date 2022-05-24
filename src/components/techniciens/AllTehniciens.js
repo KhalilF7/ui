@@ -49,7 +49,7 @@ export default function AllTehniciens() {
             <Table
               component={Paper}
               sx={{minWidth: 650}}
-              aria-label="tous les responsables">
+              aria-label="tous les Techniciens">
               <TableHead>
                 <TableRow>
                   <TableCell align="center">Matricule</TableCell>
