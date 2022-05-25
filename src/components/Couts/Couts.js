@@ -48,7 +48,7 @@ export default function Couts(props) {
               .map(c => (
                 <>
                   <div>
-                    {getType(c)} :<> {c.Cout} DT </>
+                    {getType(c)} :<> {c.Cout} </>
                   </div>
                 </>
               ))}
