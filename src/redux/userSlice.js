@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const auth = createAsyncThunk("users/login", async user => {
-  const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth`, {
+  const res = await axios.post(`/auth`, {
     login: user.login,
     motDePasse: user.password,
   });

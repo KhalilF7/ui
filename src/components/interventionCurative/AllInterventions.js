@@ -37,24 +37,18 @@ export default function AllInterventions() {
   const etat = ["ouvert", "encours", "achieve", "cloture"];
   const fetchData = () => {
     if (user.profile === "tech") {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/technicien/${user.userID}`)
-        .then(response => {
-          setTech(response.data);
-        });
-    } else {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/responsable/${user.userID}`)
-        .then(response => {
-          setTech(response.data);
-        });
-    }
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/InteventionCuratives`)
-      .then(response => {
-        setInterventions(response.data);
+      axios.get(`/technicien/${user.userID}`).then(response => {
+        setTech(response.data);
       });
-    axios.get(`${process.env.REACT_APP_API_URL}/machines`).then(response => {
+    } else {
+      axios.get(`/responsable/${user.userID}`).then(response => {
+        setTech(response.data);
+      });
+    }
+    axios.get(`/InteventionCuratives`).then(response => {
+      setInterventions(response.data);
+    });
+    axios.get(`/machines`).then(response => {
       setMachines(response.data);
     });
     setLoading(false);

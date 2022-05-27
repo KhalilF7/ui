@@ -85,7 +85,7 @@ export default function Authentification() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form>
+          <form onSubmit={handelLogin}>
             <TextField
               margin="normal"
               required
@@ -125,8 +125,7 @@ export default function Authentification() {
               }}
             />
             <Button
-              type="button"
-              onClick={handelLogin}
+              type="submit"
               fullWidth
               variant="contained"
               sx={{mt: 3, mb: 2}}>

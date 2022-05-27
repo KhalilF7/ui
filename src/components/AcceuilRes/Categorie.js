@@ -90,8 +90,8 @@ export default function Categorie(props) {
         </Typography>
         <Typography variant="body2" color="text.secondary">
           <div>en Arret : {getMachineArret()}</div>
-          <div>fonctionner : {getMachinefonction()}</div>
-          <div> degrade : {getMachinedegrade()}</div>
+          <div>fonctionne : {getMachinefonction()}</div>
+          <div> dégrade : {getMachinedegrade()}</div>
         </Typography>
       </CardContent>
       <CardActions>

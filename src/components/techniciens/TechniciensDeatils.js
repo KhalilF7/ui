@@ -28,13 +28,11 @@ export default function TechniciensDeatils() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/technicien/${param.code}`)
-      .then(response => {
-        let data = response.data;
-        setTechnicien(data);
-        setLoading(false);
-      });
+    axios.get(`/technicien/${param.code}`).then(response => {
+      let data = response.data;
+      setTechnicien(data);
+      setLoading(false);
+    });
   }, [param.code]);
 
   const handelResMaint = e => {
@@ -60,23 +58,21 @@ export default function TechniciensDeatils() {
         setTechnicien({...technicine, branche: branche});
       }
       if (result.isConfirmed) {
-        axios
-          .delete(`${process.env.REACT_APP_API_URL}/technicien/${param.code}`)
-          .then(response => {
-            let data = response.data;
+        axios.delete(`/technicien/${param.code}`).then(response => {
+          let data = response.data;
+          console.log(data);
+          if (data.message === "deleted") {
             console.log(data);
-            if (data.message === "deleted") {
-              console.log(data);
-              MySwal.fire(
-                "Supprimer!",
-                "le responsable est supprimer avec succes",
-                "success",
-              );
-              navigate("/");
-            } else {
-              MySwal.fire("Error", "un error detecter ", "error");
-            }
-          });
+            MySwal.fire(
+              "Supprimer!",
+              "le responsable est supprimer avec succes",
+              "success",
+            );
+            navigate("/");
+          } else {
+            MySwal.fire("Error", "un error detecter ", "error");
+          }
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         MySwal.fire("Cancelled", "les changement sont annuler", "error");
       }
@@ -95,10 +91,7 @@ export default function TechniciensDeatils() {
     }).then(result => {
       if (result.isConfirmed) {
         axios
-          .put(
-            `${process.env.REACT_APP_API_URL}/technicien/${technicine.matricule}`,
-            technicine,
-          )
+          .put(`/technicien/${technicine.matricule}`, technicine)
           .then(response => {
             let data = response.data;
             if (data) {

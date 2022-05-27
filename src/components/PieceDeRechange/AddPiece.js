@@ -25,13 +25,11 @@ export default function AddPiece(props) {
         Prevetive: null,
       });
       if (piece.Curative === props.code) {
-        axios
-          .post(`${process.env.REACT_APP_API_URL}/pieceDeRechange`, piece)
-          .then(resposne => {
-            if (resposne.data) {
-              props.handleClose();
-            }
-          });
+        axios.post(`/pieceDeRechange`, piece).then(resposne => {
+          if (resposne.data) {
+            props.handleClose();
+          }
+        });
       }
     }
     if (props.type === "prev") {
@@ -41,13 +39,11 @@ export default function AddPiece(props) {
         Preventive: props.code,
       });
       if (piece.Preventive === props.code) {
-        axios
-          .post(`${process.env.REACT_APP_API_URL}/pieceDeRechange`, piece)
-          .then(resposne => {
-            if (resposne.data) {
-              props.handleClose();
-            }
-          });
+        axios.post(`/pieceDeRechange`, piece).then(resposne => {
+          if (resposne.data) {
+            props.handleClose();
+          }
+        });
       }
     }
   };

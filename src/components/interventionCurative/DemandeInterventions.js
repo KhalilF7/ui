@@ -160,12 +160,10 @@ export default function DemandeInterventions(props) {
     setdetailsSympthomes(e.target.value);
   };
   const fetchData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/sousTraitences`)
-      .then(response => {
-        setsousTraitence(response.data);
-      });
-    axios.get(`${process.env.REACT_APP_API_URL}/techniciens`).then(response => {
+    axios.get(`/sousTraitences`).then(response => {
+      setsousTraitence(response.data);
+    });
+    axios.get(`/techniciens`).then(response => {
       setTechnicien(response.data);
     });
   };
@@ -215,16 +213,11 @@ export default function DemandeInterventions(props) {
       etatInterventions: "ouvert",
     });
     if (intervention.Sympthomes.length === sym.length) {
-      axios
-        .post(
-          `${process.env.REACT_APP_API_URL}/InteventionCuratives`,
-          intervention,
-        )
-        .then(response => {
-          if (response.data) {
-            props.handelClose();
-          }
-        });
+      axios.post(`/InteventionCuratives`, intervention).then(response => {
+        if (response.data) {
+          props.handelClose();
+        }
+      });
     }
   };
   return (

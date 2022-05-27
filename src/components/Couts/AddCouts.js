@@ -29,13 +29,11 @@ export default function AddCouts(props) {
         Prevetive: null,
       });
       if (cout.Curative === props.code) {
-        axios
-          .post(`${process.env.REACT_APP_API_URL}/couts`, cout)
-          .then(resposne => {
-            if (resposne.data) {
-              props.handleClose();
-            }
-          });
+        axios.post(`/couts`, cout).then(resposne => {
+          if (resposne.data) {
+            props.handleClose();
+          }
+        });
       }
     }
     if (props.type === "prev") {
@@ -45,13 +43,11 @@ export default function AddCouts(props) {
         Preventive: props.code,
       });
       if (cout.Preventive === props.code) {
-        axios
-          .post(`${process.env.REACT_APP_API_URL}/couts`, cout)
-          .then(resposne => {
-            if (resposne.data) {
-              props.handleClose();
-            }
-          });
+        axios.post(`/couts`, cout).then(resposne => {
+          if (resposne.data) {
+            props.handleClose();
+          }
+        });
       }
     }
   };

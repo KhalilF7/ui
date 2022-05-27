@@ -21,11 +21,9 @@ export default function AddSousTraitent(props) {
     let f = Number(sousT.fax);
     setSousT({...sousT, telephone: p, fax: f});
     console.log(sousT);
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/sousTraitences`, sousT)
-      .then(response => {
-        props.handleClose();
-      });
+    axios.post(`/sousTraitences`, sousT).then(response => {
+      props.handleClose();
+    });
   };
   return (
     <div>

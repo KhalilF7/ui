@@ -14,11 +14,9 @@ import React, {useState} from "react";
 export default function AddAtelier(props) {
   const [atelier, setAtelier] = useState();
   const handelForm = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/ateliers`, atelier)
-      .then(response => {
-        console.log(response.data);
-      });
+    axios.post(`/ateliers`, atelier).then(response => {
+      console.log(response.data);
+    });
   };
   const handelChanges = e => {
     setAtelier({...atelier, [e.target.name]: e.target.value});

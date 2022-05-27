@@ -23,7 +23,7 @@ export default function AddResponsable(props) {
   });
   const [branches, setBranches] = useState();
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/branches`).then(response => {
+    axios.get(`/branches`).then(response => {
       const data = response.data.branches;
       setBranches(data);
       console.log(data);
@@ -33,17 +33,15 @@ export default function AddResponsable(props) {
     setForm({...form, [e.target.name]: e.target.value});
   };
   const handelForm = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/responsables`, form)
-      .then(response => {
-        const res = response.data;
-        if (res.message) {
-          console.log(response.data);
-        } else {
-          console.log(response.data);
-          props.handleClose();
-        }
-      });
+    axios.post(`/responsables`, form).then(response => {
+      const res = response.data;
+      if (res.message) {
+        console.log(response.data);
+      } else {
+        console.log(response.data);
+        props.handleClose();
+      }
+    });
   };
   return (
     <div>

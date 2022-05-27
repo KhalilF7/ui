@@ -23,14 +23,12 @@ export default function AllResponsabels() {
   const [dialog, setDialog] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/responsables`)
-      .then(response => {
-        let data = response.data;
-        setResponsables(data);
+    axios.get(`/responsables`).then(response => {
+      let data = response.data;
+      setResponsables(data);
 
-        setLoading(false);
-      });
+      setLoading(false);
+    });
   }, []);
   const hadelRedirect = code => {
     navigate(`${code}`);

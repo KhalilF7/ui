@@ -26,16 +26,14 @@ export default function ResponsabelDetails() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/responsable/${param.code}`)
-      .then(response => {
-        let data = response.data;
-        setResponsable(data);
-        setLoading(false);
-      });
+    axios.get(`/responsable/${param.code}`).then(response => {
+      let data = response.data;
+      setResponsable(data);
+      setLoading(false);
+    });
   }, [edit]);
   const handelBranches = async () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/branches`).then(response => {
+    axios.get(`/branches`).then(response => {
       const data = response.data.branches;
       setBranches(data);
     });

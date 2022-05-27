@@ -31,19 +31,15 @@ export default function MachinesDetails() {
     fetchData();
   }, []);
   const fetchData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/machine/${param.code}`)
-      .then(response => {
-        let data = response.data;
-        setMachine(data);
-      });
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/categoriMachines`)
-      .then(response => {
-        setCatMachine(response.data);
-      });
+    axios.get(`/machine/${param.code}`).then(response => {
+      let data = response.data;
+      setMachine(data);
+    });
+    axios.get(`/categoriMachines`).then(response => {
+      setCatMachine(response.data);
+    });
 
-    axios.get(`${process.env.REACT_APP_API_URL}/ateliers`).then(response => {
+    axios.get(`/ateliers`).then(response => {
       setAteliers(response.data);
     });
     setLoading(false);
@@ -77,13 +73,11 @@ export default function MachinesDetails() {
       type: machine.type,
       atelier: machine.atelier,
     };
-    axios
-      .patch(`${process.env.REACT_APP_API_URL}/machine/${param.code}`, tmp)
-      .then(response => {
-        let data = response.data;
-        console.log(data);
-        setEdit(false);
-      });
+    axios.patch(`/machine/${param.code}`, tmp).then(response => {
+      let data = response.data;
+      console.log(data);
+      setEdit(false);
+    });
   };
   const handelCancelEditMode = () => {
     setEdit(false);

@@ -15,16 +15,14 @@ export default function MainAcceuil() {
     fetchData();
   }, []);
   const fetchData = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/machines`).then(response => {
+    axios.get(`/machines`).then(response => {
       setMachines(response.data);
 
       setLoading(false);
     });
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/categoriMachines`)
-      .then(response => {
-        setCategorie(response.data);
-      });
+    axios.get(`/categoriMachines`).then(response => {
+      setCategorie(response.data);
+    });
   };
 
   return (

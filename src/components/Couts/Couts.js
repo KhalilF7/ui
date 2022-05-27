@@ -8,7 +8,7 @@ export default function Couts(props) {
   const [loading, setloading] = useState(true);
   const [empty, setEmpty] = useState(false);
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/couts`).then(resposne => {
+    axios.get(`/couts`).then(resposne => {
       if (resposne.data) {
         setCouts(resposne.data);
         setloading(false);

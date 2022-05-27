@@ -28,13 +28,11 @@ export default function AddTechniciens(props) {
     setForm({...form, [e.target.name]: e.target.value});
   };
   const handelForm = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/techniciens`, form)
-      .then(response => {
-        if (response.data) {
-          props.handleClose();
-        }
-      });
+    axios.post(`/techniciens`, form).then(response => {
+      if (response.data) {
+        props.handleClose();
+      }
+    });
   };
   return (
     <div>

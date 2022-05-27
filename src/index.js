@@ -6,6 +6,9 @@ import {Provider} from "react-redux";
 import store from "./redux/store";
 import {PersistGate} from "redux-persist/integration/react";
 import persistStore from "redux-persist/es/persistStore";
+import axios from "axios";
+
+axios.defaults.proxy = "http://127.0.0.1:8000";
 
 let persistor = persistStore(store);
 ReactDOM.render(

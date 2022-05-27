@@ -17,13 +17,13 @@ export default function AllPreventif() {
     fetchData();
   }, [plan]);
   const fetchData = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/preventives`).then(response => {
+    axios.get(`/preventives`).then(response => {
       setPreventives(response.data);
     });
-    axios.get(`${process.env.REACT_APP_API_URL}/machines`).then(response => {
+    axios.get(`/machines`).then(response => {
       setMachines(response.data);
     });
-    axios.get(`${process.env.REACT_APP_API_URL}/techniciens`).then(response => {
+    axios.get(`/techniciens`).then(response => {
       setTechniciens(response.data);
     });
     setLoadding(false);

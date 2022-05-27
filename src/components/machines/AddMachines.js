@@ -22,13 +22,11 @@ export default function AddMachines(props) {
   const [ateliers, setAteliers] = useState();
   const [catMachine, setCatMachine] = useState();
   const fetchData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/categoriMachines`)
-      .then(response => {
-        setCatMachine(response.data);
-      });
+    axios.get(`/categoriMachines`).then(response => {
+      setCatMachine(response.data);
+    });
 
-    axios.get(`${process.env.REACT_APP_API_URL}/ateliers`).then(response => {
+    axios.get(`/ateliers`).then(response => {
       setAteliers(response.data);
     });
   };
@@ -58,7 +56,7 @@ export default function AddMachines(props) {
     formData.append("anneeManifacture", form["anneeManifacture"]);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/machines`, formData, {
+      .post(`/machines`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

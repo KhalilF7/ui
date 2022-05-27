@@ -7,12 +7,10 @@ export default function CountCuratif() {
   const [interventions, setInterventions] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/InteventionCuratives`)
-      .then(response => {
-        setInterventions(response.data);
-        setLoading(false);
-      });
+    axios.get(`/InteventionCuratives`).then(response => {
+      setInterventions(response.data);
+      setLoading(false);
+    });
   }, []);
   const getTodayInterventions = () => {
     let date = new Date();

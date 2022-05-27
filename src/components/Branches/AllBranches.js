@@ -23,7 +23,7 @@ export default function AllBranches() {
     navigate(`${code}`);
   };
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/branches`).then(response => {
+    axios.get(`/branches`).then(response => {
       let data = response.data.branches;
       setBranches(data);
       setLoading(false);

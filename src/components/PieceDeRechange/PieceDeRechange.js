@@ -8,17 +8,15 @@ export default function PieceDeRechange(props) {
   const [loading, setloading] = useState(true);
   const [empty, setEmpty] = useState(false);
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/pieceDeRechange`)
-      .then(resposne => {
-        if (resposne.data) {
-          setPieces(resposne.data);
-          setloading(false);
-        } else {
-          setEmpty(true);
-          setloading(true);
-        }
-      });
+    axios.get(`/pieceDeRechange`).then(resposne => {
+      if (resposne.data) {
+        setPieces(resposne.data);
+        setloading(false);
+      } else {
+        setEmpty(true);
+        setloading(true);
+      }
+    });
   });
   return (
     <>

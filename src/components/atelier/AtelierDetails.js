@@ -23,14 +23,12 @@ export default function AtelierDetails() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/atelier/${param.code}`)
-      .then(response => {
-        let data = response.data;
-        console.log(data);
-        setAtelier(data);
-        setLoading(false);
-      });
+    axios.get(`/atelier/${param.code}`).then(response => {
+      let data = response.data;
+      console.log(data);
+      setAtelier(data);
+      setLoading(false);
+    });
   }, [edit]);
 
   const handelChange = e => {

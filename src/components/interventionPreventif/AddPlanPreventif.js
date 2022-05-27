@@ -33,11 +33,9 @@ export default function AddPlanPreventif(props) {
     e.preventDefault(e);
     setPrevetif({...preventif, technicines: techs});
     if (preventif.technicines && preventif.technicines.length > 0) {
-      axios
-        .post(`${process.env.REACT_APP_API_URL}/preventives`, preventif)
-        .then(response => {
-          console.log(response);
-        });
+      axios.post(`/preventives`, preventif).then(response => {
+        console.log(response);
+      });
     }
   };
   const handelChanges = e => {

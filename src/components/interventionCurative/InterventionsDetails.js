@@ -166,10 +166,7 @@ export default function InterventionsDetails() {
     ) {
       setLoading(true);
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-          temp,
-        )
+        .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -194,10 +191,7 @@ export default function InterventionsDetails() {
     ) {
       setLoading(true);
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-          temp,
-        )
+        .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -224,10 +218,7 @@ export default function InterventionsDetails() {
     if (temp.TypeDePanne.length === tp.length) {
       setLoading(true);
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-          temp,
-        )
+        .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -236,11 +227,9 @@ export default function InterventionsDetails() {
     }
   };
   const getSt = code => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/sousTraitence/${code}`)
-      .then(resposne => {
-        setSt(resposne.data);
-      });
+    axios.get(`/sousTraitence/${code}`).then(resposne => {
+      setSt(resposne.data);
+    });
   };
   const getTechnice = mat => {
     let result;
@@ -276,10 +265,7 @@ export default function InterventionsDetails() {
     if (temp !== undefined && temp.codeCuratif) {
       setLoading(true);
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-          temp,
-        )
+        .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -294,32 +280,22 @@ export default function InterventionsDetails() {
     }
   };
   const fetchData = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-      )
-      .then(response => {
+    axios.get(`/InterventionCurative/${param.code}`).then(response => {
+      let data = response.data;
+      setIntevention(data);
+      axios.get(`/machine/${data.machine}`).then(response => {
         let data = response.data;
-        setIntevention(data);
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/machine/${data.machine}`)
-          .then(response => {
-            let data = response.data;
-            setMachine(data);
-          });
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/techniciens`)
-          .then(response => {
-            let data = response.data;
-            setTechniciens(data);
-          });
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/sousTraitences`)
-          .then(response => {
-            let data = response.data;
-            setSousTraitence(data);
-          });
+        setMachine(data);
       });
+      axios.get(`/techniciens`).then(response => {
+        let data = response.data;
+        setTechniciens(data);
+      });
+      axios.get(`/sousTraitences`).then(response => {
+        let data = response.data;
+        setSousTraitence(data);
+      });
+    });
     setLoading(false);
   };
   const handelTimeUpdate = e => {
@@ -337,10 +313,7 @@ export default function InterventionsDetails() {
     if (temp !== undefined && temp.codeCuratif) {
       setLoading(true);
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-          temp,
-        )
+        .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -361,10 +334,7 @@ export default function InterventionsDetails() {
     if (temp !== undefined) {
       setLoading(true);
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-          temp,
-        )
+        .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           console.log(response.data);
@@ -386,10 +356,7 @@ export default function InterventionsDetails() {
     if (temp !== undefined) {
       setLoading(true);
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/InterventionCurative/${param.code}`,
-          temp,
-        )
+        .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});

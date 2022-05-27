@@ -49,26 +49,22 @@ export default function Statistic() {
     );
   };
   const fetchData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/InteventionCuratives`)
-      .then(response => {
-        setInterventions(response.data);
-      });
-    axios.get(`${process.env.REACT_APP_API_URL}/machines`).then(response => {
+    axios.get(`/InteventionCuratives`).then(response => {
+      setInterventions(response.data);
+    });
+    axios.get(`/machines`).then(response => {
       setMachines(response.data);
     });
-    axios.get(`${process.env.REACT_APP_API_URL}/couts`).then(resposne => {
+    axios.get(`/couts`).then(resposne => {
       if (resposne.data) {
         setCouts(resposne.data);
       }
     });
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/pieceDeRechange`)
-      .then(resposne => {
-        if (resposne.data) {
-          setPieceDeRechange(resposne.data);
-        }
-      });
+    axios.get(`/pieceDeRechange`).then(resposne => {
+      if (resposne.data) {
+        setPieceDeRechange(resposne.data);
+      }
+    });
     axios.get(`${process.env.REACT_APP_API_URL}/techniciens`).then(response => {
       setTechniciens(response.data);
     });

@@ -23,7 +23,7 @@ export default function AllAtelier() {
   const [dialog, setDialog] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/ateliers`).then(response => {
+    axios.get(`/ateliers`).then(response => {
       let data = response.data;
       setAtelier(data);
       setLoading(false);

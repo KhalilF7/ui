@@ -45,31 +45,27 @@ export default function AllSousTraitents() {
       cancelButtonColor: "#F21800",
     }).then(result => {
       if (result.isConfirmed) {
-        axios
-          .delete(`${process.env.REACT_APP_API_URL}/sousTraitence/${code}`)
-          .then(response => {
-            if (response.data.message === "done") {
-              Myswal.fire(
-                "Supprimer!",
-                "le responsable est supprimer avec succes",
-                "success",
-              );
-            } else {
-              Myswal.fire("Error", "un error detecter ", "error");
-            }
-          });
+        axios.delete(`/sousTraitence/${code}`).then(response => {
+          if (response.data.message === "done") {
+            Myswal.fire(
+              "Supprimer!",
+              "le responsable est supprimer avec succes",
+              "success",
+            );
+          } else {
+            Myswal.fire("Error", "un error detecter ", "error");
+          }
+        });
       }
     });
   };
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/sousTraitences`)
-      .then(response => {
-        if (response.data) {
-          setSousTraitence(response.data);
-          setLoading(false);
-        }
-      });
+    axios.get(`/sousTraitences`).then(response => {
+      if (response.data) {
+        setSousTraitence(response.data);
+        setLoading(false);
+      }
+    });
   }, [addSous, Myswal]);
   return (
     <>
