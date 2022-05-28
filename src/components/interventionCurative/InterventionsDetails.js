@@ -56,6 +56,10 @@ export default function InterventionsDetails() {
     hyd: {value: "Hydraulique", cheked: false},
     autre: {value: "Autre", checked: false},
   });
+  const [etatMachine, setEtatMahine] = useState();
+  const setMachineStatus = e => {
+    setEtatMahine({[e.target.name]: e.target.value});
+  };
   const handelAddCout = () => {
     setAddCouts(true);
   };
@@ -336,6 +340,26 @@ export default function InterventionsDetails() {
       axios
         .patch(`/InterventionCurative/${param.code}`, temp)
         .then(response => {
+          axios.get(`/machine/${intervention.machine}`).then(response => {
+            let m = response.data;
+            let tmp = {
+              code: m.code,
+              brand: m.brand,
+              model: m.model,
+              anneeManifacture: m.anneeManifacture,
+              currentState: etatMachine.etat,
+              schudledTime: m.schudledTime,
+              timeLosses: m.timeLosses,
+              descriptions: m.descriptions,
+              availibilty: m.availibilty,
+              type: m.type,
+              atelier: m.atelier,
+            };
+
+            axios
+              .patch(`/machine/${intervention.machine}`, tmp)
+              .then(response => {});
+          });
           setIntevention(response.data);
           console.log(response.data);
           setTemp({});
@@ -749,6 +773,21 @@ export default function InterventionsDetails() {
                                       alignItems: "space",
                                       justifyContent: "space-around",
                                     }}>
+                                    <label htmlFor="etat"> Etat machine </label>
+                                    <Select
+                                      name="etat"
+                                      variant="outlined"
+                                      onChange={setMachineStatus}
+                                      defaultValue="fonction">
+                                      <MenuItem value="fonction">
+                                        {" "}
+                                        Bon fonctionnement
+                                      </MenuItem>
+                                      <MenuItem value="degradee">
+                                        {" "}
+                                        Dégradée{" "}
+                                      </MenuItem>
+                                    </Select>
                                     <Button
                                       color="success"
                                       sx={{

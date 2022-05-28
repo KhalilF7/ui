@@ -45,8 +45,6 @@ export default function DemandeInterventions(props) {
   const panne = ["Mécanique", "Électrique", "Pneumatique", "Hydraulique"];
   const machines = props.machines;
   const [textEnabel, setTextEnabel] = useState(true);
-  const [equipeIntene, setequipeIntene] = useState(false);
-  const [sous, setSous] = useState(false);
   const [sympthomes, setSympthomes] = useState({
     bruit: {value: "Bruit", cheked: false},
     fuitEau: {value: "Fuite d'eau", cheked: false},
@@ -57,22 +55,13 @@ export default function DemandeInterventions(props) {
     arret: {value: "Arret", cheked: false},
     autre: {value: "autre", checked: false},
   });
-  const [typePanne, setTypePanne] = useState({
-    mec: {value: "Mécanique", cheked: false},
-    elc: {value: "Électrique", cheked: false},
-    pne: {value: "Pneumatique", cheked: false},
-    hyd: {value: "Hydraulique", cheked: false},
-  });
+  const [etatMachine, setEtatMahine] = useState();
   const [detailSympthomes, setdetailsSympthomes] = useState();
-
+  const setMachineStatus = e => {
+    setEtatMahine({[e.target.name]: e.target.value});
+  };
   const enableText = () => {
     setTextEnabel(!textEnabel);
-  };
-  const enableSousTraitence = () => {
-    setSous(!sous);
-  };
-  const eanbelEquipe = () => {
-    setequipeIntene(!equipeIntene);
   };
   const HandelSympthome = e => {
     switch (e.target.name) {
@@ -126,33 +115,7 @@ export default function DemandeInterventions(props) {
         break;
     }
   };
-  const HandelPanne = e => {
-    switch (e.target.name) {
-      case "Mécanique":
-        setTypePanne({
-          ...typePanne,
-          mec: {value: e.target.name, cheked: e.target.checked},
-        });
-        break;
-      case "Électrique":
-        setTypePanne({
-          ...typePanne,
-          elc: {value: e.target.name, cheked: e.target.checked},
-        });
-        break;
-      case "Pneumatique":
-        setTypePanne({
-          ...typePanne,
-          pne: {value: e.target.name, cheked: e.target.checked},
-        });
-        break;
-      default:
-        setTypePanne({
-          ...typePanne,
-          hyd: {value: e.target.name, cheked: e.target.checked},
-        });
-    }
-  };
+
   const handelChanges = e => {
     setintervention({...intervention, [e.target.name]: e.target.value});
   };
@@ -173,9 +136,7 @@ export default function DemandeInterventions(props) {
   const getSelected = e => {
     HandelSympthome(e);
   };
-  const getPanne = e => {
-    HandelPanne(e);
-  };
+
   const handelSubmit = e => {
     e.preventDefault(e);
     var sym = [];
@@ -198,7 +159,7 @@ export default function DemandeInterventions(props) {
     let nb = 0;
     let today = new Date();
     interventions.filter(row => {
-      let date = new Date(intervention.dateRapport);
+      let date = new Date(row.dateRapport);
       if (date.getFullYear() === today.getFullYear()) {
         nb++;
       }
@@ -215,7 +176,30 @@ export default function DemandeInterventions(props) {
     if (intervention.Sympthomes.length === sym.length) {
       axios.post(`/InteventionCuratives`, intervention).then(response => {
         if (response.data) {
-          props.handelClose();
+          axios.get(`/machine/${intervention.machine}`).then(response => {
+            let m = response.data;
+            let tmp = {
+              code: m.code,
+              brand: m.brand,
+              model: m.model,
+              anneeManifacture: m.anneeManifacture,
+              currentState: etatMachine.etat,
+              schudledTime: m.schudledTime,
+              timeLosses: m.timeLosses,
+              descriptions: m.descriptions,
+              availibilty: m.availibilty,
+              type: m.type,
+              atelier: m.atelier,
+            };
+
+            axios
+              .patch(`/machine/${intervention.machine}`, tmp)
+              .then(response => {
+                if (response.data) {
+                  props.handelClose();
+                }
+              });
+          });
         }
       });
     }
@@ -241,6 +225,17 @@ export default function DemandeInterventions(props) {
                 required
               />
             </div>
+            <Divider />
+            <label htmlFor="etat"> Etat machine </label>
+            <Select
+              name="etat"
+              variant="outlined"
+              fullWidth
+              onChange={setMachineStatus}
+              defaultValue="enArret">
+              <MenuItem value="enArret"> En Arrêt </MenuItem>
+              <MenuItem value="degradee"> Dégradée </MenuItem>
+            </Select>
             <Divider />
             {machines && (
               <>

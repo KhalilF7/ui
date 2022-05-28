@@ -133,25 +133,7 @@ export default function MachinesDetails() {
                 alignItems: "center",
                 margin: "20px",
               }}>
-              {machine.image !== null ? (
-                <img
-                  width="300px"
-                  src={`${process.env.REACT_APP_API_URL}${machine.image}`}
-                  alt=""
-                />
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}>
-                  Aucune image disponible
-                  <br />
-                  <NoPhotographyIcon fontSize="large" color="primary" />
-                </div>
-              )}
+              <img width="300px" src={`${machine.image}`} alt="" />
             </div>
             <Grid container spacing={8}>
               <Grid item xs={4}>
@@ -223,7 +205,7 @@ export default function MachinesDetails() {
                       fullWidth>
                       <MenuItem value="enArret">En Arret</MenuItem>
                       <MenuItem value="fonction">fontionee</MenuItem>
-                      <MenuItem value="degradee">En etat dégrade</MenuItem>
+                      <MenuItem value="degradee">En etat dégradee</MenuItem>
                     </Select>
                   </>
                 )}

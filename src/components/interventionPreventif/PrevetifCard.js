@@ -38,7 +38,7 @@ export default function PrevetifCard(props) {
         <CardMedia
           component="img"
           height="194"
-          image={`${process.env.REACT_APP_API_URL}${machine.image}`}
+          image={`${machine.image}`}
           alt="machine"
         />
         <CardContent>

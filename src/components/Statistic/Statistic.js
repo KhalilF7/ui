@@ -40,9 +40,15 @@ export default function Statistic() {
       interventions.filter(intervention => {
         let dateD = new Date(intervention.dateRapport);
         let dateF = new Date(intervention.dateCloture);
-        if (intervention.machine === machine) {
-          if (moment(dateD).isAfter(debut) && moment(dateF).isBefore(fin)) {
-            return intervention;
+        if (intervention.etatInterventions === "cloture") {
+          if (machine === "all") {
+            if (moment(dateD).isAfter(debut) && moment(dateF).isBefore(fin)) {
+              return intervention;
+            }
+          } else if (intervention.machine === machine) {
+            if (moment(dateD).isAfter(debut) && moment(dateF).isBefore(fin)) {
+              return intervention;
+            }
           }
         }
       }),
@@ -65,7 +71,7 @@ export default function Statistic() {
         setPieceDeRechange(resposne.data);
       }
     });
-    axios.get(`${process.env.REACT_APP_API_URL}/techniciens`).then(response => {
+    axios.get(`/techniciens`).then(response => {
       setTechniciens(response.data);
     });
     setLoading(false);
@@ -252,6 +258,7 @@ export default function Statistic() {
                     name="machine"
                     id="machine"
                     variant="outlined">
+                    <MenuItem value="all"> Tout </MenuItem>
                     {machines.map(machine => (
                       <MenuItem value={machine.code} key={machine.code}>
                         {machine.model}

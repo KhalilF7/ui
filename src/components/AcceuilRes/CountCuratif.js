@@ -12,6 +12,27 @@ export default function CountCuratif() {
       setLoading(false);
     });
   }, []);
+  const getInteventionsTotal = () => {
+    return interventions.length;
+  };
+  const getNomberOuvert = () => {
+    let nb = 0;
+    interventions.filter(row => {
+      if (row.etatInterventions === "ouvert") {
+        nb++;
+      }
+    });
+    return nb;
+  };
+  const getNomberEncours = () => {
+    let nb = 0;
+    interventions.filter(row => {
+      if (row.etatInterventions === "encours") {
+        nb++;
+      }
+    });
+    return nb;
+  };
   const getTodayInterventions = () => {
     let date = new Date();
     let nb = 0;
@@ -25,11 +46,7 @@ export default function CountCuratif() {
         nb++;
       }
     });
-    if (nb === 0) {
-      return nb;
-    } else {
-      return nb - 1;
-    }
+    return nb;
   };
   return (
     <>
@@ -41,16 +58,42 @@ export default function CountCuratif() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "space-around",
+                margin: "50px",
               }}>
-              <Card>
-                <CardContent>
-                  <Typography gutterBottom variant="h4" component="div">
-                    Nomber des intevrnetions curatives d'aujourd'hui :{" "}
-                    {getTodayInterventions()}
-                  </Typography>
-                </CardContent>
-              </Card>
+              <div
+                style={{
+                  margin: "20px",
+                }}>
+                <Typography gutterBottom variant="h6" component="div">
+                  Nomber des intevrnetions curatives d'aujourd'hui :{" "}
+                  {getTodayInterventions()}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  margin: "20px",
+                }}>
+                <Typography gutterBottom variant="h6" component="div">
+                  Nomber des intevrnetions Totale : {getInteventionsTotal()}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  margin: "20px",
+                }}>
+                <Typography gutterBottom variant="h6" component="div">
+                  Nomber des intevrnetions ouverts : {getNomberOuvert()}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  margin: "20px",
+                }}>
+                <Typography gutterBottom variant="h6" component="div">
+                  Nomber des intevrnetions En cours : {getNomberEncours()}
+                </Typography>
+              </div>
             </div>
           </Container>
         </>

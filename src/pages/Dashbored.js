@@ -7,7 +7,7 @@ import AllAtelier from "../components/atelier/AllAtelier";
 import AtelierDetails from "../components/atelier/AtelierDetails";
 import Ateliers from "../components/atelier/Ateliers";
 import AllBranches from "../components/Branches/AllBranches";
-import Branche from "../components/Branches/Branche";
+
 import Branches from "../components/Branches/Branches";
 import AllInterventions from "../components/interventionCurative/AllInterventions";
 import Interventions from "../components/interventionCurative/Interventions";
@@ -51,12 +51,12 @@ export default function Dashbored() {
             <>
               <Route path="branches" element={<Branches />}>
                 <Route index element={<AllBranches />} />
-                <Route path=":code" element={<Branche />} />
               </Route>
               <Route path="responsables" element={<Responsabels />}>
                 <Route index element={<AllResponsabels />}></Route>
                 <Route path=":code" element={<ResponsabelDetails />}></Route>
               </Route>
+              <Route path="*" element={<AllBranches />}></Route>
             </>
           )}
           {user["profile"] === "res" && (

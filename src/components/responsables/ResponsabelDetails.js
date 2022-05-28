@@ -53,23 +53,21 @@ export default function ResponsabelDetails() {
       cancelButtonColor: "#F21800",
     }).then(result => {
       if (result.isConfirmed) {
-        axios
-          .delete(`${process.env.REACT_APP_API_URL}/responsable/${param.code}`)
-          .then(response => {
-            let data = response.data;
+        axios.delete(`/responsable/${param.code}`).then(response => {
+          let data = response.data;
+          console.log(data);
+          if (data.message === "deleted") {
             console.log(data);
-            if (data.message === "deleted") {
-              console.log(data);
-              MySwal.fire(
-                "Supprimer!",
-                "le responsable est supprimer avec succes",
-                "success",
-              );
-              navigate("/responsables");
-            } else {
-              MySwal.fire("Error", "un error detecter ", "error");
-            }
-          });
+            MySwal.fire(
+              "Supprimer!",
+              "le responsable est supprimer avec succes",
+              "success",
+            );
+            navigate("/resposnables");
+          } else {
+            MySwal.fire("Error", "un error detecter ", "error");
+          }
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         MySwal.fire("Cancelled", "les changement sont annuler", "error");
         setEdit(false);
@@ -88,14 +86,10 @@ export default function ResponsabelDetails() {
     }).then(result => {
       if (result.isConfirmed) {
         axios
-          .put(
-            `${process.env.REACT_APP_API_URL}/responsable/${responsable.matricule}`,
-            responsable,
-          )
+          .put(`/responsable/${responsable.matricule}`, responsable)
           .then(response => {
             let data = response.data;
             if (data) {
-              console.log(data);
               setResponsable(data);
               MySwal.fire(
                 "Modifier!",
@@ -105,7 +99,7 @@ export default function ResponsabelDetails() {
               setEdit(false);
             } else {
               MySwal.fire("Error", "un error detecter ", "error");
-              console.log(data);
+
               setEdit(false);
             }
           });

@@ -17,7 +17,7 @@ export default function PieceDeRechange(props) {
         setloading(true);
       }
     });
-  });
+  }, [props.Curative]);
   return (
     <>
       {loading && <Spinning />}

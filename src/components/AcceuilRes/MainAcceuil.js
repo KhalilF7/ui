@@ -44,16 +44,16 @@ export default function MainAcceuil() {
               </Container>
             ))}
           </Box>
+          <CountCuratif />
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              height: "100%",
+              margin: "100px",
             }}>
             <img src={logo} alt="logo" />
           </div>
-          <CountCuratif />
         </>
       )}
     </>

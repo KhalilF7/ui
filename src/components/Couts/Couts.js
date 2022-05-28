@@ -17,7 +17,7 @@ export default function Couts(props) {
         setloading(false);
       }
     });
-  }, []);
+  }, [props.Curative]);
 
   const getType = cout => {
     if (cout.typeDeCout === "facture") {

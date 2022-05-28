@@ -1,26 +1,30 @@
 import {
-  Button,
   Card,
-  CardActionArea,
-  CardActions,
   CardContent,
   CardHeader,
   Grid,
   Typography,
+  Fab,
+  CardActions,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import {AnimatePresence, motion} from "framer-motion";
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import Spinning from "../Spinning";
-import {Outlet, useNavigate} from "react-router-dom";
+import AddBranche from "./AddBranche";
 
 export default function AllBranches() {
   const [branches, setBranches] = useState();
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const handelRedirect = code => {
-    navigate(`${code}`);
+
+  const [dialog, setDialog] = useState(false);
+  const handleClickOpen = () => {
+    setDialog(true);
+  };
+  const handleClose = () => {
+    setDialog(false);
   };
   useEffect(() => {
     axios.get(`/branches`).then(response => {
@@ -44,36 +48,49 @@ export default function AllBranches() {
               les branches
             </Typography>
           </div>
-          <Grid container sx={{margin: "10px"}} spacing={4}>
+          <Grid container sx={{margin: "10px"}} spacing={2}>
             <AnimatePresence>
               {branches.map(row => (
-                <Grid key={row.code} item xs={4}>
+                <Grid
+                  xs={{
+                    margin: "80px",
+                  }}
+                  key={row.code}
+                  item>
                   <motion.div
                     initial={{opacity: 0}}
                     whileInView={{opacity: 1}}
                     viewport={{once: true}}>
                     <Card sx={{minWidth: 275}} variant="outlined">
-                      <CardActionArea
-                        onClick={() => {
-                          handelRedirect(row.code);
-                        }}>
-                        <CardHeader
-                          title={row.nom}
-                          subheader={row.adress}></CardHeader>
-                        <CardContent>
-                          numero telephonique : {row.telephone} <br />
-                          fax : {row.fax}
-                        </CardContent>
-                      </CardActionArea>
+                      <CardHeader
+                        title={row.nom}
+                        subheader={row.adress}></CardHeader>
+                      <CardContent>
+                        numero telephonique : {row.telephone} <br />
+                        fax : {row.fax} <br />
+                        email : {row.email}
+                      </CardContent>
                     </Card>
                   </motion.div>
                 </Grid>
               ))}
             </AnimatePresence>
           </Grid>
-          <Outlet />
         </div>
       )}
+      <Fab
+        onClick={handleClickOpen}
+        color="primary"
+        aria-label="add"
+        sx={{
+          position: "fixed",
+          bottom: "100px",
+          right: "100px",
+          transform: "scale(1.3)",
+        }}>
+        <AddIcon />
+      </Fab>
+      <AddBranche open={dialog} handelClose={handleClose} />
     </>
   );
 }
