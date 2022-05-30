@@ -15,12 +15,12 @@ export default function MainAcceuil() {
     fetchData();
   }, []);
   const fetchData = () => {
-    axios.get(`/machines`).then(response => {
+    axios.get(`/api/machines`).then(response => {
       setMachines(response.data);
 
       setLoading(false);
     });
-    axios.get(`/categoriMachines`).then(response => {
+    axios.get(`/api/categoriMachines`).then(response => {
       setCategorie(response.data);
     });
   };

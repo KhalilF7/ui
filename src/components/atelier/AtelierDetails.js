@@ -23,7 +23,7 @@ export default function AtelierDetails() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`/atelier/${param.code}`).then(response => {
+    axios.get(`/api/atelier/${param.code}`).then(response => {
       let data = response.data;
       console.log(data);
       setAtelier(data);

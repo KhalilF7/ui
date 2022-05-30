@@ -28,7 +28,7 @@ export default function AddTechniciens(props) {
     setForm({...form, [e.target.name]: e.target.value});
   };
   const handelForm = () => {
-    axios.post(`/techniciens`, form).then(response => {
+    axios.post(`/api/techniciens`, form).then(response => {
       if (response.data) {
         props.handleClose();
       }

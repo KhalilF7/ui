@@ -7,7 +7,7 @@ export default function CountCuratif() {
   const [interventions, setInterventions] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios.get(`/InteventionCuratives`).then(response => {
+    axios.get(`/api/InteventionCuratives`).then(response => {
       setInterventions(response.data);
       setLoading(false);
     });

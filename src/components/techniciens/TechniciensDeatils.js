@@ -28,7 +28,7 @@ export default function TechniciensDeatils() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`/technicien/${param.code}`).then(response => {
+    axios.get(`/api/technicien/${param.code}`).then(response => {
       let data = response.data;
       setTechnicien(data);
       setLoading(false);
@@ -58,7 +58,7 @@ export default function TechniciensDeatils() {
         setTechnicien({...technicine, branche: branche});
       }
       if (result.isConfirmed) {
-        axios.delete(`/technicien/${param.code}`).then(response => {
+        axios.delete(`/api/technicien/${param.code}`).then(response => {
           let data = response.data;
           console.log(data);
           if (data.message === "deleted") {
@@ -91,7 +91,7 @@ export default function TechniciensDeatils() {
     }).then(result => {
       if (result.isConfirmed) {
         axios
-          .put(`/technicien/${technicine.matricule}`, technicine)
+          .put(`/api/technicien/${technicine.matricule}`, technicine)
           .then(response => {
             let data = response.data;
             if (data) {
