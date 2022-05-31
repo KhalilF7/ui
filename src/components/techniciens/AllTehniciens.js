@@ -24,7 +24,7 @@ export default function AllTehniciens() {
   const [dialog, setDialog] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`/techniciens`).then(response => {
+    axios.get(`/api/techniciens`).then(response => {
       let data = response.data;
       setTechniciens(data);
       setLoading(false);

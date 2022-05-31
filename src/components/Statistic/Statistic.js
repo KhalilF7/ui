@@ -55,23 +55,23 @@ export default function Statistic() {
     );
   };
   const fetchData = () => {
-    axios.get(`/InteventionCuratives`).then(response => {
+    axios.get(`/api/InteventionCuratives`).then(response => {
       setInterventions(response.data);
     });
-    axios.get(`/machines`).then(response => {
+    axios.get(`/api/machines`).then(response => {
       setMachines(response.data);
     });
-    axios.get(`/couts`).then(resposne => {
+    axios.get(`/api/couts`).then(resposne => {
       if (resposne.data) {
         setCouts(resposne.data);
       }
     });
-    axios.get(`/pieceDeRechange`).then(resposne => {
+    axios.get(`/api/pieceDeRechange`).then(resposne => {
       if (resposne.data) {
         setPieceDeRechange(resposne.data);
       }
     });
-    axios.get(`/techniciens`).then(response => {
+    axios.get(`/api/techniciens`).then(response => {
       setTechniciens(response.data);
     });
     setLoading(false);

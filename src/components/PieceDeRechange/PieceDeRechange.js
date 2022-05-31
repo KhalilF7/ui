@@ -8,7 +8,7 @@ export default function PieceDeRechange(props) {
   const [loading, setloading] = useState(true);
   const [empty, setEmpty] = useState(false);
   useEffect(() => {
-    axios.get(`/pieceDeRechange`).then(resposne => {
+    axios.get(`/api/pieceDeRechange`).then(resposne => {
       if (resposne.data) {
         setPieces(resposne.data);
         setloading(false);

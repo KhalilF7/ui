@@ -31,15 +31,15 @@ export default function MachinesDetails() {
     fetchData();
   }, []);
   const fetchData = () => {
-    axios.get(`/machine/${param.code}`).then(response => {
+    axios.get(`/api/machine/${param.code}`).then(response => {
       let data = response.data;
       setMachine(data);
     });
-    axios.get(`/categoriMachines`).then(response => {
+    axios.get(`/api/categoriMachines`).then(response => {
       setCatMachine(response.data);
     });
 
-    axios.get(`/ateliers`).then(response => {
+    axios.get(`/api/ateliers`).then(response => {
       setAteliers(response.data);
     });
     setLoading(false);
@@ -73,7 +73,7 @@ export default function MachinesDetails() {
       type: machine.type,
       atelier: machine.atelier,
     };
-    axios.patch(`/machine/${param.code}`, tmp).then(response => {
+    axios.patch(`/api/machine/${param.code}`, tmp).then(response => {
       let data = response.data;
       console.log(data);
       setEdit(false);

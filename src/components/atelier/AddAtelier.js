@@ -14,7 +14,7 @@ import React, {useState} from "react";
 export default function AddAtelier(props) {
   const [atelier, setAtelier] = useState();
   const handelForm = () => {
-    axios.post(`/ateliers`, atelier).then(response => {
+    axios.post(`/api/ateliers`, atelier).then(response => {
       console.log(response.data);
     });
   };

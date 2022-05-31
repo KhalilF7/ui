@@ -41,12 +41,12 @@ export default function AllMachines() {
     setSelectedCat(e.target.value);
   };
   const fetchData = () => {
-    axios.get(`/machines`).then(response => {
+    axios.get(`/api/machines`).then(response => {
       setMachines(response.data);
       console.log(response.data);
       setLoading(false);
     });
-    axios.get(`/categoriMachines`).then(response => {
+    axios.get(`/api/categoriMachines`).then(response => {
       setCatMachine(response.data);
     });
   };

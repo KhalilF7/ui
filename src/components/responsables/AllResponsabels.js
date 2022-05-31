@@ -23,7 +23,7 @@ export default function AllResponsabels() {
   const [dialog, setDialog] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`/responsables`).then(response => {
+    axios.get(`/api/responsables`).then(response => {
       let data = response.data;
       setResponsables(data);
 

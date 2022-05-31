@@ -158,10 +158,10 @@ export default function OldIntervention(props) {
     setdetailsSympthomes(e.target.value);
   };
   const fetchData = () => {
-    axios.get(`/sousTraitences`).then(response => {
+    axios.get(`/api/sousTraitences`).then(response => {
       setsousTraitence(response.data);
     });
-    axios.get(`/techniciens`).then(response => {
+    axios.get(`/api/techniciens`).then(response => {
       setTechniciens(response.data);
     });
   };
@@ -220,7 +220,7 @@ export default function OldIntervention(props) {
       intervention.Sympthomes.length === sym.length &&
       intervention.TypeDePanne.length === tp.length
     ) {
-      axios.post(`/InteventionCuratives`, intervention).then(response => {
+      axios.post(`/api/InteventionCuratives`, intervention).then(response => {
         if (response.data) {
           props.handelClose();
         }
