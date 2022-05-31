@@ -75,12 +75,10 @@ export default function InterventionsDetails() {
   const [st, setSt] = useState();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/technicien/${user.userID}`)
-      .then(response => {
-        let data = response.data;
-        setTechnicien(data);
-      });
+    axios.get(`/technicien/${user.userID}`).then(response => {
+      let data = response.data;
+      setTechnicien(data);
+    });
     fetchData();
   }, [addCout]);
   const handelUpdateDebut = () => {
@@ -361,7 +359,7 @@ export default function InterventionsDetails() {
               .then(response => {});
           });
           setIntevention(response.data);
-          console.log(response.data);
+
           setTemp({});
           setLoading(false);
         });
