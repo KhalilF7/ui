@@ -45,7 +45,7 @@ export default function AllSousTraitents() {
       cancelButtonColor: "#F21800",
     }).then(result => {
       if (result.isConfirmed) {
-        axios.delete(`/sousTraitence/${code}`).then(response => {
+        axios.delete(`/api/sousTraitence/${code}`).then(response => {
           if (response.data.message === "done") {
             Myswal.fire(
               "Supprimer!",
@@ -60,7 +60,7 @@ export default function AllSousTraitents() {
     });
   };
   useEffect(() => {
-    axios.get(`/sousTraitences`).then(response => {
+    axios.get(`/api/sousTraitences`).then(response => {
       if (response.data) {
         setSousTraitence(response.data);
         setLoading(false);

@@ -168,7 +168,7 @@ export default function InterventionsDetails() {
     ) {
       setLoading(true);
       axios
-        .patch(`/InterventionCurative/${param.code}`, temp)
+        .patch(`/api/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -193,7 +193,7 @@ export default function InterventionsDetails() {
     ) {
       setLoading(true);
       axios
-        .patch(`/InterventionCurative/${param.code}`, temp)
+        .patch(`/api/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -220,7 +220,7 @@ export default function InterventionsDetails() {
     if (temp.TypeDePanne.length === tp.length) {
       setLoading(true);
       axios
-        .patch(`/InterventionCurative/${param.code}`, temp)
+        .patch(`/api/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -229,7 +229,7 @@ export default function InterventionsDetails() {
     }
   };
   const getSt = code => {
-    axios.get(`/sousTraitence/${code}`).then(resposne => {
+    axios.get(`/api/sousTraitence/${code}`).then(resposne => {
       setSt(resposne.data);
     });
   };
@@ -267,7 +267,7 @@ export default function InterventionsDetails() {
     if (temp !== undefined && temp.codeCuratif) {
       setLoading(true);
       axios
-        .patch(`/InterventionCurative/${param.code}`, temp)
+        .patch(`/api/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -282,18 +282,18 @@ export default function InterventionsDetails() {
     }
   };
   const fetchData = () => {
-    axios.get(`/InterventionCurative/${param.code}`).then(response => {
+    axios.get(`/api/api/InterventionCurative/${param.code}`).then(response => {
       let data = response.data;
       setIntevention(data);
-      axios.get(`/machine/${data.machine}`).then(response => {
+      axios.get(`/api/machine/${data.machine}`).then(response => {
         let data = response.data;
         setMachine(data);
       });
-      axios.get(`/techniciens`).then(response => {
+      axios.get(`/api/techniciens`).then(response => {
         let data = response.data;
         setTechniciens(data);
       });
-      axios.get(`/sousTraitences`).then(response => {
+      axios.get(`/api/sousTraitences`).then(response => {
         let data = response.data;
         setSousTraitence(data);
       });
@@ -315,7 +315,7 @@ export default function InterventionsDetails() {
     if (temp !== undefined && temp.codeCuratif) {
       setLoading(true);
       axios
-        .patch(`/InterventionCurative/${param.code}`, temp)
+        .patch(`/api/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});
@@ -336,9 +336,9 @@ export default function InterventionsDetails() {
     if (temp !== undefined) {
       setLoading(true);
       axios
-        .patch(`/InterventionCurative/${param.code}`, temp)
+        .patch(`/api/InterventionCurative/${param.code}`, temp)
         .then(response => {
-          axios.get(`/machine/${intervention.machine}`).then(response => {
+          axios.get(`/api/machine/${intervention.machine}`).then(response => {
             let m = response.data;
             let tmp = {
               code: m.code,
@@ -355,7 +355,7 @@ export default function InterventionsDetails() {
             };
 
             axios
-              .patch(`/machine/${intervention.machine}`, tmp)
+              .patch(`/api/machine/${intervention.machine}`, tmp)
               .then(response => {});
           });
           setIntevention(response.data);
@@ -378,7 +378,7 @@ export default function InterventionsDetails() {
     if (temp !== undefined) {
       setLoading(true);
       axios
-        .patch(`/InterventionCurative/${param.code}`, temp)
+        .patch(`/api/InterventionCurative/${param.code}`, temp)
         .then(response => {
           setIntevention(response.data);
           setTemp({});

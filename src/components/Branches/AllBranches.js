@@ -27,7 +27,7 @@ export default function AllBranches() {
     setDialog(false);
   };
   useEffect(() => {
-    axios.get(`/branches`).then(response => {
+    axios.get(`/api/branches`).then(response => {
       let data = response.data.branches;
       setBranches(data);
       setLoading(false);

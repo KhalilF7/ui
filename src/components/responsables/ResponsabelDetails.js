@@ -26,14 +26,14 @@ export default function ResponsabelDetails() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`/responsable/${param.code}`).then(response => {
+    axios.get(`/api/responsable/${param.code}`).then(response => {
       let data = response.data;
       setResponsable(data);
       setLoading(false);
     });
   }, [edit]);
   const handelBranches = async () => {
-    axios.get(`/branches`).then(response => {
+    axios.get(`/api/branches`).then(response => {
       const data = response.data.branches;
       setBranches(data);
     });
@@ -53,7 +53,7 @@ export default function ResponsabelDetails() {
       cancelButtonColor: "#F21800",
     }).then(result => {
       if (result.isConfirmed) {
-        axios.delete(`/responsable/${param.code}`).then(response => {
+        axios.delete(`/api/responsable/${param.code}`).then(response => {
           let data = response.data;
           console.log(data);
           if (data.message === "deleted") {
@@ -86,7 +86,7 @@ export default function ResponsabelDetails() {
     }).then(result => {
       if (result.isConfirmed) {
         axios
-          .put(`/responsable/${responsable.matricule}`, responsable)
+          .put(`/api/responsable/${responsable.matricule}`, responsable)
           .then(response => {
             let data = response.data;
             if (data) {

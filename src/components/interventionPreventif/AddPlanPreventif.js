@@ -33,7 +33,7 @@ export default function AddPlanPreventif(props) {
     e.preventDefault(e);
     setPrevetif({...preventif, technicines: techs});
     if (preventif.technicines && preventif.technicines.length > 0) {
-      axios.post(`/preventives`, preventif).then(response => {
+      axios.post(`/api/preventives`, preventif).then(response => {
         console.log(response);
       });
     }

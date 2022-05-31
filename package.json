@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -16,6 +16,7 @@
     "compare-dates": "^2.0.0",
     "dateformat": "^5.0.3",
     "framer-motion": "^6.2.8",
+    "http-proxy-middleware": "^2.0.6",
     "moment": "^2.29.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -37,7 +38,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy":"http://127.0.0.1:8000",
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -23,7 +23,7 @@ export default function AddResponsable(props) {
   });
   const [branches, setBranches] = useState();
   useEffect(() => {
-    axios.get(`/branches`).then(response => {
+    axios.get(`/api/branches`).then(response => {
       const data = response.data.branches;
       setBranches(data);
       console.log(data);
@@ -33,7 +33,7 @@ export default function AddResponsable(props) {
     setForm({...form, [e.target.name]: e.target.value});
   };
   const handelForm = () => {
-    axios.post(`/responsables`, form).then(response => {
+    axios.post(`/api/responsables`, form).then(response => {
       const res = response.data;
       if (res.message) {
         console.log(response.data);

@@ -38,6 +38,16 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Production:
+- download and extract [nginx](http://nginx.org/download/nginx-1.22.0.zip)
+- override {extract_folder_path}/conf/nginx.conf file by [nginx/nginx.conf](nginx/nginx.conf)
+- build prod: ``npm run build``
+- copy build folder content to {extract_folder_path}/html
+- play with nginx: from {extract_folder_path} you can run:
+  - start nginx: ``start nginx``
+  - stop nginx: ``nginx -s stop``
+  - reload nginx : ``nginx -s reload``
+
 
 ## Learn More
 
