@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+
 import AddIcon from "@mui/icons-material/Add";
 import React, {useEffect, useState} from "react";
 import Spinning from "../Spinning";
@@ -79,16 +79,27 @@ export default function AllSousTraitents() {
                 sx={{minWidth: 650}}
                 aria-label="tous les sous traitences">
                 <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
-                  <TableCell align="center"> Sous traitent </TableCell>
-                  <TableCell align="center">
-                    {" "}
-                    nom de responsable / representent{" "}
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Sous traitent
                   </TableCell>
-                  <TableCell align="center"> Adresss </TableCell>
-                  <TableCell align="center"> Telephone </TableCell>
-                  <TableCell align="center"> Fax </TableCell>
-                  <TableCell align="center"></TableCell>
-                  <TableCell align="center"></TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    nom de responsable / representent
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Adresss
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Telephone
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Fax
+                  </TableCell>
+                  <TableCell
+                    sx={{fontWeight: "bold"}}
+                    align="center"></TableCell>
+                  <TableCell
+                    sx={{fontWeight: "bold"}}
+                    align="center"></TableCell>
                 </TableHead>
                 <TableBody>
                   {sousTraitents.map(row => (

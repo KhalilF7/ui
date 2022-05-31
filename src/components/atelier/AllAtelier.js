@@ -48,9 +48,11 @@ export default function AllAtelier() {
               component={Paper}
               sx={{minWidth: 650}}
               aria-label="tous les atelier">
-              <TableHead>
+              <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
                 <TableRow>
-                  <TableCell align="center">nom de l'atelier </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    nom de l'atelier{" "}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

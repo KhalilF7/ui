@@ -49,12 +49,20 @@ export default function AllResponsabels() {
               component={Paper}
               sx={{minWidth: 650}}
               aria-label="tous les responsables">
-              <TableHead>
+              <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
                 <TableRow>
-                  <TableCell align="center">Matricule</TableCell>
-                  <TableCell align="center">Nom</TableCell>
-                  <TableCell align="center">Prenom</TableCell>
-                  <TableCell align="center">Branche</TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Matricule
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Nom
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Prenom
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Branche
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

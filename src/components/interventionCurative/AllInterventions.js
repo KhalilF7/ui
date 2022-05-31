@@ -178,10 +178,17 @@ export default function AllInterventions() {
           {interventions && (
             <TableContainer component={Container}>
               <Table sx={{minWidth: 650}} aria-label="Tous les interventions">
-                <TableHead>
-                  <TableCell align="center"> Code intervention </TableCell>
-                  <TableCell align="center"> machine </TableCell>
-                  <TableCell align="center"> Etat </TableCell>
+                <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Code intervention
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    machine
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Etat
+                  </TableCell>
+                  <TableCell></TableCell>
                 </TableHead>
                 <TableBody>
                   {interventions

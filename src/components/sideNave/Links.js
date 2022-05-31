@@ -1,12 +1,18 @@
 import {ListItem, Typography} from "@mui/material";
 import React from "react";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 export default function Links(props) {
   const link = props.link;
+  const navLinkSTyle = ({isActive}) => {
+    return {
+      fontWeigh: isActive ? "bold" : "normal",
+      backgroundColor: isActive ? "#7F9DFA" : "white",
+    };
+  };
   return (
     <ListItem>
-      <Link to={link}>
+      <NavLink style={navLinkSTyle} to={link}>
         <Typography
           sx={{
             ":hover": {
@@ -20,7 +26,7 @@ export default function Links(props) {
           component="h2">
           {link}
         </Typography>
-      </Link>
+      </NavLink>
     </ListItem>
   );
 }

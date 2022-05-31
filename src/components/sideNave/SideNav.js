@@ -18,7 +18,7 @@ export default function SideNav() {
   useEffect(() => {
     switch (user.profile) {
       case "pdg":
-        setLinkes(["branches", "responsables", "compte"]);
+        setLinkes(["branches", "responsables"]);
 
         break;
       case "res":
@@ -30,18 +30,10 @@ export default function SideNav() {
           "techniciens",
           "machines",
           "atelier",
-          "compte",
-          "admin",
         ]);
         break;
       default:
-        setLinkes([
-          "Acceuil",
-          "Preventif",
-          "interventions",
-          "machines",
-          "compte",
-        ]);
+        setLinkes(["Acceuil", "Preventif", "interventions", "machines"]);
     }
     setLoading(false);
   }, []);

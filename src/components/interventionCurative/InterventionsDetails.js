@@ -48,7 +48,6 @@ export default function InterventionsDetails() {
   const [diagnostique, setDiagnotique] = useState();
   const [updateDebut, setUpdateDebut] = useState(false);
   const [updateFin, setUpdateFin] = useState(false);
-  const panne = ["Mécanique", "Électrique", "Pneumatique", "Hydraulique"];
   const [typePanne, setTypePanne] = useState({
     mec: {value: "Mécanique", cheked: false},
     elc: {value: "Électrique", cheked: false},
@@ -75,21 +74,19 @@ export default function InterventionsDetails() {
   const [st, setSt] = useState();
 
   useEffect(() => {
-    axios.get(`/technicien/${user.userID}`).then(response => {
+    axios.get(`/api/technicien/${user.userID}`).then(response => {
       let data = response.data;
       setTechnicien(data);
     });
     fetchData();
-  }, [addCout]);
+  }, [addCout, Addpiece]);
   const handelUpdateDebut = () => {
     setUpdateDebut(!updateDebut);
   };
   const handelUpdatefin = () => {
     setUpdateFin(!updateFin);
   };
-  const getPanne = e => {
-    HandelPanne(e);
-  };
+
   const setUpdate = () => {
     setDiagnotiqueUpdate(true);
   };
@@ -282,7 +279,7 @@ export default function InterventionsDetails() {
     }
   };
   const fetchData = () => {
-    axios.get(`/api/api/InterventionCurative/${param.code}`).then(response => {
+    axios.get(`/api/InterventionCurative/${param.code}`).then(response => {
       let data = response.data;
       setIntevention(data);
       axios.get(`/api/machine/${data.machine}`).then(response => {
@@ -394,24 +391,21 @@ export default function InterventionsDetails() {
           style={{
             margin: "100px",
             display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
+            justifyContent: "space-evenly",
           }}>
           <form>
+            <div>
+              <h3> code Intervention (1) : </h3>
+              <div>{intervention.codeCuratif}</div>
+            </div>
             <Grid
               container
               justifyContent="space-around"
               alignItems="center"
-              sapcing={12}>
-              <Grid item xs={6}>
-                <div style={{margin: "20px"}}>
-                  <h3> code Intervention : </h3>
-                  <div>{intervention.codeCuratif}</div>
-                </div>
-              </Grid>
+              sapcing={2}>
               <Grid item xs={4}>
-                <div style={{margin: "20px"}}>
-                  <h3> Date rapport : </h3>
+                <div>
+                  <h3> Date rapport (2) : </h3>
                   <div>
                     {getDate(intervention.dateRapport)}|
                     {getTime(intervention.dateRapport)}
@@ -419,8 +413,14 @@ export default function InterventionsDetails() {
                 </div>
               </Grid>
               <Grid item xs={4}>
-                <div style={{margin: "20px"}}>
-                  <h3>Sympthômes :</h3>
+                <h3> Equipement (3): </h3>
+                <div>
+                  {machine.code} / {machine.model}
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div>
+                  <h3>Sympthômes (4) :</h3>
                   <div>
                     {intervention.Sympthomes.map(sym => (
                       <div>{sym}</div>
@@ -428,19 +428,24 @@ export default function InterventionsDetails() {
                   </div>
                 </div>
               </Grid>
+              <Grid>
+                <h3> Etat (5) : </h3>
+                <div>{machine.currentState}</div>
+              </Grid>
               <Grid item xs={4}>
                 <div style={{margin: "20px"}}>
-                  <h3>Date de Début intervention :</h3>
+                  <h3>Date de Début intervention (6) :</h3>
                   <div>
                     {intervention.dateDebutAction === undefined ||
                     intervention.dateDebutAction === null ? (
                       <>
                         <div> Aucune action</div>
-
-                        <Button variant="contained" onClick={setdebutAction}>
-                          {" "}
-                          Début intervention{" "}
-                        </Button>
+                        {user.profile === "tech" && (
+                          <Button variant="contained" onClick={setdebutAction}>
+                            {" "}
+                            Début intervention{" "}
+                          </Button>
+                        )}
                       </>
                     ) : (
                       <>
@@ -469,12 +474,14 @@ export default function InterventionsDetails() {
                                 {getDate(intervention.dateDebutAction)}
                                 {getTime(intervention.dateDebutAction)}
                               </span>
-                              <IconButton
-                                color="primary"
-                                size="large"
-                                onClick={handelUpdateDebut}>
-                                <EditIcon />
-                              </IconButton>
+                              {user.profile === "tech" && (
+                                <IconButton
+                                  color="primary"
+                                  size="large"
+                                  onClick={handelUpdateDebut}>
+                                  <EditIcon />
+                                </IconButton>
+                              )}
                             </>
                           )}
                         </>
@@ -485,40 +492,42 @@ export default function InterventionsDetails() {
               </Grid>
               {intervention.etatInterventions !== "ouvert" && (
                 <>
-                  <Grid item xs={8}>
-                    <div style={{margin: "5px"}}>
-                      <h3>Maintenance realiser par :</h3>
+                  <Grid item xs={4}>
+                    <div>
+                      <h3>Maintenance realiser par(7) :</h3>
                       <div>
                         {intervention.sousTraitence === null &&
                         intervention.technicines.length === 0 ? (
                           <>
                             Aucun personel/sous traitent effectue a cette
                             intervention
-                            <div style={{margin: "10px"}}>
-                              <FormLabel component="legend">
-                                Realiser par :
-                              </FormLabel>
-                              <FormGroup>
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      name="sous Traintance"
-                                      onChange={enableSousTraitence}
-                                    />
-                                  }
-                                  label="sousTraitence"
-                                />
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      name="Equipe interne "
-                                      onChange={eanbelEquipe}
-                                    />
-                                  }
-                                  label="Equipe interne"
-                                />
-                              </FormGroup>
-                            </div>
+                            {user.profile === "tech" && (
+                              <div style={{margin: "10px"}}>
+                                <FormLabel component="legend">
+                                  Realiser par :
+                                </FormLabel>
+                                <FormGroup>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        name="sous Traintance"
+                                        onChange={enableSousTraitence}
+                                      />
+                                    }
+                                    label="sousTraitence"
+                                  />
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        name="Equipe interne "
+                                        onChange={eanbelEquipe}
+                                      />
+                                    }
+                                    label="Equipe interne"
+                                  />
+                                </FormGroup>
+                              </div>
+                            )}
                             {sousTraitence && sousT && (
                               <>
                                 <label htmlFor="sousTraitence">
@@ -544,7 +553,7 @@ export default function InterventionsDetails() {
                                 <label htmlFor="technicine">Technicine</label>
                                 <>
                                   <FormLabel component="legend">
-                                    Symphtome{" "}
+                                    techniciens
                                   </FormLabel>
                                   <FormGroup required onChange={handelTechs}>
                                     {techniciens.map(T => (
@@ -575,12 +584,7 @@ export default function InterventionsDetails() {
                           </>
                         ) : (
                           <>
-                            <Grid
-                              container
-                              spacing={8}
-                              sx={{
-                                margin: "4px",
-                              }}>
+                            <Grid container spacing={4}>
                               <Grid item>
                                 <>
                                   <div>
@@ -621,36 +625,10 @@ export default function InterventionsDetails() {
                       </div>
                     </div>
                   </Grid>
+
                   <Grid item xs={4}>
-                    {intervention.TypeDePanne.length === 0 ? (
-                      <>
-                        <FormLabel component="legend"> TypeDePanne </FormLabel>
-                        <FormGroup onChange={getPanne}>
-                          {panne.map(row => (
-                            <FormControlLabel
-                              key={panne.indexOf(row)}
-                              control={<Checkbox cheked name={row} />}
-                              label={row}
-                            />
-                          ))}
-                        </FormGroup>
-                        <Button variant="contained" onClick={setPanne}>
-                          {" "}
-                          Set panne{" "}
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <h3> Type de Panne : </h3>
-                        {intervention.TypeDePanne.map(row => (
-                          <div>{row}</div>
-                        ))}
-                      </>
-                    )}
-                  </Grid>
-                  <Grid item xs={4}>
-                    <div style={{margin: "20px"}}>
-                      <h3>Diagnostique :</h3>
+                    <div>
+                      <h3>Diagnostique et rapport(8-9) :</h3>
                       <div>
                         {intervention.diagnostique === "" ? (
                           <>
@@ -660,8 +638,10 @@ export default function InterventionsDetails() {
                                   onChange={handelDiagnostique}
                                   id="diagnostique"
                                   name="diagnostique"
-                                  label="Diagnostque"
+                                  label="Diagnostique et rapport"
                                   type="text"
+                                  multiline
+                                  rows={4}
                                   fullWidth
                                   variant="outlined"
                                   required
@@ -697,7 +677,7 @@ export default function InterventionsDetails() {
 
                   <Grid item xs={4}>
                     <div style={{margin: "20px"}}>
-                      <h3>Date de Fin d'intervention :</h3>
+                      <h3>Date de Fin d'intervention (10):</h3>
                       <div>
                         {intervention.dateFinAction === "" ||
                         intervention.dateFinAction === null ? (
@@ -754,22 +734,22 @@ export default function InterventionsDetails() {
                   {user.profile === "tech" && (
                     <>
                       {technicien.isResponsableProduction && (
-                        <Grid item xs={8}>
+                        <Grid item xs={4}>
                           <div style={{margin: "20px"}}>
-                            <h3>Date de clôture intervention :</h3>
+                            <h3>Date de clôture intervention(11) :</h3>
                             <div>
                               {intervention.dateCloture === "" ||
                               intervention.dateCloture === null ? (
                                 <>
                                   <div>
-                                    {" "}
                                     valider l'intervention et le clôturer
                                   </div>
                                   <div
                                     style={{
                                       display: "flex",
-                                      alignItems: "space",
-                                      justifyContent: "space-around",
+                                      padding: 1,
+                                      alignItems: "center",
+                                      justifyContent: "space-between",
                                     }}>
                                     <label htmlFor="etat"> Etat machine </label>
                                     <Select
@@ -778,12 +758,10 @@ export default function InterventionsDetails() {
                                       onChange={setMachineStatus}
                                       defaultValue="fonction">
                                       <MenuItem value="fonction">
-                                        {" "}
                                         Bon fonctionnement
                                       </MenuItem>
                                       <MenuItem value="degradee">
-                                        {" "}
-                                        Dégradée{" "}
+                                        Dégradée
                                       </MenuItem>
                                     </Select>
                                     <Button
@@ -809,7 +787,6 @@ export default function InterventionsDetails() {
                                 </>
                               ) : (
                                 <>
-                                  {" "}
                                   {getDate(intervention.dateCloture)}{" "}
                                   {getTime(intervention.dateCloture)}
                                 </>
@@ -843,45 +820,58 @@ export default function InterventionsDetails() {
                   )}
                 </>
               )}
-              <Grid item xs={8}>
-                <Couts type="cur" code={intervention.codeCuratif} />
-                <AddCouts
-                  type="cur"
-                  code={intervention.codeCuratif}
-                  open={addCout}
-                  handleClose={handelCloseCout}
-                />
-                <br />
-              </Grid>
-              <Grid item xs={8}>
-                <PieceDeRechange type="cur" code={intervention.codeCuratif} />
-                <AddPiece
-                  type="cur"
-                  code={intervention.codeCuratif}
-                  open={Addpiece}
-                  handleClose={handelClosePiece}
-                />
-                <br />
-              </Grid>
             </Grid>
+            <div
+              style={{
+                margin: 100,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <Couts type="cur" code={intervention.codeCuratif} />
+                  <AddCouts
+                    type="cur"
+                    code={intervention.codeCuratif}
+                    open={addCout}
+                    handleClose={handelCloseCout}
+                  />
+                  <br />
+                </Grid>
+                <Grid item xs={4}>
+                  <PieceDeRechange type="cur" code={intervention.codeCuratif} />
+                  <AddPiece
+                    type="cur"
+                    code={intervention.codeCuratif}
+                    open={Addpiece}
+                    handleClose={handelClosePiece}
+                  />
+                  <br />
+                </Grid>
+              </Grid>
+            </div>
             <Container>
               {intervention.etatInterventions === "cloture" && (
-                <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}>
                   <Grid item xs={4}>
-                    <Typography varaint="body2">Temps d'arrêt :</Typography>
+                    <h3>Temps d'arrêt :</h3>
                     <Typography variant="subtitle1">
                       {getDT()} minuts
                     </Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography varaint="body2">
-                      Temps du reparations :
-                    </Typography>
+                    <h3>Temps du reparations :</h3>
                     <Typography variant="subtitle1">
                       {getTTR()} minuts
                     </Typography>
                   </Grid>
-                </>
+                </div>
               )}
             </Container>
           </form>

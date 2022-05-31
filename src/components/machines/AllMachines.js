@@ -118,11 +118,20 @@ export default function AllMachines() {
 
           <TableContainer component={Container}>
             <Table sx={{minWidth: 650}} aria-label="tous les machines">
-              <TableHead>
-                <TableCell align="center">Code </TableCell>
-                <TableCell align="center">Marque </TableCell>
-                <TableCell align="center">Model </TableCell>
-                <TableCell align="center">etat </TableCell>
+              <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
+                <TableCell sx={{fontWeight: "bold"}} align="center">
+                  Code
+                </TableCell>
+                <TableCell sx={{fontWeight: "bold"}} align="center">
+                  Marque
+                </TableCell>
+                <TableCell sx={{fontWeight: "bold"}} align="center">
+                  Model
+                </TableCell>
+                <TableCell sx={{fontWeight: "bold"}} align="center">
+                  etat
+                </TableCell>
+                <TableCell></TableCell>
               </TableHead>
               <TableBody>
                 {machines

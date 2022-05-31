@@ -50,11 +50,17 @@ export default function AllTehniciens() {
               component={Paper}
               sx={{minWidth: 650}}
               aria-label="tous les Techniciens">
-              <TableHead>
+              <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
                 <TableRow>
-                  <TableCell align="center">Matricule</TableCell>
-                  <TableCell align="center">Nom</TableCell>
-                  <TableCell align="center">Prenom</TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Matricule
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Nom
+                  </TableCell>
+                  <TableCell sx={{fontWeight: "bold"}} align="center">
+                    Prenom
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
