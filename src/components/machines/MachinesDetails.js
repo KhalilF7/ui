@@ -133,7 +133,7 @@ export default function MachinesDetails() {
                 alignItems: "center",
                 margin: "20px",
               }}>
-              <img width="300px" src={`${machine.image}`} alt="" />
+              <img width="300px" src={`/api/${machine.image}`} alt="" />
             </div>
             <Grid container spacing={8}>
               <Grid item xs={4}>

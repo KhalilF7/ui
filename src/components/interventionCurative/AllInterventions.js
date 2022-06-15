@@ -72,14 +72,16 @@ export default function AllInterventions() {
     setDemande(true);
   };
   const getMachineName = code => {
+    var m = [];
     if (machines) {
-      var machine = machines.filter(row => {
+      // eslint-disable-next-line array-callback-return
+      m = machines.filter(row => {
         if (row.code === code) {
           return row;
         }
       });
     }
-    return machine[0].model;
+    return m[0].brand;
   };
   const getColor = etat => {
     switch (etat) {
@@ -229,7 +231,7 @@ export default function AllInterventions() {
                           {row.codeCuratif}{" "}
                         </TableCell>
                         <TableCell align="center">
-                          {machines && getMachineName(row.machine)}
+                          {row.machine && getMachineName(row.machine)}
                         </TableCell>
                         <TableCell align="center">
                           {getStatus(row.etatInterventions)}

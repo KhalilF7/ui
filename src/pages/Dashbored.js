@@ -95,7 +95,7 @@ export default function Dashbored() {
                 <Route index element={<AllMachines />}></Route>
                 <Route path=":code" element={<MachinesDetails />}></Route>
               </Route>
-              <Route path="Preventif" element={<InterventionPrevetif />}>
+              <Route path="preventif" element={<InterventionPrevetif />}>
                 <Route index element={<AllPreventif />}></Route>
               </Route>
               <Route path="*" element={<AcceuilTech />}></Route>

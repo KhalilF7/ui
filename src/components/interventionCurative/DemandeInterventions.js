@@ -42,7 +42,7 @@ export default function DemandeInterventions(props) {
     "Demarage anormale",
     "Arret",
   ];
-  const panne = ["Mécanique", "Électrique", "Pneumatique", "Hydraulique"];
+
   const machines = props.machines;
   const [textEnabel, setTextEnabel] = useState(true);
   const [sympthomes, setSympthomes] = useState({
@@ -55,11 +55,7 @@ export default function DemandeInterventions(props) {
     arret: {value: "Arret", cheked: false},
     autre: {value: "autre", checked: false},
   });
-  const [etatMachine, setEtatMahine] = useState();
   const [detailSympthomes, setdetailsSympthomes] = useState();
-  const setMachineStatus = e => {
-    setEtatMahine({[e.target.name]: e.target.value});
-  };
   const enableText = () => {
     setTextEnabel(!textEnabel);
   };
@@ -176,30 +172,7 @@ export default function DemandeInterventions(props) {
     if (intervention.Sympthomes.length === sym.length) {
       axios.post(`/api/InteventionCuratives`, intervention).then(response => {
         if (response.data) {
-          axios.get(`/api/machine/${intervention.machine}`).then(response => {
-            let m = response.data;
-            let tmp = {
-              code: m.code,
-              brand: m.brand,
-              model: m.model,
-              anneeManifacture: m.anneeManifacture,
-              currentState: etatMachine.etat,
-              schudledTime: m.schudledTime,
-              timeLosses: m.timeLosses,
-              descriptions: m.descriptions,
-              availibilty: m.availibilty,
-              type: m.type,
-              atelier: m.atelier,
-            };
-
-            axios
-              .patch(`/api/machine/${intervention.machine}`, tmp)
-              .then(response => {
-                if (response.data) {
-                  props.handelClose();
-                }
-              });
-          });
+          props.handelClose();
         }
       });
     }
@@ -226,17 +199,7 @@ export default function DemandeInterventions(props) {
               />
             </div>
             <Divider />
-            <label htmlFor="etat"> Etat machine </label>
-            <Select
-              name="etat"
-              variant="outlined"
-              fullWidth
-              onChange={setMachineStatus}
-              defaultValue="enArret">
-              <MenuItem value="enArret"> En Arrêt </MenuItem>
-              <MenuItem value="degradee"> Dégradée </MenuItem>
-            </Select>
-            <Divider />
+
             {machines && (
               <>
                 <label htmlFor="machine">Machine</label>

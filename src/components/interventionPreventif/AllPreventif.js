@@ -17,7 +17,7 @@ export default function AllPreventif() {
     fetchData();
   }, [plan]);
   const fetchData = () => {
-    axios.get(`/api/api/preventives`).then(response => {
+    axios.get(`/api/preventives`).then(response => {
       setPreventives(response.data);
     });
     axios.get(`/api/machines`).then(response => {
