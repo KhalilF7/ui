@@ -8,11 +8,14 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import "./App.css";
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
-import { Atelier, Accueil, Interventions, Machines, SousTraitants, Techniciens } from "./pages";
+import { Atelier, Accueil, Interventions, Machines, SousTraitants, Techniciens, Statistiques } from "./pages";
+
+import { useStateContext } from './contexts/ContextProvider';
+import MachinesDetails from "./components/machines/MachinesDetails";
 
 const App = () => {
   const logedIn = useSelector(state => state.userReducer.logedIn);
-  const activeMenu = false;
+  const { activeMenu } = useStateContext();
 
   return (
     <div>
@@ -29,41 +32,42 @@ const App = () => {
         </div>
         {activeMenu ? (
           <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white">
-            Sidebar
+            <Sidebar />
           </div>
         ) : (
           <div className="w-0 dark:bg-secondary-dark-bg">
-            Sidebar w-0
+            <Sidebar />
           </div>
           )}
           <div className={
             `dark:bg-main-bg bg-main-bg min-h-screen w-full ${activeMenu ? 'md:ml-72' : 'flex-2'}`
           }>
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
-              Navbar
+              <Navbar />
             </div>
-          </div>
 
-          <div>
-            <Routes>
-              {/*<Route path="/auth" element={<Authentification />} />
-              {logedIn && <Route path="/dashbored/*" element={<Dashbored />} />}
-              <Route
-                path="*"
-                element={<Navigate to={logedIn ? "/dashbored" : "/auth"} />}
-              />*/}
-              <Route path="/" element="Accueil" />
-              <Route path="/accueil" element="Accueil" />
-              
-              <Route path="/machines"element="Machines" />
-              <Route path="/techniciens"element="Techniciens" />
-              <Route path="/sous-traitants"element="Sous-taitants" />
-              <Route path="/interventions"element="Interventions" />
-              <Route path="/atelier"element="Atelier" />
+            <div>
+              <Routes>
+                {/*<Route path="/auth" element={<Authentification />} />
+                {logedIn && <Route path="/dashbored/*" element={<Dashbored />} />}
+                <Route
+                  path="*"
+                  element={<Navigate to={logedIn ? "/dashbored" : "/auth"} />}
+                />*/}
+                <Route path="/" element={<Accueil />} />
+                <Route path="/accueil" element={<Accueil />} />
+                
+                <Route path="/machines"element={<Machines />} />
+                <Route path=":code" element={<MachinesDetails />}></Route>
+                <Route path="/techniciens"element={<Techniciens />} />
+                <Route path="/sous-traitants"element={<SousTraitants />} />
+                <Route path="/interventions"element={<Interventions />} />
+                <Route path="/atelier"element={<Atelier />} />
 
-              <Route path="/statistiques"element="Statistiques" />
-            </Routes>
+                <Route path="/statistiques"element={<Statistiques />} />
+              </Routes>
 
+            </div>
           </div>
 
       </div>
