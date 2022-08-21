@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
-import { Button } from '.';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import avatar from '../data/avatar.jpg';
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
+import { Button } from '@mui/material';
 
 const UserProfile = () => {
   const user = useSelector(state => state.userReducer.data);
+  const [loading, setLoading] = useState(true);
   const { currentColor } = useStateContext();
   const dispath = useDispatch();
   const navigate = useNavigate();
@@ -45,14 +46,13 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="mt-5">
-        <Button
-          onClick={() => handelLogout} 
-          color="white"
-          bgColor={currentColor}
-          text="Logout"
-          borderRadius="10px"
-          width="full"
-        />
+          {!loading && (
+
+                <Button onClick={handelLogout} variant="contained">
+                  logout
+                </Button>
+
+          )}
       </div>
     </div>
 
