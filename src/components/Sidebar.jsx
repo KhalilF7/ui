@@ -10,7 +10,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 import logo from "../Assets/logo.png";
 
 const Sidebar = () => {
-const { activeMenu, setActiveMenu, screenSize } = useStateContext();
+const { activeMenu, setActiveMenu, screenSize, currentColor } = useStateContext();
 
 const handleCloseSideBar = () => {
     if(activeMenu && screenSize <= 900) {
@@ -42,7 +42,14 @@ const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md 
                                 {item.title}
                             </p>
                             {item.links.map((link) => (
-                                <NavLink to={`/${link.name}`} key={link.name} onClick={handleCloseSideBar} className={({ isActive }) => isActive ? activeLink : normalLink}>
+                                <NavLink 
+                                to={`/${link.name}`} 
+                                key={link.name} 
+                                onClick={handleCloseSideBar} 
+                                style={({ isActive }) => ({
+                                    backgroundColor: isActive ? currentColor : ''
+                                })}
+                                className={({ isActive }) => isActive ? activeLink : normalLink}>
                                     {link.icon}
                                     <span className="capitalize">
                                         {link.name}

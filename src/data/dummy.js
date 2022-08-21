@@ -11,7 +11,8 @@ import { TiTick } from 'react-icons/ti';
 import { GiLouvrePyramid } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
 
-import image from '../Assets/machine.jpg'
+import image from '../Assets/machine.jpg';
+import avatar from './avatar.jpg';
 
 export const gridOrderImage = (props) => (
   <div>
@@ -37,15 +38,38 @@ const getColor = (etat) => {
   }
 };
 
+const customerGridImage = (props) => (
+  <div className="image flex gap-4">
+    <img
+      className="rounded-full w-10 h-10"
+      src={avatar}
+      alt="employee"
+    />
+  </div>
+);
+
 export const gridOrderStatus = (props) => (
   <button
     type="button"
     style={{ background: getColor(props.currentState), width: 100, height: 30 }}
     className="text-white py-1 px-2 capitalize rounded-2xl text-md"
+    disabled
   >
     {props.currentState}
   </button>
   
+  
+);
+
+const gridEmployeeProfile = (props) => (
+  <div className="flex items-center gap-2">
+    <img
+      className="rounded-full w-10 h-10"
+      src={avatar}
+      alt="employee"
+    />
+    <p>{props.nom}</p>
+  </div>
 );
 
 export const links = [
@@ -195,5 +219,117 @@ export const links = [
       Location: 'Delhi',
       Status: 'complete',
       StatusBg: '#8BE78B',
+    },
+  ];
+
+  export const techniciensGrid = [
+    { headerText: 'Technicien',
+      width: '80',
+      template: gridEmployeeProfile,
+      textAlign: 'Center' },
+    { field: 'matricule',
+      headerText: 'Matricule',
+      width: '170',
+      textAlign: 'Center',
+    },
+  
+    { field: 'nom',
+      headerText: 'Nom',
+      width: '135',
+      format: 'yMd',
+      textAlign: 'Center' },
+  
+    { field: 'prenom',
+      headerText: 'Prénom',
+      width: '120',
+      textAlign: 'Center' },
+    { field: 'telephone',
+      headerText: 'Téléphone',
+      width: '125',
+      textAlign: 'Center' },
+  ];
+
+  export const customersGrid = [
+    { type: 'checkbox', width: '50' },
+    { headerText: 'Image',
+      width: '80',
+      template: customerGridImage,
+      align: 'Center' },
+    { field: 'sousTraitence',
+      headerText: 'Sous Traitant',
+      width: '150',
+      textAlign: 'Center' },
+    { field: 'nomRep',
+      headerText: 'Nom de Responsable/Représentant',
+      width: '220',
+      format: 'yMd',
+      textAlign: 'Center'},
+    {
+      field: 'adress',
+      headerText: 'Adresse',
+      width: '200',
+      format: 'C2',
+      textAlign: 'Center' },
+    { field: 'telephone',
+      headerText: 'Téléphone',
+      width: '100',
+      textAlign: 'Center' },
+  
+    { field: 'fax',
+      headerText: 'Fax',
+      width: '100',
+      textAlign: 'Center',
+    },
+  
+  ];
+
+  export const themeColors = [
+    {
+      name: 'blue-theme',
+      color: '#1A97F5',
+    },
+    {
+      name: 'green-theme',
+      color: '#03C9D7',
+    },
+    {
+      name: 'purple-theme',
+      color: '#7352FF',
+    },
+    {
+      name: 'red-theme',
+      color: '#FF5C8E',
+    },
+    {
+      name: 'indigo-theme',
+      color: '#1E4DB7',
+    },
+    {
+      color: '#FB9678',
+      name: 'orange-theme',
+    },
+  ];
+
+  export const userProfileData = [
+    {
+      icon: <BsCurrencyDollar />,
+      title: 'My Profile',
+      desc: 'Account Settings',
+      iconColor: '#03C9D7',
+      iconBg: '#E5FAFB',
+    },
+    {
+      icon: <BsShield />,
+      title: 'My Inbox',
+      desc: 'Messages & Emails',
+      iconColor: 'rgb(0, 194, 146)',
+      iconBg: 'rgb(235, 250, 242)',
+    },
+    {
+      icon: <FiCreditCard />,
+      title: 'My Tasks',
+      desc: 'To-do and Daily Tasks',
+      iconColor: 'rgb(255, 244, 229)',
+      iconBg: 'rgb(254, 201, 15)',
     },
   ];

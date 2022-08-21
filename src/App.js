@@ -12,20 +12,22 @@ import { Atelier, Accueil, Interventions, Machines, SousTraitants, Techniciens, 
 
 import { useStateContext } from './contexts/ContextProvider';
 import MachinesDetails from "./components/machines/MachinesDetails";
+import InterventionsDetails from "./components/interventionCurative/InterventionsDetails";
 
 const App = () => {
   const logedIn = useSelector(state => state.userReducer.logedIn);
-  const { activeMenu } = useStateContext();
+  const { activeMenu, themeSettings, setThemeSettings, currentColor, currentMode } = useStateContext();
 
   return (
-    <div>
+    <div className={currentMode === 'Sombre' ? 'dark' : ''}>
       <BrowserRouter>
       <div className="flex relative dark:bg-main-dark-bg">
         <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
           <TooltipComponent content="Settings" position="Top">
             <button type="button"
             className="text-3xl p-3 hover:drop-shadow-xl hover:bg-light-gray text-white"
-            style={{ background: 'blue', borderRadius: '50%' }}>
+            onClick={() => setThemeSettings(true)}
+            style={{ background: currentColor, borderRadius: '50%' }}>
               <FiSettings />
             </button>
           </TooltipComponent>
@@ -40,16 +42,19 @@ const App = () => {
           </div>
           )}
           <div className={
-            `dark:bg-main-bg bg-main-bg min-h-screen w-full ${activeMenu ? 'md:ml-72' : 'flex-2'}`
+            `dark:bg-main-dark-bg bg-main-bg min-h-screen w-full ${activeMenu ? 'md:ml-72' : 'flex-2'}`
           }>
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
               <Navbar />
             </div>
 
             <div>
+
+              {themeSettings && <ThemeSettings />}
+
               <Routes>
-                {/*<Route path="/auth" element={<Authentification />} />
-                {logedIn && <Route path="/dashbored/*" element={<Dashbored />} />}
+                <Route path="/auth" element={<Authentification />} />
+                {/*{logedIn && <Route path="/dashbored/*" element={<Dashbored />} />}
                 <Route
                   path="*"
                   element={<Navigate to={logedIn ? "/dashbored" : "/auth"} />}
@@ -58,10 +63,11 @@ const App = () => {
                 <Route path="/accueil" element={<Accueil />} />
                 
                 <Route path="/machines"element={<Machines />} />
-                <Route path=":code" element={<MachinesDetails />}></Route>
+                <Route path="/machines/:code" element={<MachinesDetails />}></Route>
                 <Route path="/techniciens"element={<Techniciens />} />
                 <Route path="/sous-traitants"element={<SousTraitants />} />
                 <Route path="/interventions"element={<Interventions />} />
+                <Route path="/interventions/:code" element={<InterventionsDetails />}></Route>
                 <Route path="/atelier"element={<Atelier />} />
 
                 <Route path="/statistiques"element={<Statistiques />} />

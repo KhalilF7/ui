@@ -19,6 +19,10 @@ import {
   import AddSousTraitent from "../components/Sous-Traitent/AddSousTraitent";
   import Swal from "sweetalert2";
   import withReactContent from "sweetalert2-react-content";
+  import { GridComponent, ColumnsDirective, CoumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject, ColumnDirective, Data, cellSelected, Search, Toolbar, Selection } from '@syncfusion/ej2-react-grids';
+  import { customerData, customersGrid } from '../data/dummy';
+import { Header } from "../components";
+
 
 const SousTraitants = () => {
     const [sousTraitents, setSousTraitence] = useState();
@@ -71,74 +75,23 @@ const SousTraitants = () => {
       <>
         {loading && <Spinning />}
         {!loading && sousTraitents && (
-          <>
-            <div>
-              <TableContainer component={Container}>
-                <Table
-                  component={Paper}
-                  sx={{minWidth: 650}}
-                  aria-label="tous les sous traitences">
-                  <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      Sous traitent
-                    </TableCell>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      nom de responsable / representent
-                    </TableCell>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      Adresss
-                    </TableCell>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      Telephone
-                    </TableCell>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      Fax
-                    </TableCell>
-                    <TableCell
-                      sx={{fontWeight: "bold"}}
-                      align="center"></TableCell>
-                    <TableCell
-                      sx={{fontWeight: "bold"}}
-                      align="center"></TableCell>
-                  </TableHead>
-                  <TableBody>
-                    {sousTraitents.map(row => (
-                      <TableRow>
-                        <TableCell align="center">{row.sousTraitence}</TableCell>
-                        <TableCell align="center"> {row.nomRep} </TableCell>
-                        <TableCell align="center"> {row.adress} </TableCell>
-                        <TableCell align="center"> {row.telephone} </TableCell>
-                        <TableCell align="center"> {row.fax} </TableCell>
-  
-                        <TableCell>
-                          <IconButton
-                            aria-label="delete"
-                            onClick={() => {
-                              handelDelete(row.id);
-                            }}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <Fab
-                color="primary"
-                aria-label="add"
-                onClick={handelAddOpen}
-                sx={{
-                  position: "fixed",
-                  bottom: "100px",
-                  right: "100px",
-                  transform: "scale(1.3)",
-                }}>
-                <AddIcon />
-              </Fab>
-              <AddSousTraitent open={addSous} handleClose={handelAddClose} />
-            </div>
-          </>
+          <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+          <Header category="Page" title="Sous Traitants" />
+          <GridComponent id='gridcomp' dataSource={sousTraitents.filter((row, i) => {
+                  return sousTraitents[i];
+              }
+            )} 
+             allowPaging 
+             allowSorting 
+             toolbar={['Delete']} 
+             editSettings={{ allowDeleting: true, allowEditing: true }}
+             width="auto" >
+            <ColumnsDirective>
+              {customersGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
+            </ColumnsDirective>
+            <Inject services={[Page, Toolbar, Selection, Edit, Sort, Filter]} />
+          </GridComponent>
+          </div>
         )}
       </>
     );

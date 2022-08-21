@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -12,7 +11,10 @@ import moule from "../../Assets/moule.jpg";
 import machine from "../../Assets/machine.jpg";
 import press from "../../Assets/press.jpg";
 import robot from "../../Assets/robot.jpg";
+import Button from "../Button";
+import { useStateContext } from "../../contexts/ContextProvider";
 export default function Categorie(props) {
+  const { currentColor } = useStateContext();
   const machines = props.machines;
   const categorie = props.detail;
   const navigate = useNavigate();
@@ -95,9 +97,7 @@ export default function Categorie(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" onClick={clicked}>
-          plus de detail
-        </Button>
+        <Button color="white" bgColor={currentColor} text="Plus de détails" onClick={clicked} borderRadius="10px" />
       </CardActions>
     </Card>
   );
