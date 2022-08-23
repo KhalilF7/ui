@@ -1,5 +1,5 @@
 import Authentification from "./pages/Authentifcation";
-import {Routes, Route, Navigate, BrowserRouter} from "react-router-dom";
+import {Routes, Route, Navigate, BrowserRouter, useNavigate} from "react-router-dom";
 import Dashbored from "./pages/Dashbored";
 import {useSelector} from "react-redux";
 import React, { useEffect } from "react";
@@ -13,15 +13,29 @@ import { Atelier, Accueil, Interventions, Machines, SousTraitants, Techniciens, 
 import { useStateContext } from './contexts/ContextProvider';
 import MachinesDetails from "./components/machines/MachinesDetails";
 import InterventionsDetails from "./components/interventionCurative/InterventionsDetails";
+import Branches from "./components/Branches/Branches";
+import AllBranches from "./components/Branches/AllBranches";
+import Responsabels from "./components/responsables/Responsabels";
+import AllResponsabels from "./components/responsables/AllResponsabels";
+import ResponsabelDetails from "./components/responsables/ResponsabelDetails";
+import AtelierDetails from "./components/atelier/AtelierDetails";
+import TechniciensDeatils from "./components/techniciens/TechniciensDeatils";
+import InterventionPrevetif from "./components/interventionPreventif/InterventionPrevetif";
+import AllPreventif from "./components/interventionPreventif/AllPreventif";
+import AcceuilTech from "./components/AcceuilTech/AcceuilTech";
+import Acceuil from "./components/Acceuil";
 
 const App = () => {
+  
   const logedIn = useSelector(state => state.userReducer.logedIn);
+  const user = useSelector(state => state.userReducer.data);
   const { activeMenu, themeSettings, setThemeSettings, currentColor, currentMode } = useStateContext();
 
   return (
     <div className={currentMode === 'Sombre' ? 'dark' : ''}>
       <BrowserRouter>
-      <div className="flex relative dark:bg-main-dark-bg">
+      {logedIn ? (
+        <div className="flex relative dark:bg-main-dark-bg">
         <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
           <TooltipComponent content="Settings" position="Top">
             <button type="button"
@@ -53,31 +67,59 @@ const App = () => {
               {themeSettings && <ThemeSettings />}
 
               <Routes>
-                <Route path="/auth" element={<Authentification />} />
-                {/*{logedIn && <Route path="/dashbored/*" element={<Dashbored />} />}
-                <Route
-                  path="*"
-                  element={<Navigate to={logedIn ? "/dashbored" : "/auth"} />}
-                />*/}
-                <Route path="/" element={<Accueil />} />
+              {user["profile"] === "pdg" && (
+            <>
+              <Route path="branches" element={<Branches />}>
+                <Route index element={<AllBranches />} />
+              </Route>
+              <Route path="responsables" element={<Responsabels />}>
+                <Route index element={<AllResponsabels />}></Route>
+                <Route path=":code" element={<ResponsabelDetails />}></Route>
+              </Route>
+              <Route path="*" element={<AllBranches />}></Route>
+            </>
+          )}
+          {user["profile"] === "res" && (
+            <>
+                <Route path="*" element={<Accueil />} />
                 <Route path="/accueil" element={<Accueil />} />
                 
                 <Route path="/machines"element={<Machines />} />
-                <Route path="/machines/:code" element={<MachinesDetails />}></Route>
+                <Route path="/machines/:code" element={<MachinesDetails />} />
                 <Route path="/techniciens"element={<Techniciens />} />
+                <Route path="/techniciens/:code"element={<TechniciensDeatils />} />
                 <Route path="/sous-traitants"element={<SousTraitants />} />
                 <Route path="/interventions"element={<Interventions />} />
-                <Route path="/interventions/:code" element={<InterventionsDetails />}></Route>
+                <Route path="/interventions/:code" element={<InterventionsDetails />} />
                 <Route path="/atelier"element={<Atelier />} />
+                <Route path="/atelier/:code"element={<AtelierDetails />} />
 
                 <Route path="/statistiques"element={<Statistiques />} />
+            </>
+          )}
+          {user["profile"] === "tech" && (
+            <>
+              <Route path="/machines"element={<Machines />} />
+              <Route path="/machines/:code" element={<MachinesDetails />} />
+              <Route path="/interventions"element={<Interventions />} />
+              <Route path="/interventions/:code" element={<InterventionsDetails />} />
+              <Route path="preventif" element={<InterventionPrevetif />}>
+                <Route index element={<AllPreventif />}></Route>
+              </Route>
+              <Route path="*" element={<AcceuilTech />}></Route>
+            </>
+          )}
               </Routes>
 
             </div>
           </div>
 
       </div>
-        
+      ) : (
+        <Routes>
+          <Route path="/auth" element={<Authentification />} />
+        </Routes>
+      )}
       </BrowserRouter>
     </div>
     
