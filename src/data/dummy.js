@@ -72,7 +72,7 @@ const gridEmployeeProfile = (props) => (
   </div>
 );
 
-export const links = [
+export const linksRes = [
     {
       title: 'Dashboard',
       links: [
@@ -122,6 +122,52 @@ export const links = [
         },
       ],
     },
+  ];
+
+export const linksPdg = [    
+    {
+      title: 'Pages',
+      links: [
+        {
+          name: 'branches',
+          icon: <MdOutlineSettings />,
+        },
+        {
+          name: 'responsables',
+          icon: <IoMdContacts />,
+        }
+      ]
+    }
+];
+
+export const links = [
+    {
+      title: 'Dashboard',
+      links: [
+        {
+          name: 'accueil',
+          icon: <MdOutlineHome />,
+        },
+      ],
+    },
+  
+    {
+      title: 'Pages',
+      links: [
+        {
+          name: 'machines',
+          icon: <MdOutlineSettings />,
+        },
+        {
+          name: 'interventions',
+          icon: <MdOutlineMiscellaneousServices />,
+        },
+        {
+          name: 'préventif',
+          icon: <MdOutlineManageAccounts />,
+        },
+      ],
+    }
   ];
 
   export const earningData = [

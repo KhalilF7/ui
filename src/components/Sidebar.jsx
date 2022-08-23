@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SiShopware } from "react-icons/si";
 import { MdOutlineCancel } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-import { links } from "../data/dummy"
+import { links, linksPdg, linksRes } from "../data/dummy"
 import { useStateContext } from "../contexts/ContextProvider";
 
 import logo from "../Assets/logo.png";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
 const { activeMenu, setActiveMenu, screenSize, currentColor } = useStateContext();
+const [linkes, setLinkes] = useState([]);
+const user = useSelector(state => state.userReducer.data);
 
 const handleCloseSideBar = () => {
     if(activeMenu && screenSize <= 900) {
@@ -18,6 +21,18 @@ const handleCloseSideBar = () => {
     }
 }
 
+useEffect(() => {
+    switch (user.profile) {
+        case "pdg":
+            setLinkes(linksPdg);
+            break;
+        case "res":
+            setLinkes(linksRes);
+            break;
+        default:
+            setLinkes(links);
+    }
+    }, []);
 const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2';
 const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
 
@@ -36,7 +51,7 @@ const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md 
                     </TooltipComponent>
                 </div>
                 <div className="mt-10">
-                    {links.map((item) => (
+                    {linkes.map((item) => (
                         <div key={item.title}>
                             <p className="text-gray-400 m-3 mt-4 uppercase">
                                 {item.title}
