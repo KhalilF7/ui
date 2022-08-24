@@ -38,6 +38,19 @@ const getColor = (etat) => {
   }
 };
 
+const getColorIntervention = (etat) => {
+  switch (etat) {
+    case "ouvert":
+      return "#FC4445";
+    case "encours":
+      return "#E7A302";
+    case "achieve":
+      return "#5431F0";
+    default:
+      return "#5CDB95";
+  }
+};
+
 const customerGridImage = (props) => (
   <div className="image flex gap-4">
     <img
@@ -56,6 +69,32 @@ export const gridOrderStatus = (props) => (
     disabled
   >
     {props.currentState}
+  </button>
+  
+  
+);
+
+export const gridInterventionMachine = (props) => (
+  <button
+    type="button"
+    style={{ background: 'gray', width: 100, height: 30 }}
+    className="text-white py-1 px-2 capitalize rounded-2xl text-md"
+    disabled
+  >
+    {props.machine}
+  </button>
+  
+  
+);
+
+export const gridInterventionStatus = (props) => (
+  <button
+    type="button"
+    style={{ background: getColorIntervention(props.etatInterventions), width: 100, height: 30 }}
+    className="text-white py-1 px-2 capitalize rounded-2xl text-md"
+    disabled
+  >
+    {props.etatInterventions}
   </button>
   
   
@@ -241,6 +280,29 @@ export const links = [
       headerText: 'Statut',
       template: gridOrderStatus,
       field: 'currentState',
+      textAlign: 'Center',
+      width: '120',
+    },
+  ];
+
+  export const interventionsGrid = [
+    {
+      field: 'codeCuratif',
+      headerText: 'Code',
+      width: '150',
+      editType: 'dropdownedit',
+      textAlign: 'Center',
+    },
+    { headerText: 'Machine',
+      //template: gridInterventionMachine,
+      field: 'machine',
+      width: '150',
+      textAlign: 'Center',
+    },
+    {
+      headerText: 'Statut',
+      template: gridInterventionStatus,
+      field: 'etatInterventions',
       textAlign: 'Center',
       width: '120',
     },

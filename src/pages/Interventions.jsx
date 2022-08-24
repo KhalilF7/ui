@@ -14,6 +14,8 @@ import {
     TableRow,
     TextField,
   } from "@mui/material";
+  import { GridComponent, ColumnsDirective, CoumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject, ColumnDirective, Data, cellSelected } from '@syncfusion/ej2-react-grids';
+  import { Header } from '../components';
   import AddIcon from "@mui/icons-material/Add";
   import axios from "axios";
   import React, { useEffect, useState } from "react";
@@ -22,6 +24,7 @@ import {
   import OldIntervention from "../components/interventionCurative/OldIntervention";
   import DemandeInterventions from "../components/interventionCurative/DemandeInterventions";
   import { useNavigate } from "react-router-dom";
+//import { interventionsGrid } from "../data/dummy";
 
 const Interventions = () => {
     const user = useSelector(state => state.userReducer.data);
@@ -115,11 +118,78 @@ const Interventions = () => {
       setSelectedMachine(e.target.value);
       console.log(e.target.value);
     };
+
+    console.log(interventions);
+
+    const getColorIntervention = (etat) => {
+      switch (etat) {
+        case "ouvert":
+          return "#FC4445";
+        case "encours":
+          return "#E7A302";
+        case "achieve":
+          return "#5431F0";
+        default:
+          return "#5CDB95";
+      }
+    };
+
+    const gridInterventionStatus = (props) => (
+      <button
+        type="button"
+        style={{ background: getColorIntervention(props.etatInterventions), width: 100, height: 30 }}
+        className="text-white py-1 px-2 capitalize rounded-2xl text-md"
+        disabled
+      >
+        {props.etatInterventions}
+      </button>
+      
+      
+    );
+
+    const gridInterventionMachine = (props) => (
+      <button
+        type="button"
+        className="py-1 px-2 capitalize rounded-2xl text-md"
+        onClick={async () => await hadelRedirect(props.codeCuratif)}
+      >
+        {getMachineName(props.machine)}
+      </button>
+      
+      
+    );
+
+    const interventionsGrid = [
+      {
+        field: 'codeCuratif',
+        headerText: 'Code',
+        width: '150',
+        editType: 'dropdownedit',
+        textAlign: 'Center',
+      },
+      { headerText: 'Machine',
+        template: gridInterventionMachine,
+        field: 'machine',
+        width: '150',
+        textAlign: 'Center',
+      },
+      {
+        headerText: 'Statut',
+        template: gridInterventionStatus,
+        field: 'etatInterventions',
+        textAlign: 'Center',
+        width: '120',
+      },
+    ];
+
+
     return (
       <>
         {loading && <Spinning />}
         {!loading && interventions && tech && machines && (
           <>
+          <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+      <Header category="Page" title="Équipements" />
             <Container
               sx={{
                 width: "300px",
@@ -176,9 +246,40 @@ const Interventions = () => {
                 </FormControl>
               </div>
             </div>
+
+            <GridComponent id='gridcomp' 
+            //onClick={async (e) => await console.log(e.target.value)}
+            dataSource={interventions.filter((row, i) => {
+            if (selectedEtat === "" && selectedMachine === "") {
+              return interventions[i];
+            } else if (
+              row.etatInterventions === selectedEtat &&
+              selectedMachine === ""
+            ) {
+              return interventions[i];
+            } else if (
+              row.machine === selectedMachine &&
+              selectedEtat === ""
+            ) {
+              return interventions[i];
+            } else if (
+              row.etatInterventions === selectedEtat &&
+              row.machine === selectedMachine
+            ) {
+              return interventions[i];
+            }
+          }
+        )} 
+         allowPaging allowSorting >
+        <ColumnsDirective>
+          {interventionsGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
+        </ColumnsDirective>
+        <Inject services={[Resize, Sort, ContextMenu, Filter, Page, ExcelExport, Edit, PdfExport]} />
+      </GridComponent>
+
             {/** fillter d intevention selon : etat (ouvert , en cours , achiver , cloture) */}
             {/** chercher par nom du machine  */}
-            {interventions && (
+            {/**interventions && (
               <TableContainer component={Container}>
                 <Table sx={{minWidth: 650}} aria-label="Tous les interventions">
                   <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
@@ -246,7 +347,8 @@ const Interventions = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-            )}
+                          )*/}
+
             {tech.isResponsableProduction && user.profile === "tech" && (
               <>
                 <Fab
@@ -274,6 +376,8 @@ const Interventions = () => {
               open={demand}
               handelClose={handelCloseDemande}
             />
+            </div>
+      
           </>
         )}
       </>
