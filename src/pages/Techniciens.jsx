@@ -20,9 +20,13 @@ import {
   import AddTechniciens from "../components/techniciens/AddTechniciens";
 import { Header } from "../components";
 import { techniciensGrid } from '../data/dummy';
+import { MdInfoOutline } from 'react-icons/md';
+import avatar from '../data/avatar.jpg'
+import { useStateContext } from '../contexts/ContextProvider';
 
 const Techniciens = () => {
-    const [techniciens, setTechniciens] = useState();
+  const { currentColor } = useStateContext();
+  const [techniciens, setTechniciens] = useState();
     const [loading, setLoading] = useState(true);
     const [dialog, setDialog] = useState(false);
     const navigate = useNavigate();
@@ -42,6 +46,59 @@ const Techniciens = () => {
     const handleClose = () => {
       setDialog(false);
     };
+
+    const gridEmployeeProfile = (props) => (
+      <div className="flex items-center gap-2">
+        <img
+          className="rounded-full w-10 h-10"
+          src={avatar}
+          alt="employee"
+        />
+        <p>{props.nom}</p>
+      </div>
+    );
+
+    const action = (props) => (
+      <button
+        type="button"
+        onClick={async () => await hadelRedirect(props.matricule)}
+      >
+        <MdInfoOutline color={currentColor} size="30px" />
+      </button>
+    );
+
+    const techniciensGrid = [
+      { headerText: 'Technicien',
+        width: '80',
+        template: gridEmployeeProfile,
+        textAlign: 'Center' },
+      { field: 'matricule',
+        headerText: 'Matricule',
+        width: '170',
+        textAlign: 'Center',
+      },
+    
+      { field: 'nom',
+        headerText: 'Nom',
+        width: '135',
+        format: 'yMd',
+        textAlign: 'Center' },
+    
+      { field: 'prenom',
+        headerText: 'Prénom',
+        width: '120',
+        textAlign: 'Center' },
+      { field: 'telephone',
+        headerText: 'Téléphone',
+        width: '125',
+        textAlign: 'Center' },
+        {
+          headerText: 'Action',
+          template: action,
+          textAlign: 'Center',
+          width: '120',
+        },
+    ];
   
     return (
       <>
@@ -76,66 +133,6 @@ const Techniciens = () => {
         <AddTechniciens open={dialog} handleClose={handleClose} />
       </>
     );
-  }  
-
-{/**
- * <div>
-            <TableContainer component={Container}>
-              <Table
-                component={Paper}
-                sx={{minWidth: 650}}
-                aria-label="tous les Techniciens">
-                <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
-                  <TableRow>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      Matricule
-                    </TableCell>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      Nom
-                    </TableCell>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      Prenom
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {techniciens.map(row => (
-                    <Tooltip title="detail" placement="top">
-                      <TableRow
-                        onClick={() => {
-                          hadelRedirect(row.matricule);
-                        }}
-                        key={row.matricule}
-                        sx={{
-                          ":hover": {
-                            backgroundColor: "#8aa8ff",
-                          },
-                          cursor: "pointer",
-                        }}>
-                        <TableCell align="center">{row.matricule}</TableCell>
-                        <TableCell align="center">{row.nom}</TableCell>
-                        <TableCell align="center">{row.prenom}</TableCell>
-                      </TableRow>
-                    </Tooltip>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        )}
-        <Fab
-          onClick={handleClickOpen}
-          color="primary"
-          aria-label="add"
-          sx={{
-            position: "fixed",
-            bottom: "100px",
-            right: "100px",
-            transform: "scale(1.3)",
-          }}>
-          <AddIcon />
-        </Fab>
-        <AddTechniciens open={dialog} handleClose={handleClose} />
- */}
+  }
 
 export default Techniciens;

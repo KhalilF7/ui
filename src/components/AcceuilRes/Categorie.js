@@ -88,16 +88,16 @@ export default function Categorie(props) {
         </Typography>
 
         <Typography gutterBottom variant="body4" component="div">
-          nomber Total : {getMachineNumber()}
+        Nombre Total : {getMachineNumber()}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <div>en Arret : {getMachineArret()}</div>
-          <div>fonctionne : {getMachinefonction()}</div>
-          <div> dégrade : {getMachinedegrade()}</div>
+          <div>En Arrêt : {getMachineArret()}</div>
+          <div>Fonctionne : {getMachinefonction()}</div>
+          <div>Dégradé : {getMachinedegrade()}</div>
         </Typography>
       </CardContent>
       <CardActions>
-        <Button color="white" bgColor={currentColor} text="Plus de détails" onClick={clicked} borderRadius="10px" />
+        <button className={`text-10 p-3 hover:drop-shadow-xl`} style={{ color: "white", backgroundColor: currentColor, borderRadius: "10px"}} onClick={clicked}>Plus de détails</button>
       </CardActions>
     </Card>
   );

@@ -22,9 +22,14 @@ import {
 import AddMachines from "../components/machines/AddMachines";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import { ordersGrid } from '../data/dummy';
+//import { ordersGrid } from '../data/dummy';
+import { useStateContext } from '../contexts/ContextProvider';
+
+import image from '../Assets/machine.jpg';
+import { MdInfoOutline } from 'react-icons/md';
 
 const Machines = () => {
+  const { currentColor } = useStateContext();
   const [machines, setMachines] = useState();
   const [loading, setLoading] = useState(true);
   const [dialog, setDialog] = useState(false);
@@ -72,21 +77,82 @@ const Machines = () => {
     }
   };
 
-  const hadelRedirect = (props) => {
-    navigate(`${props.code}`);
+  const hadelRedirect = (code) => {
+    navigate(`${code}`);
   };
-  const getStatus = etat => {
-    switch (etat) {
-      case "fonction":
-        return "Bon fonctionnement ";
 
-      case "degradee":
-        return "Fonctionnement degrade";
+  const gridMachineImage = (props) => (
+    <div>
+      <img
+        className="rounded-xl h-20 md:ml-3"
+        //src={props.ProductImage}
+        src={image}
+        alt="machine-item"
+      />
+    </div>
+  );
 
-      default:
-        return "Arrêt";
-    }
-  };
+  const gridMachineStatus = (props) => (
+    <button
+      type="button"
+      style={{ background: getColor(props.currentState), width: 100, height: 30 }}
+      className="text-white py-1 px-2 capitalize rounded-2xl text-md"
+      disabled
+    >
+      {props.currentState}
+    </button>
+  );
+
+  const action = (props) => (
+    <button
+      type="button"
+      onClick={async () => await hadelRedirect(props.code)}
+    >
+      <MdInfoOutline color={currentColor} size="30px" />
+    </button>
+  );
+
+  const machinesGrid = [
+    {
+      headerText: 'Image',
+      template: gridMachineImage,
+      textAlign: 'Center',
+      width: '120',
+    },
+    {
+      field: 'code',
+      headerText: 'Code',
+      width: '150',
+      editType: 'dropdownedit',
+      textAlign: 'Center',
+    },
+    { field: 'brand',
+      headerText: 'Marque',
+      width: '150',
+      textAlign: 'Center',
+    },
+    {
+      field: 'model',
+      headerText: 'Model',
+      format: 'C2',
+      textAlign: 'Center',
+      editType: 'numericedit',
+      width: '150',
+    },
+    {
+      headerText: 'Statut',
+      template: gridMachineStatus,
+      field: 'currentState',
+      textAlign: 'Center',
+      width: '120',
+    },
+    {
+      headerText: 'Action',
+      template: action,
+      textAlign: 'Center',
+      width: '120',
+    },
+  ];
   return (
     <>
       {loading && <Spinning />}
@@ -121,12 +187,27 @@ const Machines = () => {
         )} 
          allowPaging allowSorting >
         <ColumnsDirective>
-          {ordersGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
+          {machinesGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
         </ColumnsDirective>
         <Inject services={[Resize, Sort, ContextMenu, Filter, Page, ExcelExport, Edit, PdfExport]} />
       </GridComponent>
     </div>
       )}
+      {user.profile === "res" && (
+        <Fab
+          onClick={handleClickOpen}
+          color="primary"
+          aria-label="add"
+          sx={{
+            position: "fixed",
+            bottom: "100px",
+            right: "100px",
+            transform: "scale(1.3)",
+          }}>
+          <AddIcon />
+        </Fab>
+      )}
+      <AddMachines open={dialog} handleClose={handleClose} />
     </>
     
   );

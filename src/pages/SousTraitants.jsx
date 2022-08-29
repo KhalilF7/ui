@@ -20,11 +20,14 @@ import {
   import Swal from "sweetalert2";
   import withReactContent from "sweetalert2-react-content";
   import { GridComponent, ColumnsDirective, CoumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject, ColumnDirective, Data, cellSelected, Search, Toolbar, Selection } from '@syncfusion/ej2-react-grids';
-  import { customerData, customersGrid } from '../data/dummy';
+  import avatar from '../data/avatar.jpg';
 import { Header } from "../components";
+import { MdInfoOutline, MdOutlineDeleteForever } from "react-icons/md";
+import { useStateContext } from "../contexts/ContextProvider";
 
 
 const SousTraitants = () => {
+  const { currentColor } = useStateContext();
     const [sousTraitents, setSousTraitence] = useState();
     const [loading, setLoading] = useState(true);
     const [addSous, setAddSous] = useState(false);
@@ -40,7 +43,7 @@ const SousTraitants = () => {
   
     const handelDelete = code => {
       Myswal.fire({
-        title: <p>vous etes sur de supprimer ce sous traitence </p>,
+        title: <p>Vous êtes sûr de supprimer ce sous traitance ?</p>,
         icon: "question",
         showConfirmButton: true,
         showCancelButton: true,
@@ -71,6 +74,50 @@ const SousTraitants = () => {
         }
       });
     }, [addSous, Myswal]);
+    
+    const action = (props) => (
+      <button
+        type="button"
+        onClick={() => handelDelete(props.id)}
+      >
+        <MdOutlineDeleteForever color={currentColor} size="25px" />
+      </button>
+    );
+
+    const sousTraitantsGrid = [
+      { field: 'sousTraitence',
+        headerText: 'Sous Traitant',
+        width: '150',
+        textAlign: 'Center' },
+      { field: 'nomRep',
+        headerText: 'Nom de Responsable/Représentant',
+        width: '220',
+        format: 'yMd',
+        textAlign: 'Center'},
+      {
+        field: 'adress',
+        headerText: 'Adresse',
+        width: '200',
+        format: 'C2',
+        textAlign: 'Center' },
+      { field: 'telephone',
+        headerText: 'Téléphone',
+        width: '100',
+        textAlign: 'Center' },
+    
+      { field: 'fax',
+        headerText: 'Fax',
+        width: '100',
+        textAlign: 'Center',
+      },
+      {field: 'id',
+        headerText: 'Action',
+        template: action,
+        textAlign: 'Center',
+        width: '80',
+      },
+    
+    ];
     return (
       <>
         {loading && <Spinning />}
@@ -83,16 +130,27 @@ const SousTraitants = () => {
             )} 
              allowPaging 
              allowSorting 
-             toolbar={['Delete']} 
-             editSettings={{ allowDeleting: true, allowEditing: true }}
              width="auto" >
             <ColumnsDirective>
-              {customersGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
+              {sousTraitantsGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
             </ColumnsDirective>
-            <Inject services={[Page, Toolbar, Selection, Edit, Sort, Filter]} />
+            <Inject services={[Page, Toolbar, Sort, Filter, Resize]} />
           </GridComponent>
           </div>
         )}
+        <Fab
+              color="primary"
+              aria-label="add"
+              onClick={handelAddOpen}
+              sx={{
+                position: "fixed",
+                bottom: "100px",
+                right: "100px",
+                transform: "scale(1.3)",
+              }}>
+              <AddIcon />
+            </Fab>
+            <AddSousTraitent open={addSous} handleClose={handelAddClose} />
       </>
     );
   }

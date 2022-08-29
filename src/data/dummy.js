@@ -51,7 +51,7 @@ const getColorIntervention = (etat) => {
   }
 };
 
-const customerGridImage = (props) => (
+const sousTraitantGridImage = (props) => (
   <div className="image flex gap-4">
     <img
       className="rounded-full w-10 h-10"
@@ -70,8 +70,6 @@ export const gridOrderStatus = (props) => (
   >
     {props.currentState}
   </button>
-  
-  
 );
 
 export const gridInterventionMachine = (props) => (
@@ -357,11 +355,11 @@ export const links = [
       textAlign: 'Center' },
   ];
 
-  export const customersGrid = [
+  export const sousTraitantsGrid = [
     { type: 'checkbox', width: '50' },
     { headerText: 'Image',
       width: '80',
-      template: customerGridImage,
+      template: sousTraitantGridImage,
       align: 'Center' },
     { field: 'sousTraitence',
       headerText: 'Sous Traitant',
