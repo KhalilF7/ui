@@ -19,7 +19,7 @@ import {
   import AddSousTraitent from "../components/Sous-Traitent/AddSousTraitent";
   import Swal from "sweetalert2";
   import withReactContent from "sweetalert2-react-content";
-  import { GridComponent, ColumnsDirective, CoumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject, ColumnDirective, Data, cellSelected, Search, Toolbar, Selection } from '@syncfusion/ej2-react-grids';
+  import { GridComponent, ColumnsDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject, ColumnDirective, Data, cellSelected, Search, Toolbar, Selection } from '@syncfusion/ej2-react-grids';
   import avatar from '../data/avatar.jpg';
 import { Header } from "../components";
 import { MdInfoOutline, MdOutlineDeleteForever } from "react-icons/md";
@@ -66,15 +66,16 @@ const SousTraitants = () => {
         }
       });
     };
-    useEffect(() => {
+    const fetchData = () => {
       axios.get(`/api/sousTraitences`).then(response => {
-        if (response.data) {
           setSousTraitence(response.data);
           setLoading(false);
-        }
       });
+    }
+    useEffect(() => {
+      fetchData();
     }, [addSous, Myswal]);
-    
+
     const action = (props) => (
       <button
         type="button"

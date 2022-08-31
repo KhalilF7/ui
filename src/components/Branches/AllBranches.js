@@ -52,7 +52,7 @@ export default function AllBranches() {
             <AnimatePresence>
               {branches.map(row => (
                 <Grid
-                  xs={{
+                  sx={{
                     margin: "80px",
                   }}
                   key={row.code}

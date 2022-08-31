@@ -83,17 +83,6 @@ const Accueil = () => {
   return (
     <div className="mt-12">
         <div className="flex flex-wrap lg:flex-nowrap justify-center">
-            {/*<div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <p className="font-bold text-gray-400">Earnings</p>
-                        <p className="text-2xl">$63,448.78</p>
-                    </div>
-                </div>
-                <div className="mt-6">
-                    <Button color="white" bgColor="blue" text="Download" borderRadius="10px" size="md" />
-                </div>
-            </div>*/}
             <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
             <CountCuratif />
                 
@@ -130,40 +119,6 @@ const Accueil = () => {
       )}
         </div>
     </div>
-
-    
     );
-    {/*<>
-      {loading && <Spinning />}
-      {!loading && machines && categories && Object.keys(machines) !== 0 && (
-        <>
-          <Box
-            sx={{
-              display: "flex",
-            }}>
-            {categories.map(row => (
-              <Container key={row.codeCategorie}>
-                <div>
-                  <div>
-                    <p>{<Categorie detail={row} machines={machines} />} </p>
-                  </div>
-                </div>
-              </Container>
-            ))}
-          </Box>
-          <CountCuratif />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "100px",
-            }}>
-            <img src={logo} alt="logo" />
-          </div>
-        </>
-      )}
-        </>*/}
-  
 }
 export default Accueil;

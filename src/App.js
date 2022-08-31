@@ -24,6 +24,7 @@ import InterventionPrevetif from "./components/interventionPreventif/Interventio
 import AllPreventif from "./components/interventionPreventif/AllPreventif";
 import AcceuilTech from "./components/AcceuilTech/AcceuilTech";
 import Acceuil from "./components/Acceuil";
+import Responsables from "./pages/Responsables";
 
 const App = () => {
   
@@ -72,11 +73,9 @@ const App = () => {
               <Route path="branches" element={<Branches />}>
                 <Route index element={<AllBranches />} />
               </Route>
-              <Route path="responsables" element={<Responsabels />}>
-                <Route index element={<AllResponsabels />}></Route>
-                <Route path=":code" element={<ResponsabelDetails />}></Route>
-              </Route>
-              <Route path="*" element={<AllBranches />}></Route>
+              <Route path="/responsables" element={<Responsables />} />
+              <Route path="/responsables/:code" element={<ResponsabelDetails />} />
+              <Route path="*" element={<AllBranches />} />
             </>
           )}
           {user["profile"] === "res" && (
@@ -103,7 +102,7 @@ const App = () => {
               <Route path="/machines/:code" element={<MachinesDetails />} />
               <Route path="/interventions"element={<Interventions />} />
               <Route path="/interventions/:code" element={<InterventionsDetails />} />
-              <Route path="preventif" element={<InterventionPrevetif />}>
+              <Route path="/preventif" element={<InterventionPrevetif />}>
                 <Route index element={<AllPreventif />}></Route>
               </Route>
               <Route path="*" element={<AcceuilTech />}></Route>
