@@ -44,8 +44,7 @@ const Navbar = () => {
             <NavButton title="Menu" 
             customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
             color={currentColor}
-            icon={<AiOutlineMenu />}
-        />
+            icon={<AiOutlineMenu />} />
             <div className="flex">
                 <TooltipComponent content="Profile" position="BottomCenter">
                     <div className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" onClick={() => handleClick('userProfile')}>

@@ -7,6 +7,7 @@ import { HiOutlineRefresh } from "react-icons/hi";
 import { MdFiberNew, MdList, MdLockOpen, MdOutlineNewReleases, MdOutlineSupervisorAccount } from "react-icons/md";
 import { useStateContext } from "../../contexts/ContextProvider";
 import { Interventions } from "../../pages";
+import NewInterventions from "../NewInterventions";
 import Spinning from "../Spinning";
 import UserProfile from "../UserProfile";
 
@@ -14,7 +15,6 @@ export default function CountCuratif() {
   const { isClicked, setIsClicked, handleClick } = useStateContext();
   const [interventions, setInterventions] = useState();
   const [loading, setLoading] = useState(true);
-  let newInterventions = 0;
   useEffect(() => {
     axios.get(`/api/InteventionCuratives`).then(response => {
       setInterventions(response.data);
@@ -52,18 +52,18 @@ export default function CountCuratif() {
         rapport.getMonth() === date.getMonth() &&
         rapport.getDay() === date.getDay()
       ) {
-        newInterventions++;
+        nb++
       }
     });
-    //setNewInterventions(nb);
-    return newInterventions;
+    return nb;
   };
+
   return (
     <>
       {loading && <Spinning />}
       {!loading && interventions && (
         <>
-        {(newInterventions = 0) ? (
+        {(getTodayInterventions() === 0) ? (
           <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56 p-4 pt-9 rounded-2xl">
               <button type="button" style={{ color: 'rgb(228, 106, 118)', backgroundColor: 'rgb(255, 244, 229)' }} className="text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl">
                   <MdFiberNew />
@@ -80,14 +80,16 @@ export default function CountCuratif() {
               <button type="button" 
               style={{ color: 'rgb(228, 106, 118)', backgroundColor: 'rgb(255, 244, 229)' }} 
               className="text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl" 
-              //onClick={() => handleClick('intervention')}
+              onClick={() => handleClick('intervention')}
               >
                   <MdFiberNew />
-                  {/*isClicked.intervention && <Interventions />*/}
               </button>
+              <div className="flex">
+              </div>
               <p className="mt-3">
                   <span className="text-lg font-semibold">
                       {getTodayInterventions()}
+                      {isClicked.intervention && <NewInterventions />}
                   </span>
               </p>
               <p className="text-sm text-gray-800 mt-1">Intevrnetions curatives d'aujourd'hui</p>
