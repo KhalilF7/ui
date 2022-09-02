@@ -73,7 +73,7 @@ export default function CountCuratif() {
                       {getTodayInterventions()}
                   </span>
               </p>
-              <p className="text-sm text-gray-800 mt-1">Intevrnetions curatives d'aujourd'hui</p>
+              <p className="text-sm text-gray-400 mt-1">Intevrnetions curatives d'aujourd'hui</p>
           </div>
         ) : (
           <div style={{ backgroundColor: 'rgb(228, 106, 118)' }} className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56 p-4 pt-9 rounded-2xl">

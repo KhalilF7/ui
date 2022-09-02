@@ -18,7 +18,10 @@ import {useNavigate, useParams} from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Spinning from "../Spinning";
+import { useStateContext } from "../../contexts/ContextProvider";
+
 export default function MachinesDetails() {
+  const { currentColor } = useStateContext();
   const param = useParams();
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
@@ -93,7 +96,7 @@ export default function MachinesDetails() {
       showCancelButton: true,
       cancelButtonText: "Annuler",
       confirmButtonText: "Supprimer",
-      cancelButtonColor: "#F21800",
+      cancelButtonColor: currentColor,
     }).then(result => {
       if (result.isConfirmed) {
         axios
@@ -121,7 +124,8 @@ export default function MachinesDetails() {
     <>
       {loading && <Spinning />}
       {!loading && machine && Object.keys(machine) !== 0 && (
-        <div
+                <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+                <div
           style={{
             margin: "100px",
           }}>
@@ -255,12 +259,12 @@ export default function MachinesDetails() {
               {edit && (
                 <>
                   <Grid item xs={8}>
-                    <Button variant="contained" onClick={handelUpdate}>
+                    <Button style={{ backgroundColor: currentColor}} variant="contained" onClick={handelUpdate}>
                       affecter les changements
                     </Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button variant="contained" onClick={handelCancelEditMode}>
+                    <Button style={{ backgroundColor: currentColor}} variant="contained" onClick={handelCancelEditMode}>
                       Annuler
                     </Button>
                   </Grid>
@@ -284,6 +288,7 @@ export default function MachinesDetails() {
               onClick={handelDelete}
             />
           </SpeedDial>
+        </div>
         </div>
       )}
     </>

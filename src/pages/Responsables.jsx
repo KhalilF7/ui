@@ -109,7 +109,7 @@ const Responsables = () => {
       )}
       <Fab
         onClick={handleClickOpen}
-        color="primary"
+        style={{ backgroundColor: currentColor }}
         aria-label="add"
         sx={{
           position: "fixed",

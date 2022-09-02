@@ -16,8 +16,13 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Spinning from "../components/Spinning";
 import AddAtelier from "../components/atelier/AddAtelier";
+import { ColumnDirective, ColumnsDirective, GridComponent, Inject, Page, Search, Toolbar } from "@syncfusion/ej2-react-grids";
+import { Header } from "../components";
+import { MdInfoOutline } from "react-icons/md";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const Atelier = () => {
+  const { currentColor } = useStateContext();
     const [atelier, setAtelier] = useState();
     const [loading, setLoading] = useState(true);
     const [dialog, setDialog] = useState(false);
@@ -38,49 +43,50 @@ const Atelier = () => {
     const handleClose = () => {
       setDialog(false);
     };
+
+    const action = (props) => (
+      <button
+        type="button"
+        onClick={async () => await hadelRedirect(props.idAtelier)}
+      >
+        <MdInfoOutline color={currentColor} size="30px" />
+      </button>
+    );
+
+    const atelierGrid = [
+      { field: 'nomAtelier',
+        headerText: "Nom de l"+"'"+"atelier",
+        width: '170',
+        textAlign: 'Center',
+      },
+        {field: 'idAtelier',
+          headerText: 'Action',
+          template: action,
+          textAlign: 'Center',
+          width: '120',
+        },
+    ];
     return (
       <>
         {loading && <Spinning />}
         {!loading && atelier && Object.keys(atelier) !== 0 && (
-          <div>
-            <TableContainer component={Container}>
-              <Table
-                component={Paper}
-                sx={{minWidth: 650}}
-                aria-label="tous les atelier">
-                <TableHead sx={{backgroundColor: "hsl(210 79% 46%)"}}>
-                  <TableRow>
-                    <TableCell sx={{fontWeight: "bold"}} align="center">
-                      nom de l'atelier{" "}
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {atelier.map(row => (
-                    <Tooltip title="detail" placement="top">
-                      <TableRow
-                        onClick={() => {
-                          hadelRedirect(row.idAtelier);
-                        }}
-                        key={row.matricule}
-                        sx={{
-                          ":hover": {
-                            backgroundColor: "#8aa8ff",
-                          },
-                          cursor: "pointer",
-                        }}>
-                        <TableCell align="center">{row.nomAtelier}</TableCell>
-                      </TableRow>
-                    </Tooltip>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+          <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+          <Header category="Page" title="Ateliers" />
+          <GridComponent dataSource={atelier.filter((row, i) => {
+              return atelier[i];
+          }
+        )}
+         allowPaging allowSorting toolbar={['Search']} width="auto" >
+        <ColumnsDirective>
+          {atelierGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
+        </ColumnsDirective>
+        <Inject services={[Page, Search, Toolbar]} />
+      </GridComponent>
           </div>
         )}
         <Fab
           onClick={handleClickOpen}
-          color="primary"
+          style={{ backgroundColor: currentColor }}
           aria-label="add"
           sx={{
             position: "fixed",

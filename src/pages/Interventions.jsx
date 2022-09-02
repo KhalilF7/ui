@@ -188,7 +188,7 @@ const Interventions = () => {
         {!loading && interventions && tech && machines && (
           <>
           <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
-      <Header category="Page" title="Équipements" />
+      <Header category="Page" title="Interventions" />
             <Container
               sx={{
                 width: "300px",
@@ -278,7 +278,7 @@ const Interventions = () => {
             {tech.isResponsableProduction && user.profile === "tech" && (
               <>
                 <Fab
-                  color="primary"
+                  style={{ backgroundColor: currentColor }}
                   onClick={handleDemande}
                   aria-label="add"
                   sx={{

@@ -14,8 +14,10 @@ import {
   TextField,
 } from "@mui/material";
 import {Delete} from "@mui/icons-material";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function AtelierDetails() {
+  const { currentColor } = useStateContext();
   const param = useParams();
   const [atelier, setAtelier] = useState();
   const [loading, setLoading] = useState(true);
@@ -42,7 +44,7 @@ export default function AtelierDetails() {
       showCancelButton: true,
       cancelButtonText: "Annuler",
       confirmButtonText: "Supprimer",
-      cancelButtonColor: "#F21800",
+      cancelButtonColor: currentColor,
     }).then(result => {
       if (result.isConfirmed) {
         axios
@@ -77,7 +79,7 @@ export default function AtelierDetails() {
       showCancelButton: true,
       cancelButtonText: "Annuler",
       confirmButtonText: "Modifier",
-      cancelButtonColor: "#F21800",
+      cancelButtonColor: currentColor,
     }).then(result => {
       if (result.isConfirmed) {
         axios
@@ -118,10 +120,11 @@ export default function AtelierDetails() {
     <>
       {loading && <Spinning />}
       {!loading && atelier && Object.keys(atelier) !== 0 && (
-        <div style={{margin: "100px"}}>
+        <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+          <div style={{margin: "100px"}}>
           <form>
-            <Grid container spacing={8}>
-              <Grid item xs={4}>
+            <Grid container>
+              <Grid item>
                 {edit ? (
                   <TextField
                     onChange={handelChange}
@@ -140,18 +143,18 @@ export default function AtelierDetails() {
                 )}
               </Grid>
               {edit && (
-                <>
-                  <Grid item xs={8}>
-                    <Button variant="contained" onClick={handelUpdate}>
+                <div className="flex m-4">
+                  <Grid item>
+                    <Button style={{ backgroundColor: currentColor, margin: '10px'}} variant="contained" onClick={handelUpdate}>
                       affecter les changements
                     </Button>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Button variant="contained" onClick={handelCancelEditMode}>
+                  <Grid item>
+                    <Button style={{ backgroundColor: currentColor, margin: '10px'}} variant="contained" onClick={handelCancelEditMode}>
                       Annuler
                     </Button>
                   </Grid>
-                </>
+                </div>
               )}
             </Grid>
           </form>
@@ -170,6 +173,7 @@ export default function AtelierDetails() {
               onClick={handelDelete}
             />
           </SpeedDial>
+        </div>
         </div>
       )}
     </>

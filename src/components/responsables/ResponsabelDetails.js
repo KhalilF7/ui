@@ -16,8 +16,10 @@ import {
 } from "@mui/material";
 import withReactContent from "sweetalert2-react-content";
 import {Delete} from "@mui/icons-material";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function ResponsabelDetails() {
+  const { currentColor } = useStateContext();
   const param = useParams();
   const [responsable, setResponsable] = useState();
   const [loading, setLoading] = useState(true);
@@ -50,7 +52,7 @@ export default function ResponsabelDetails() {
       showCancelButton: true,
       cancelButtonText: "Annuler",
       confirmButtonText: "Supprimer",
-      cancelButtonColor: "#F21800",
+      cancelButtonColor: currentColor,
     }).then(result => {
       if (result.isConfirmed) {
         axios.delete(`/api/responsable/${param.code}`).then(response => {
@@ -82,7 +84,7 @@ export default function ResponsabelDetails() {
       showCancelButton: true,
       cancelButtonText: "Annuler",
       confirmButtonText: "Modifier",
-      cancelButtonColor: "#F21800",
+      cancelButtonColor: currentColor,
     }).then(result => {
       if (result.isConfirmed) {
         axios
@@ -120,6 +122,7 @@ export default function ResponsabelDetails() {
     <>
       {loading && <Spinning />}
       {!loading && responsable && Object.keys(responsable) !== 0 && (
+        <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
         <div style={{margin: "100px"}}>
           <form>
             <Grid container spacing={8}>
@@ -272,6 +275,7 @@ export default function ResponsabelDetails() {
               onClick={handelDelete}
             />
           </SpeedDial>
+        </div>
         </div>
       )}
     </>

@@ -29,7 +29,9 @@ import HandymanIcon from "@mui/icons-material/Handyman";
 import Couts from "../Couts/Couts";
 import AddPiece from "../PieceDeRechange/AddPiece";
 import PieceDeRechange from "../PieceDeRechange/PieceDeRechange";
+import { useStateContext } from "../../contexts/ContextProvider";
 export default function InterventionsDetails() {
+  const { currentColor } = useStateContext();
   const user = useSelector(state => state.userReducer.data);
   const param = useParams();
   const [intervention, setIntevention] = useState();
@@ -387,6 +389,7 @@ export default function InterventionsDetails() {
     <>
       {loading && <Spinning />}
       {!loading && intervention && machine && techniciens && (
+      <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
         <div
           style={{
             margin: "100px",
@@ -462,7 +465,7 @@ export default function InterventionsDetails() {
                                 required
                               />
                               <IconButton
-                                color="primary"
+                                style={{ color: currentColor }}
                                 size="large"
                                 onClick={handelUpdate}>
                                 <SaveIcon />
@@ -476,7 +479,7 @@ export default function InterventionsDetails() {
                               </span>
                               {user.profile === "tech" && (
                                 <IconButton
-                                  color="primary"
+                                  style={{ color: currentColor }}
                                   size="large"
                                   onClick={handelUpdateDebut}>
                                   <EditIcon />
@@ -706,7 +709,7 @@ export default function InterventionsDetails() {
                                   required
                                 />
                                 <IconButton
-                                  color="primary"
+                                  style={{ color: currentColor }}
                                   size="large"
                                   onClick={handelUpdate}>
                                   <SaveIcon />
@@ -719,7 +722,7 @@ export default function InterventionsDetails() {
                                   {getTime(intervention.dateFinAction)}
                                 </span>
                                 <IconButton
-                                  color="primary"
+                                  style={{ color: currentColor }}
                                   size="large"
                                   onClick={handelUpdatefin}>
                                   <EditIcon />
@@ -876,7 +879,7 @@ export default function InterventionsDetails() {
             </Container>
           </form>
           <Fab
-            color="primary"
+            style={{ backgroundColor: currentColor }}
             onClick={handelAddPiece}
             aria-label="add"
             sx={{
@@ -888,7 +891,7 @@ export default function InterventionsDetails() {
             <HandymanIcon />
           </Fab>
           <Fab
-            color="primary"
+            style={{ backgroundColor: currentColor }}
             onClick={handelAddCout}
             aria-label="add"
             sx={{
@@ -899,6 +902,7 @@ export default function InterventionsDetails() {
             }}>
             <PaidIcon />
           </Fab>
+        </div>
         </div>
       )}
     </>

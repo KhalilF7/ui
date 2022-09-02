@@ -140,7 +140,7 @@ const SousTraitants = () => {
           </div>
         )}
         <Fab
-              color="primary"
+              style={{ backgroundColor: currentColor }}
               aria-label="add"
               onClick={handelAddOpen}
               sx={{

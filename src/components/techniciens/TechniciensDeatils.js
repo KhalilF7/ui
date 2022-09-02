@@ -17,8 +17,10 @@ import {
 import withReactContent from "sweetalert2-react-content";
 import {Delete} from "@mui/icons-material";
 import {useSelector} from "react-redux";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function TechniciensDeatils() {
+  const { currentColor } = useStateContext();
   const param = useParams();
   const [technicine, setTechnicien] = useState();
   const user = useSelector(state => state.userReducer.data);
@@ -52,7 +54,7 @@ export default function TechniciensDeatils() {
       showCancelButton: true,
       cancelButtonText: "Annuler",
       confirmButtonText: "Supprimer",
-      cancelButtonColor: "#F21800",
+      cancelButtonColor: currentColor,
     }).then(result => {
       if (branche) {
         setTechnicien({...technicine, branche: branche});
@@ -87,7 +89,7 @@ export default function TechniciensDeatils() {
       showCancelButton: true,
       cancelButtonText: "Annuler",
       confirmButtonText: "Modifier",
-      cancelButtonColor: "#F21800",
+      cancelButtonColor: currentColor,
     }).then(result => {
       if (result.isConfirmed) {
         axios
@@ -125,6 +127,7 @@ export default function TechniciensDeatils() {
     <>
       {loading && <Spinning />}
       {!loading && technicine && Object.keys(technicine) !== 0 && (
+        <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
         <div style={{margin: "100px"}}>
           <form>
             <Grid container spacing={8}>
@@ -296,12 +299,12 @@ export default function TechniciensDeatils() {
               {edit && (
                 <>
                   <Grid item xs={8}>
-                    <Button variant="contained" onClick={handelUpdate}>
+                    <Button style={{ backgroundColor: currentColor}} variant="contained" onClick={handelUpdate}>
                       affecter les changements
                     </Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button variant="contained" onClick={handelCancelEditMode}>
+                    <Button style={{ backgroundColor: currentColor}} variant="contained" onClick={handelCancelEditMode}>
                       Annuler
                     </Button>
                   </Grid>
@@ -324,6 +327,7 @@ export default function TechniciensDeatils() {
               onClick={handelDelete}
             />
           </SpeedDial>
+        </div>
         </div>
       )}
     </>

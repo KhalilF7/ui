@@ -157,7 +157,7 @@ const Machines = () => {
     <>
       {loading && <Spinning />}
       {!loading && machines && catMachine && Object.keys(machines) !== 0 && (
-        <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+      <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
       <Header category="Page" title="Équipements" />
       <FormControl>
         <Select
@@ -196,7 +196,7 @@ const Machines = () => {
       {user.profile === "res" && (
         <Fab
           onClick={handleClickOpen}
-          color="primary"
+          style={{ backgroundColor: currentColor }}
           aria-label="add"
           sx={{
             position: "fixed",
