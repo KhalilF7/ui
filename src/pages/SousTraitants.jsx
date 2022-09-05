@@ -131,11 +131,12 @@ const SousTraitants = () => {
             )} 
              allowPaging 
              allowSorting 
+             toolbar={['Search']}
              width="auto" >
             <ColumnsDirective>
               {sousTraitantsGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
             </ColumnsDirective>
-            <Inject services={[Page, Toolbar, Sort, Filter, Resize]} />
+            <Inject services={[Page, Toolbar, Search]} />
           </GridComponent>
           </div>
         )}

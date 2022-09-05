@@ -1,4 +1,4 @@
-import { GridComponent, ColumnsDirective, CoumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject, ColumnDirective, Data, cellSelected } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, CoumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject, ColumnDirective, Data, cellSelected, Toolbar } from '@syncfusion/ej2-react-grids';
 import { Header } from '../components';
 import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
@@ -185,11 +185,11 @@ const Machines = () => {
             }
           }
         )} 
-         allowPaging allowSorting >
+         allowPaging allowSorting toolbar={['Search']} >
         <ColumnsDirective>
           {machinesGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
         </ColumnsDirective>
-        <Inject services={[Resize, Sort, ContextMenu, Filter, Page, ExcelExport, Edit, PdfExport]} />
+        <Inject services={[Resize, Sort, ContextMenu, Filter, Page, ExcelExport, Edit, PdfExport, Toolbar]} />
       </GridComponent>
     </div>
       )}

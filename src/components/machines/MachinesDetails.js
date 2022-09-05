@@ -124,8 +124,8 @@ export default function MachinesDetails() {
     <>
       {loading && <Spinning />}
       {!loading && machine && Object.keys(machine) !== 0 && (
-                <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
-                <div
+        <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+          <div
           style={{
             margin: "100px",
           }}>

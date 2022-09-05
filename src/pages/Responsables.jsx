@@ -98,12 +98,12 @@ const Responsables = () => {
             }
           )} 
            allowPaging 
-           allowSorting 
+           allowSorting toolbar={['Search']}
            width="auto" >
           <ColumnsDirective>
             {responsablesGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
           </ColumnsDirective>
-          <Inject services={[Page, Sort, Filter, Resize]} />
+          <Inject services={[Page, Sort, Filter, Resize, Toolbar]} />
         </GridComponent>
         </div>
       )}
