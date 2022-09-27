@@ -10,9 +10,8 @@ import {
   TableBody,
   Fab,
   Tooltip,
-  Toolbar,
 } from "@mui/material";
-import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Inject, Page, Resize, Sort } from "@syncfusion/ej2-react-grids";
+import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Inject, Page, Resize, Sort, Toolbar } from "@syncfusion/ej2-react-grids";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import { MdInfoOutline } from "react-icons/md";

@@ -9,6 +9,7 @@ import { UserProfile } from '.';
 import { useStateContext } from "../contexts/ContextProvider";
 
 import avatar from '../data/avatar.jpg';
+import { useSelector } from "react-redux";
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
     <TooltipComponent content={title} position="BottomCenter">
@@ -21,6 +22,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 const Navbar = () => {
     const { activeMenu, setActiveMenu, handleClick, isClicked, setIsClicked, screenSize, setScreenSize, currentColor } = useStateContext();
+    const user = useSelector(state => state.userReducer.data);
 
     useEffect(() => {
         const handleResize = () => setScreenSize(window.innerWidth);
@@ -51,7 +53,7 @@ const Navbar = () => {
                         <img className="rounded-full w-8 h-8" src={avatar} />
                         <p>
                             <span className="text-gray-400 text-14">Salut, </span> {' '}
-                            <span className="text-gray-400 font-bold ml-1 text-14">Khalil</span>
+                            <span className="text-gray-400 font-bold ml-1 text-14">{user.profile}</span>
                         </p>
                         <MdKeyboardArrowDown className="text-gray-400 text-14" />
                     </div>

@@ -650,6 +650,7 @@ export default function InterventionsDetails() {
                                   required
                                 />
                                 <Button
+                                  style={{ backgroundColor: currentColor}}
                                   onClick={updateDiagnostique}
                                   variant="contained">
                                   Ajouter
@@ -661,6 +662,7 @@ export default function InterventionsDetails() {
                                 {user.profile === "tech" && (
                                   <>
                                     <Button
+                                      style={{ backgroundColor: currentColor}}
                                       onClick={setUpdate}
                                       variant="contained"
                                       startIcon={<EditIcon />}>
@@ -688,9 +690,10 @@ export default function InterventionsDetails() {
                             <div> Aucune action</div>
                             {user.profile === "tech" && (
                               <Button
+                                style={{ backgroundColor: currentColor}}
                                 variant="contained"
                                 onClick={setFinAction}>
-                                Fin intervention intervention{" "}
+                                Fin intervention{" "}
                               </Button>
                             )}
                           </>

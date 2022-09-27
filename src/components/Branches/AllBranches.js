@@ -14,8 +14,10 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import Spinning from "../Spinning";
 import AddBranche from "./AddBranche";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function AllBranches() {
+  const { currentColor } = useStateContext();
   const [branches, setBranches] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -80,7 +82,7 @@ export default function AllBranches() {
       )}
       <Fab
         onClick={handleClickOpen}
-        color="primary"
+        style={{ backgroundColor: currentColor}} 
         aria-label="add"
         sx={{
           position: "fixed",

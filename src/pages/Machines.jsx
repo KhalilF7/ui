@@ -85,8 +85,8 @@ const Machines = () => {
     <div>
       <img
         className="rounded-xl h-20 md:ml-3"
-        //src={props.ProductImage}
-        src={image}
+        src={`/api/${props.image}`}
+        //src={image}
         alt="machine-item"
       />
     </div>

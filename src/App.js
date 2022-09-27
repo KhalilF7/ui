@@ -69,22 +69,22 @@ const App = () => {
 
               <Routes>
               {user["profile"] === "pdg" && (
-            <>
-              <Route path="branches" element={<Branches />}>
-                <Route index element={<AllBranches />} />
-              </Route>
-              <Route path="/responsables" element={<Responsables />} />
-              <Route path="/responsables/:code" element={<ResponsabelDetails />} />
-              <Route path="*" element={<AllBranches />} />
-            </>
-          )}
+                <>
+                  <Route path="branches" element={<Branches />}>
+                    <Route index element={<AllBranches />} />
+                  </Route>
+                  <Route path="/responsables" element={<Responsables />} />
+                  <Route path="/responsables/:code" element={<ResponsabelDetails />} />
+                  <Route path="*" element={<AllBranches />} />
+                </>
+              )}
           {user["profile"] === "res" && (
             <>
                 <Route path="*" element={<Accueil />} />
                 <Route path="/accueil" element={<Accueil />} />
                 
-                <Route path="/machines"element={<Machines />} />
-                <Route path="/machines/:code" element={<MachinesDetails />} />
+                <Route path="/equipements"element={<Machines />} />
+                <Route path="/equipements/:code" element={<MachinesDetails />} />
                 <Route path="/techniciens"element={<Techniciens />} />
                 <Route path="/techniciens/:code"element={<TechniciensDeatils />} />
                 <Route path="/sous-traitants"element={<SousTraitants />} />
@@ -98,8 +98,8 @@ const App = () => {
           )}
           {user["profile"] === "tech" && (
             <>
-              <Route path="/machines"element={<Machines />} />
-              <Route path="/machines/:code" element={<MachinesDetails />} />
+              <Route path="/equipements"element={<Machines />} />
+              <Route path="/equipements/:code" element={<MachinesDetails />} />
               <Route path="/interventions"element={<Interventions />} />
               <Route path="/interventions/:code" element={<InterventionsDetails />} />
               <Route path="/preventif" element={<InterventionPrevetif />}>

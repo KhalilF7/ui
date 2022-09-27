@@ -275,7 +275,7 @@ export default function MachinesDetails() {
           {/** graphe de : nomber de panne , moyenne de temps de panne , nomber de panne selon type  */}
           <SpeedDial
             ariaLabel="Action"
-            sx={{position: "fixed", bottom: 50, right: 50}}
+            sx={{position: "fixed", bottom: 80, right: 60, }}
             icon={<SpeedDialIcon />}>
             <SpeedDialAction
               icon={<EditIcon />}

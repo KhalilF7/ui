@@ -48,7 +48,7 @@ export default function AddPlanPreventif(props) {
           <DialogTitle>
             <Typography variant="h4">
               {" "}
-              Ajouter un intervention preventif{" "}
+              Ajouter une intervention préventive{" "}
             </Typography>
           </DialogTitle>
           <DialogContent>

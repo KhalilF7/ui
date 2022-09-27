@@ -64,7 +64,8 @@ const NewInterventions = () => {
                 <div key={row.codeCuratif} className="flex items-center leading-8 gap-5 border-b-1 border-color p-3">
                     <button onClick={() => { hadelRedirect(row.codeCuratif); }}>
                         <p className="font-semibold">Intervention Numéro: {row.codeCuratif}</p>
-                        <p className="text-gray-500 text-sm dark:text-gray-400">Équipement:  {getMachineName(row.machine)} </p>
+                        <p className="text-gray-500 text-sm dark:text-gray-400">Code: {row.machine} </p>
+                        <p className="text-gray-500 text-sm dark:text-gray-400">Équipement: {getMachineName(row.machine)} </p>
                         <p className="text-gray-500 text-sm dark:text-gray-400">Type de panne:  {row.TypeDePanne} </p>
                         <p className="text-gray-500 text-sm dark:text-gray-400">Sympthomes:  {row.Sympthomes} </p>
                         <p className="text-gray-500 text-sm dark:text-gray-400">État de l'intervention: {row.etatInterventions} </p>

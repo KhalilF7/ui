@@ -201,8 +201,8 @@ const Interventions = () => {
               {tech.isResponsableMaintenance && (
                 <>
                   {/** todo : feuille complet d'intevention encient  */}
-                  <Button variant="contained" onClick={ancientIntervention}>
-                    Ajouter une ancient intervention
+                  <Button style={{ backgroundColor: currentColor}} variant="contained" onClick={ancientIntervention}>
+                    Ajouter une anciente intervention
                   </Button>
                 </>
               )}

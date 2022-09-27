@@ -2,8 +2,10 @@ import {Button, Card, CardContent, Typography} from "@mui/material";
 import {Box} from "@mui/system";
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function AcceuilTech() {
+  const { currentColor } = useStateContext();
   const navigate = useNavigate();
 
   const Curative = () => {
@@ -24,7 +26,7 @@ export default function AcceuilTech() {
             <Typography gutterBottom variant="h4" component="div">
               Inteverntion Curatives
             </Typography>
-            <Button variant="contained" onClick={Curative}>
+            <Button style={{ backgroundColor: currentColor}} variant="contained" onClick={Curative}>
               plus de detail
             </Button>
           </CardContent>
@@ -34,7 +36,7 @@ export default function AcceuilTech() {
             <Typography gutterBottom variant="h4" component="div">
               Inteverntion Preventif
             </Typography>
-            <Button variant="contained" onClick={preventive}>
+            <Button style={{ backgroundColor: currentColor}} variant="contained" onClick={preventive}>
               plus de detail
             </Button>
           </CardContent>

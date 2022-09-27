@@ -124,7 +124,7 @@ export const linksRes = [
       title: 'Pages',
       links: [
         {
-          name: 'machines',
+          name: 'equipements',
           icon: <MdOutlineSettings />,
         },
         {
@@ -192,7 +192,7 @@ export const links = [
       title: 'Pages',
       links: [
         {
-          name: 'machines',
+          name: 'equipements',
           icon: <MdOutlineSettings />,
         },
         {
@@ -200,7 +200,7 @@ export const links = [
           icon: <MdOutlineMiscellaneousServices />,
         },
         {
-          name: 'préventif',
+          name: 'preventif',
           icon: <MdOutlineManageAccounts />,
         },
       ],

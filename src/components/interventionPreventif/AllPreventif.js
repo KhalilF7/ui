@@ -4,10 +4,11 @@ import AddPlanPreventif from "./AddPlanPreventif";
 import Spinning from "../Spinning";
 import axios from "axios";
 import {Container, Fab, Grid} from "@mui/material";
-import {Box} from "@mui/system";
 import PrevetifCard from "./PrevetifCard";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export default function AllPreventif() {
+  const { currentColor } = useStateContext();
   const [plan, setPlan] = useState(false);
   const [preventives, setPreventives] = useState();
   const [machines, setMachines] = useState();
@@ -62,7 +63,7 @@ export default function AllPreventif() {
             </Grid>
           </Container>
           <Fab
-            color="primary"
+            style={{ backgroundColor: currentColor}}
             onClick={handelPlan}
             aria-label="add"
             sx={{
