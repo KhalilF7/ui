@@ -68,7 +68,7 @@ export default function Categorie(props) {
     return machineNumber;
   };
   const clicked = () => {
-    navigate("../machines", {state: {categorie: categorie.codeCategorie}});
+    navigate("../equipements", {state: {categorie: categorie.codeCategorie}});
   };
   useEffect(() => {
     getMachineNumber();
